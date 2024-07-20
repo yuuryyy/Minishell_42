@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/07/20 02:55:30 by ychagri          ###   ########.fr       */
+/*   Created: 2024/07/17 00:02:23 by youssra           #+#    #+#             */
+/*   Updated: 2024/07/20 01:11:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../minishell.h"
 
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "lib/Libft/libft.h"
-
-typedef struct s_cmd
+void	environment(char **envp, t_args *cmd_line)
 {
-	char	**cmd_table;
-	int		in;
-	int		out;
-	int		err;
-}	t_cmd;
-
-typedef struct s_args
-{
-	char	*line;
-	t_list	*cmds;
-	int		cmd_num;
-	char	**path;
 	t_list	*env;
-}	t_args;
+	int		i;
+	char	*str;
+	char	**pathh;
 
-void	environment(char **envp, t_args *args);
-
-#endif
+	env = NULL;
+	str = getenv("PATH");
+	pathh = ft_split(str, ':');
+	cmd_line->path = pathh;
+	i  = 0;
+	while (envp[i])
+	{
+		ft_lstadd_back(&env, ft_lstnew(envp[i]));
+		i++;
+	}
+	cmd_line->env = env;
+}

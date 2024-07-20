@@ -3,25 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
+#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/07/17 00:53:54 by youssra          ###   ########.fr        #
+#    Updated: 2024/07/20 02:51:50 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		:=	minishell
+NAME 		=	minishell
+CC			=	cc
 
-COMPILE		:=	cc -Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra  -Werror
+#-fsanitize=address
+LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
 
-HEADER		:=	minishell.h
+HEADER		=	minishell.h
 
-LIBRARY		:=	lib/libft.a
+LIBRARY		=	lib/libft.a
 
-SRCS		:=	parse/main.c \
-				parse/env_setups.c \
+SRCS		=	parse/main.c \
+				parse/tools.c \
 
-OBJS		:= $(SRCS:.c=.o)
+OBJS		= $(SRCS:.c=.o)
 
 all : $(NAME)
 
@@ -29,10 +32,10 @@ lib :
 	make -C lib
 
 $(NAME) : $(OBJS) lib
-	$(COMPILE) $(OBJS) $(LIBRARY) -o $(NAME)
+	$(CC)  $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) -lreadline $(LFLAGS)
 
 %.o: %.c $(HEADER)
-		$(COMPILE) -c $< -o $@
+		$(CC)  $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C lib
