@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 23:23:18 by ychagri           #+#    #+#             */
-/*   Updated: 2023/11/08 23:14:47 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/20 06:38:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_list	*ft_lstnew(void *content)
 		return (NULL);
 	node->content = content;
 	node->next = NULL;
+	node->previous = NULL;
 	return (node);
 }
 
