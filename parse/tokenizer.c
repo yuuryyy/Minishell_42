@@ -6,9 +6,22 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 03:34:14 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/20 03:34:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/21 03:48:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int is_seperator(char c)
+{
+	return (c == '|' || c == '<' || c == '>');
+}
+
+
+
+// char	**split_line(char *line);
+// {
+// 	char	**split;
+
+	
+// }

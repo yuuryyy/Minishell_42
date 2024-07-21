@@ -6,7 +6,7 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/07/20 02:51:50 by ychagri          ###   ########.fr        #
+#    Updated: 2024/07/21 02:36:51 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ LIBRARY		=	lib/libft.a
 
 SRCS		=	parse/main.c \
 				parse/tools.c \
+				parse/tokenizer.c \
 
 OBJS		= $(SRCS:.c=.o)
 
