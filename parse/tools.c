@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 00:02:23 by youssra           #+#    #+#             */
-/*   Updated: 2024/07/21 05:25:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/21 06:00:07 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,32 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 	return (1);
 }
 
+
+char	*expand(char *line)
+{
+	char	**tmp;
+	char	*var;
+	int		k;
+	int		i;
+
+	tmp = ft_split(line, "\'");
+	i = 0;
+	while (tmp[i])
+	{
+		k = 0;
+		var = ft_strchr(tmp[i],'$');
+		if (var)
+		{
+			while (var[k] && (var[k] == '_'  || ft_isalnum(var[k])))
+				k++;
+			var[k] == '\0';
+			var = getenv(var);
+		}
+	}
+}
+
+
+
 char	*remove_quotes(char *line)
 {
 	char	*new;
@@ -155,3 +181,5 @@ char	*remove_quotes(char *line)
 	new[len] = '\0';
 	return (new);
 }
+
+
