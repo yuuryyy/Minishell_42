@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 00:02:23 by youssra           #+#    #+#             */
-/*   Updated: 2024/07/21 06:00:07 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/23 04:39:25 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	free_array(char	**str)
 
 void	free_struct(t_args *cmd_line)
 {
-	if (cmd_line->line)
-		free(cmd_line->line);
+	// if (cmd_line->line)
+	// 	free(cmd_line->line);
 	// if (cmd_line->commands)
 	// 	ft_lstclear(&cmd_line->commands, );
 	// if (cmd_line->env)
@@ -60,14 +60,13 @@ void	free_struct(t_args *cmd_line)
 		free_array(cmd_line->path);
 }
 
-void	syntax_error(t_args	*cmd_line,char *line)
+void	syntax_error(char *line)
 {
 	ft_putstr_fd("bash: parse error\n", 2);
 	free(line);
-	cmd_line->exit_code = 1;
 }
 
-int	replace_literal_token(t_args *cmd_line, char *line)
+int	replace_literal_token(char *line)
 {
 	int	i;
 
@@ -81,6 +80,8 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 			{
 				if (line[i] == '<')
 					line[i] = IN;
+				else if (line[i] == ' ')
+					line[i] = SPACE;
 				else if (line[i] == '>')
 					line[i] = OUT;
 				else if (line[i] == '|')
@@ -91,7 +92,7 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 			}
 			if (!line[i])
 			{
-				syntax_error(cmd_line, line);
+				syntax_error( line);
 				return (0);
 			}
 		}
@@ -100,7 +101,9 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 			i++;
 			while (line[i] && line[i] != '\'')
 			{
-				if (line[i] == '<')
+				if (line[i] == ' ')
+					line[i] = SPACE;
+				else if (line[i] == '<')
 					line[i] = IN;
 				else if (line[i] == '>')
 					line[i] = OUT;
@@ -114,7 +117,7 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 			}
 			if (!line[i])
 			{
-				syntax_error(cmd_line, line);
+				syntax_error( line);
 				return (0);
 			}
 		}
@@ -123,31 +126,47 @@ int	replace_literal_token(t_args *cmd_line, char *line)
 	return (1);
 }
 
+// t_list	*tokenize(char *line)
+// {
+	
+	
+// }
 
-char	*expand(char *line)
+void	seperate_tokens(t_args *cmd_line)
 {
-	char	**tmp;
-	char	*var;
-	int		k;
+	char	*new;
 	int		i;
+	char	c;
+	int		k;
 
-	tmp = ft_split(line, "\'");
+
 	i = 0;
-	while (tmp[i])
+	while (cmd_line->line[i])
 	{
-		k = 0;
-		var = ft_strchr(tmp[i],'$');
-		if (var)
-		{
-			while (var[k] && (var[k] == '_'  || ft_isalnum(var[k])))
-				k++;
-			var[k] == '\0';
-			var = getenv(var);
-		}
+		if (is_seperator(cmd_line->line[i]))
+			cmd_line->token_num++;
+		i++;
 	}
+	new = malloc(ft_strlen(cmd_line->line) + (cmd_line->token_num * 2) + 1);
+	i = 0;
+	k = 0;
+	while (cmd_line->line[i])
+	{
+		if (is_seperator(cmd_line->line[i]))
+		{
+			new[k++] = ' ';
+			c = cmd_line->line[i];
+			while (cmd_line->line[i] && cmd_line->line[i] == c)
+				new[k++] = cmd_line->line[i++];
+			new[k++] = ' ';
+		}
+		else
+			new[k++] = cmd_line->line[i++];
+	}
+	new[k] = '\0';
+	free(cmd_line->line);
+	cmd_line->line = new;
 }
-
-
 
 char	*remove_quotes(char *line)
 {
