@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/23 05:19:19 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/23 06:23:59 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int main(int ac, char **av, char **env)
 	(void)ac; (void)av;
 	ft_bzero(&cmd_line, sizeof(t_args));
 	environment(env, &cmd_line);
-	
 	cmd_line.line = readline("bash~$ ");
 	// {
 		replace_literal_token(cmd_line.line);
