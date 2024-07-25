@@ -6,11 +6,11 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/23 06:20:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 10:46:05 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	free_array(char	**str)
 {

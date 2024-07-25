@@ -1,40 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:01:58 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 11:51:45 by ychagri          ###   ########.fr       */
+/*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
+/*   Updated: 2024/07/25 10:40:53 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*join;
-	size_t	j;
-	size_t	i;
-
-	join = (char *)malloc ((ft_strlen((char *)s1)
-				+ ft_strlen((char *)s2)) * sizeof(char) + 1);
-	if (!join)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		join[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		join[i] = s2[j];
-		j++;
-		i++;
-	}
-	join[i] = '\0';
-	return (join);
-}
+#include "../../minishell.h"

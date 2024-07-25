@@ -6,15 +6,14 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/07/21 02:36:51 by ychagri          ###   ########.fr        #
+#    Updated: 2024/07/25 10:45:43 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra  -Werror
-#-fsanitize=address
+CFLAGS		=	-g -Wall -Wextra  -Werror -fsanitize=address
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
 
 HEADER		=	minishell.h
@@ -22,8 +21,12 @@ HEADER		=	minishell.h
 LIBRARY		=	lib/libft.a
 
 SRCS		=	parse/main.c \
-				parse/tools.c \
-				parse/tokenizer.c \
+				parse/tools/before_parse.c \
+				parse/tools/error.c \
+				parse/tools/freeing.c \
+				parse/tools/tokenizer_tools.c \
+				parse/lexical_analyzer/split_words.c \
+				parse/lexical_analyzer/tokenizer.c \
 
 OBJS		= $(SRCS:.c=.o)
 

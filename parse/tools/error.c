@@ -1,40 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 18:01:58 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 11:51:45 by ychagri          ###   ########.fr       */
+/*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
+/*   Updated: 2024/07/25 06:47:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	syntax_error(char *line)
 {
-	char	*join;
-	size_t	j;
-	size_t	i;
-
-	join = (char *)malloc ((ft_strlen((char *)s1)
-				+ ft_strlen((char *)s2)) * sizeof(char) + 1);
-	if (!join)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		join[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		join[i] = s2[j];
-		j++;
-		i++;
-	}
-	join[i] = '\0';
-	return (join);
+	ft_putstr_fd("bash: syntax error\n", 2);
+	free(line);
 }

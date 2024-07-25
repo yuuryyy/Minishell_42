@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_path.c                                         :+:      :+:    :+:   */
+/*   before_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/23 06:21:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 10:33:51 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
+
+int is_seperator(char c)
+{
+	return (c == '|' || c == '<' || c == '>' );
+}
 
 void	environment(char **envp, t_args *cmd_line)
 {
@@ -34,3 +39,4 @@ void	environment(char **envp, t_args *cmd_line)
 		i++;
 	}
 }
+

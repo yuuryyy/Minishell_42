@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
+#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/03 01:10:21 by ychagri           #+#    #+#              #
-#    Updated: 2024/07/17 00:36:25 by youssra          ###   ########.fr        #
+#    Updated: 2024/07/25 10:43:41 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = cc 
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra  -Werror -fsanitize=address
 
 ARC = ar rc
 
