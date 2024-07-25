@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 12:25:44 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 12:53:16 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,20 @@ void	expand_var(t_args **cmd_line)
 	{
 		if(tmp->type == string || tmp->type == double_quote)
 			tmp->content = expand(tmp->content, tmp->type);
+		tmp = tmp->next;
+	}
+}
+void	remove_q(t_token **lst)
+{
+	t_token	*tmp;
+
+	tmp = *lst;
+	if (!tmp || !lst)
+		return ;
+	while (tmp)
+	{
+		if (tmp->type == single_quote || tmp->type == double_quote)
+			tmp->content = ft_substr(tmp->content, 1, ft_strlen(tmp->content) - 2);
 		tmp = tmp->next;
 	}
 }

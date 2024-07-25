@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 11:58:29 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 12:54:27 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ void	words_list(char	*line, t_args *cmd_line)
 			lst->space = true;
 	}
 	free (word);
-	expand_var(&cmd_line);
+	remove_q(&cmd_line->tokens);
+	// expand_var(&cmd_line);
 }

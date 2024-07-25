@@ -6,7 +6,7 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/03 01:10:21 by ychagri           #+#    #+#              #
-#    Updated: 2024/07/25 10:43:41 by ychagri          ###   ########.fr        #
+#    Updated: 2024/07/25 12:56:46 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = libft.a
 
 CC = cc 
 
-CFLAGS = -g -Wall -Wextra  -Werror -fsanitize=address
+CFLAGS = -g -Wall -Wextra  -Werror 
+#-fsanitize=address
 
 ARC = ar rc
 

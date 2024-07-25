@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/07/25 11:06:42 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 12:54:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	syntax_error(char *line);
 int 	word_len(char *line);
 void	words_list(char	*line, t_args *cmd_line);
 void	expand_var(t_args **cmd_line);
+void	remove_q(t_token **lst);
 
 #endif

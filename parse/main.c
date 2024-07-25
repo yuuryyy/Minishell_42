@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 11:30:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/25 12:56:25 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char **av, char **env)
 {
 	t_args	cmd_line;
 
-	// atexit(s)
+	atexit(s);
 	(void)ac; (void)av;
 	ft_bzero(&cmd_line, sizeof(t_args));
 	environment(env, &cmd_line);
