@@ -6,7 +6,7 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/07/25 12:56:13 by ychagri          ###   ########.fr        #
+#    Updated: 2024/07/27 01:54:52 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS		=	parse/main.c \
 				parse/tools/error.c \
 				parse/tools/freeing.c \
 				parse/tools/tokenizer_tools.c \
-				parse/lexical_analyzer/split_words.c \
+				parse/lexical_analyzer/create_tokens.c \
 				parse/lexical_analyzer/tokenizer.c \
 
 OBJS		= $(SRCS:.c=.o)

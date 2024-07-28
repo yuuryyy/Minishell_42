@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_words.c                                      :+:      :+:    :+:   */
+/*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 12:54:27 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/27 04:08:57 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*new_token(char *content, int type)
 	return (token);
 }
 
-char	*get_word(char **line)
+char	*get_word(char **line, t_args *cmd_line)
 {
 	int		i;
 	int		start;
@@ -43,8 +43,11 @@ char	*get_word(char **line)
 		i++;
 	start = i;
 	len = word_len(tmp + i);
+	if (len == -1)
+		return (syntax_error(cmd_line), NULL);
 	word = ft_substr(tmp, start, len);
-	*line = *line + len + i;
+	tmp = *line + len + i;
+	*line = tmp;
 	return (word);
 }
 
@@ -92,7 +95,7 @@ void	tokenadd_back(t_token	**token, t_token	*new)
 	ptr->next = new;
 }
 
-void	words_list(char	*line, t_args *cmd_line)
+int	words_list(char	*line, t_args *cmd_line)
 {
 	char	*word;
 	t_token	*lst;
@@ -107,17 +110,14 @@ void	words_list(char	*line, t_args *cmd_line)
 			break;
 		type = get_type(word);
 		if (type == 0)
-			return ;
+			return (free_tokens(&cmd_line->tokens),free(cmd_line->line), 0);
 		lst = new_token(word, type);
 		tokenadd_back(&cmd_line->tokens, lst);
 		while (line[i] && line[i] == ' ')
 			i++;
-		if (!line[i])
-			lst->space = false;
-		else if (i > 0 && line[i])
-			lst->space = true;
+		lst->space = line[i] && i > 0;
 	}
 	free (word);
 	remove_q(&cmd_line->tokens);
-	// expand_var(&cmd_line);
+	return (1);
 }
