@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/27 04:08:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/30 06:08:21 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ char	*get_word(char **line, t_args *cmd_line)
 {
 	int		i;
 	int		start;
-	size_t	len;
+	int		len;
 	char	*word;
 	char	*tmp;
 
 	i = 0;
-	if (!*line || !line)
+	if (!*line || !line || !**line)
 		return(NULL);
 	tmp = *line;
 	while (tmp[i] && tmp[i] == ' ')
@@ -45,13 +45,12 @@ char	*get_word(char **line, t_args *cmd_line)
 	len = word_len(tmp + i);
 	if (len == -1)
 		return (syntax_error(cmd_line), NULL);
-	word = ft_substr(tmp, start, len);
-	tmp = *line + len + i;
-	*line = tmp;
+	word = ft_substr(tmp, start, (size_t)len);
+	*line = *line + len + i;
 	return (word);
 }
 
-t_type	get_type(char *word)
+t_type	get_type(char *word, t_args *cmd_line)
 {
 	if (*word == '<' && ft_strlen(word) == 2)
 		return (heredoc);
@@ -68,7 +67,7 @@ t_type	get_type(char *word)
 	if (*word == '\"')
 		return (double_quote);
 	if (is_seperator(*word))
-		return (syntax_error(word), errno = EXIT_FAILURE, 0);
+		return (syntax_error(cmd_line), 0);
 	else
 		return (string);
 }
@@ -102,22 +101,26 @@ int	words_list(char	*line, t_args *cmd_line)
 	t_type type;
 	int		i;
 
+	word = NULL;
 	while (1)
 	{
 		i = 0;
-		word = get_word(&line);
-		if (!word || !*word)
+		word = get_word(&line, cmd_line);
+		if (errno == EXIT_FAILURE)
+			return (0);
+		if (!word || !*word || !line)
 			break;
-		type = get_type(word);
+		type = get_type(word, cmd_line);
 		if (type == 0)
-			return (free_tokens(&cmd_line->tokens),free(cmd_line->line), 0);
+			return (free(word), 0 );
 		lst = new_token(word, type);
 		tokenadd_back(&cmd_line->tokens, lst);
 		while (line[i] && line[i] == ' ')
 			i++;
 		lst->space = line[i] && i > 0;
 	}
-	free (word);
+	if (word)
+		free (word);
 	remove_q(&cmd_line->tokens);
 	return (1);
 }

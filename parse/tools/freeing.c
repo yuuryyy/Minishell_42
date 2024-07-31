@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/27 01:36:24 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/29 16:38:37 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	free_table(t_cmd_tab **table)
 
 void	free_struct(t_args *cmd_line)
 {
+	if (!cmd_line)
+		return ;
 	if (cmd_line->line)
 		free(cmd_line->line);
 	if (cmd_line->tokens)
@@ -78,4 +80,5 @@ void	free_struct(t_args *cmd_line)
 		free_array(cmd_line->path);
 	if (cmd_line->table)
 		free_table(&cmd_line->table);
+	ft_bzero(cmd_line, sizeof(t_args *));
 }

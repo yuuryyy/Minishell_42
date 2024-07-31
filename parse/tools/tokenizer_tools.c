@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/27 04:01:11 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/07/30 06:13:02 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int word_len(t_args *cmd_line)
+int word_len(char *line)
 {
 	int		i;
 	int		len;
-	char	*line;
 	char	c;
 
 	i = 0;
 	len = 0;
-	line = cmd_line->line;
 	if (line[i] == '\'' || line[i] == '\"')
 	{
 		c = line[i];
@@ -32,7 +30,7 @@ int word_len(t_args *cmd_line)
 			i++;
 			len++;
 		}
-		if (!line)
+		if (!line[i])
 			return (-1);
 		len++;
 	}
