@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:01:58 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/25 11:51:45 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/05 07:10:06 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,35 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	join[i] = '\0';
+	return (join);
+}
+
+char	*ft_strjoin2(char *s1, char *s2)
+{
+	char	*join;
+	int		i;
+	int		j;
+
+		printf("dfdgdfgdfgdfg\n");
+	fprintf(stderr,"s1 === %s\n", s1);
+	if (!s1)
+		s1 = ft_strdup("");
+	i = 0;
+	j = 0;
+	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!join)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	while (s2 && s2[j])
+	{
+		join[i + j] = s2[j];
+		j++;
+	}
+	free(s1);
+	join[i + j] = '\0';
 	return (join);
 }

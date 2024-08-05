@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/03 17:01:27 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/05 06:45:11 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // }
 
 
-errno = 0;
+// errno = 0;
 
 int main(int ac, char **av, char **env)
 {
@@ -38,14 +38,15 @@ int main(int ac, char **av, char **env)
 	// for(int i = 0; cmd_line.path[i]; i++)
 	if (!syntax_check(&cmd_line))
 		exit (1);
-	t_token *tmp2 = cmd_line.tokens;
-	while (tmp2)
-	{
-		printf("------\ncontent====%s\n", (char *)tmp2->content);
-		printf("type====%d\n", tmp2->type);
-		printf("space====%d\n", tmp2->space);
-		tmp2 = tmp2->next;
-	}
+	command_table(&cmd_line);
+	// t_token *tmp2 = cmd_line.tokens;
+	// while (tmp2)
+	// {
+	// 	printf("------\ncontent====%s\n", (char *)tmp2->content);
+	// 	printf("type====%d\n", tmp2->type);
+	// 	printf("space====%d\n", tmp2->space);
+	// 	tmp2 = tmp2->next;
+	// }
 	free_struct(&cmd_line);
 	// char *cmd[] = {"cat","Makefile",  NULL};
 	// execve("/usr/bin/cat", cmd, NULL);

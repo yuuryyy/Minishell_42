@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/02 11:05:45 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/05 06:43:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ typedef enum s_type
 //command table
 typedef struct s_cmd_tab
 {
-	char	*cmd;
-	char	**argv;
+	char	**cmd;
+	char	*arg;
 	char		*in;
 	char		*out;
+	bool		heredoc;
+	char		*append;
 	char	*delimiter;
 	struct s_cmd_tab	*next;
 }	t_cmd_tab;
@@ -73,6 +75,7 @@ typedef struct s_args
 void	environment(char **envp, t_args *args);
 int 	is_seperator(char c);
 
+void	command_table(t_args *cmdline);
 void	free_struct(t_args *cmd_line);
 void	free_array(char	**str);
 void	free_tokens(t_token **lst);

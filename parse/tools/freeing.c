@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/29 16:38:37 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/05 06:45:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	free_table(t_cmd_tab **table)
 	*table = tmp->next;
 	if (tmp->cmd)
 		free(tmp->cmd);
-	if (tmp->argv && (*tmp->argv))
-		free_array(tmp->argv);
+	// if (tmp->argv && (*tmp->argv))
+	// 	free_array(tmp->argv);
 	if (tmp->delimiter)
 		free(tmp->delimiter);
 	if (tmp->in)

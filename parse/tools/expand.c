@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/03 16:58:37 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/05 05:49:50 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 char	*expand_string(char *word)
 {
 	char	*value;
-	char	*tmp;
 
-	if (!ft_strchr(word, '$') || !word || strncmp(word, "$", 2) == 0)
+	if (!ft_strchr(word, '$') || !word || ft_strncmp(word, "$", 2) == 0)
 		return (word);
 	value = getenv(word + 1);
 	free(word);
@@ -28,42 +27,42 @@ char	*expand_string(char *word)
 	return (word);
 }
 
+void	norm(char **word)
+{
+	char	*befor_dolla;
+	char	*final;
+	char	*tmp;
+	size_t	len;
+	int		i;
+
+	i = 0;
+	befor_dolla = ft_strdup(*word);
+	while (befor_dolla[i] && befor_dolla[i] != '$')
+		i++;
+	befor_dolla[i] = 0;
+	len = word_len(*word + i);
+	tmp = ft_substr(*word, i, len);
+	if (!getenv(tmp + 1))
+		final = ft_strjoin(befor_dolla, *word + i + len);
+	else
+	{
+		final = ft_strjoin(befor_dolla, getenv(tmp + 1));
+		*word = ft_strjoin(final, *word + i + len);
+	}
+	free(tmp);
+	free(befor_dolla);
+	free(final);
+}
 
 char	*expand(char *word, t_type type)
 {
-	int		i;
-	char	*var;
-	char	*befor_dolla;
-	char	*final;
-	size_t	len;
-	char	*tmp;
-
+	
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
 	if (type == string)
-		word= expand_string(word);
+		word = expand_string(word);
 	else
-	{
-		i = 0;
-		befor_dolla = ft_strdup(word);
-		printf("%s\n", befor_dolla);
-		while (befor_dolla[i] && befor_dolla[i] != '$')
-			i++;
-		befor_dolla[i] = 0;
-		len = word_len(word + i);
-		tmp = ft_substr(word, i, len);
-		var = getenv(tmp + 1);
-		free(tmp);
-		if (!var)
-			final = ft_strjoin(befor_dolla, word + i + len);
-		else
-		{
-			final = ft_strjoin(befor_dolla, var);
-			word = ft_strjoin(final, word + i + len);
-		}
-		free(befor_dolla);
-		free(final);
-	}
+		norm(&word);
 	return (word);
 }
 

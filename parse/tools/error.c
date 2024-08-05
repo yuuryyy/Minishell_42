@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/03 12:13:04 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/05 06:09:54 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ bool	syntax_check(t_args *cmdline)
 			|| current->type == append) && (!next
 			|| next ->type < 6)))
 				return (syntax_error(cmdline), false);
+		if (current->type == piipe)
+			cmdline->cmd_num++;
 		current = current->next;
 	}
 	return (true);
