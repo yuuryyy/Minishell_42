@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/07/29 15:04:55 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/02 11:05:45 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ extern int 	errno;
 
 typedef enum s_type
 {
-	string = 100,
-	piipe = 200,
-	redin = 300,
-	redout = 400,
-	heredoc = 500,
-	single_quote = 600,
-	double_quote = 700,
-	append = 800,
+	piipe = 1,
+	redin = 2,
+	redout = 3,
+	heredoc = 4,
+	append = 5,
+	string = 6,
+	single_quote = 7,
+	double_quote = 8,
 }	t_type;
 
 //command table
@@ -84,6 +84,8 @@ int 	word_len(char *line);
 int 	words_list(char	*line, t_args *cmd_line);
 void	expand_var(t_args **cmd_line);
 void	remove_q(t_token **lst);
+
+bool	syntax_check(t_args *cmdline);
 
 
 #endif

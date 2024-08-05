@@ -6,15 +6,14 @@
 #    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/07/30 06:09:22 by youssra          ###   ########.fr        #
+#    Updated: 2024/08/03 16:31:27 by youssra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra 
-#-fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -fsanitize=address
 #-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
@@ -27,6 +26,7 @@ SRCS		=	parse/main.c \
 				parse/tools/before_parse.c \
 				parse/tools/error.c \
 				parse/tools/freeing.c \
+				parse/tools/expand.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \
 				parse/lexical_analyzer/tokenizer.c \

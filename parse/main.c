@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/30 06:10:46 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/03 17:01:27 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ int main(int ac, char **av, char **env)
 	(void)ac; (void)av;
 	ft_bzero(&cmd_line, sizeof(t_args));
 	environment(env, &cmd_line);
-	cmd_line.line = readline("bash~$ ");
+	cmd_line.line = readline("minionshell^~^ >$ ");
 	tmp = ft_strdup(cmd_line.line);
 	if (!words_list(tmp, &cmd_line))
 		printf("%d\n", errno);
 	free(tmp);
+	// expand_var(&cmd_line);
 	// for(int i = 0; cmd_line.path[i]; i++)
+	if (!syntax_check(&cmd_line))
+		exit (1);
 	t_token *tmp2 = cmd_line.tokens;
 	while (tmp2)
 	{
@@ -44,5 +47,6 @@ int main(int ac, char **av, char **env)
 		tmp2 = tmp2->next;
 	}
 	free_struct(&cmd_line);
-	// execve("/bin/l"s"", av, NULL);
+	// char *cmd[] = {"cat","Makefile",  NULL};
+	// execve("/usr/bin/cat", cmd, NULL);
 }

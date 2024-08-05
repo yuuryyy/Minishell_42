@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/30 06:08:21 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/03 16:28:53 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ int	words_list(char	*line, t_args *cmd_line)
 		word = get_word(&line, cmd_line);
 		if (errno == EXIT_FAILURE)
 			return (0);
-		if (!word || !*word || !line)
+		if (!word || !*word)
 			break;
 		type = get_type(word, cmd_line);
 		if (type == 0)
-			return (free(word), 0 );
+			return (free(word), 0);
 		lst = new_token(word, type);
 		tokenadd_back(&cmd_line->tokens, lst);
 		while (line[i] && line[i] == ' ')
@@ -122,5 +122,6 @@ int	words_list(char	*line, t_args *cmd_line)
 	if (word)
 		free (word);
 	remove_q(&cmd_line->tokens);
+	expand_var(&cmd_line);
 	return (1);
 }

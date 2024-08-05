@@ -6,46 +6,42 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/30 06:13:02 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/02 07:17:26 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int word_len(char *line)
+int	quote_len(char *line)
 {
-	int		i;
-	int		len;
+	int 	i;
 	char	c;
+	int		len;
 
 	i = 0;
 	len = 0;
-	if (line[i] == '\'' || line[i] == '\"')
+	c = line[i];
+	i++;
+	len++;
+	while(line[i] && line[i] != c)
 	{
-		c = line[i];
 		i++;
 		len++;
-		while(line[i] && line[i] != c)
-		{
-			i++;
-			len++;
-		}
-		if (!line[i])
-			return (-1);
-		len++;
 	}
-	if (is_seperator(line[i]))
-	{
-		len++;
-		c = line[i];
-		i++;
-		while (line[i] == c)
-		{
-			i++;
-			len++;
-		}
-	}
-	else if (line[i] == '$')
+	if (!line[i])
+		return (-1);
+	len++;
+	return (len);
+}
+
+int	strin_len(char *line)
+{
+	int	i;
+	int len;
+
+	i = 0;
+	len = 0;
+	if (line[i] == '$')
 	{
 		i++;
 		len++;
@@ -60,10 +56,36 @@ int word_len(char *line)
 		while (line[i] && !is_seperator(line[i]) && line[i] != '$'
 			&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ')
 		{
+		i++;
+		len++;
+		}
+	}
+	return (len);
+}
+
+int word_len(char *line)
+{
+	int		i;
+	int		len;
+	char	c;
+
+	i = 0;
+	len = 0;
+	if (line[i] == '\'' || line[i] == '\"')
+		return (quote_len(line));
+	if (is_seperator(line[i]))
+	{
+		len++;
+		c = line[i];
+		i++;
+		while (line[i] == c)
+		{
 			i++;
 			len++;
 		}
 	}
+	else
+		return (strin_len(line));
 	return (len);
 }
 
@@ -80,7 +102,7 @@ void	remove_q(t_token **lst)
 	{
 		if (tmp->type == single_quote || tmp->type == double_quote)
 		{
-			char *str = tmp->content;
+			str = tmp->content;
 			tmp->content = ft_substr(str, 1, ft_strlen(str) - 2);
 			free(str);
 		}
