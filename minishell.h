@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/05 06:43:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/07 10:14:32 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef enum s_type
 //command table
 typedef struct s_cmd_tab
 {
-	char	**cmd;
-	char	*arg;
+	char		**cmd;
+	char		*arg;
 	char		*in;
 	char		*out;
 	bool		heredoc;

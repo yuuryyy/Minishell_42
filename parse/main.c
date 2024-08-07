@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/05 06:45:11 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/07 11:21:44 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // }
 
 
-// errno = 0;
+errno = 0;
 
 int main(int ac, char **av, char **env)
 {
@@ -39,6 +39,17 @@ int main(int ac, char **av, char **env)
 	if (!syntax_check(&cmd_line))
 		exit (1);
 	command_table(&cmd_line);
+	// printf("arg = %s\n", cmd_line.table->arg);
+	t_cmd_tab *tab = cmd_line.table;
+		while (tab)
+	{
+		printf("------\narg====%s\n", tab->arg);
+		printf("------\nappend====%s\n", tab->append);
+		printf("------\nlimi====%s\n", tab->delimiter);
+		printf("infile====%s\n", tab->in);
+		printf("outfile====%s\n", tab->out);
+		tab = tab->next;
+	}
 	// t_token *tmp2 = cmd_line.tokens;
 	// while (tmp2)
 	// {
@@ -48,6 +59,6 @@ int main(int ac, char **av, char **env)
 	// 	tmp2 = tmp2->next;
 	// }
 	free_struct(&cmd_line);
-	// char *cmd[] = {"cat","Makefile",  NULL};
-	// execve("/usr/bin/cat", cmd, NULL);
+	// char *cmd[] = {"echo","hello    world","wiliii",  NULL};
+	// execve("/usr/bin/echo", cmd, NULL);
 }

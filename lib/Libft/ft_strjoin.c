@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:01:58 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/05 07:10:06 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/07 11:26:51 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ char	*ft_strjoin2(char *s1, char *s2)
 	int		i;
 	int		j;
 
-		printf("dfdgdfgdfgdfg\n");
-	fprintf(stderr,"s1 === %s\n", s1);
 	if (!s1)
 		s1 = ft_strdup("");
 	i = 0;
