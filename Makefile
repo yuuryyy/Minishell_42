@@ -3,18 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
+#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/08/07 11:23:05 by youssra          ###   ########.fr        #
+#    Updated: 2024/08/08 00:15:21 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -fsanitize=address 
-#-Werror
+CFLAGS		=	-g -Wall -Wextra -Werror -fsanitize=address
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
 
@@ -30,6 +29,8 @@ SRCS		=	parse/main.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \
 				parse/lexical_analyzer/parser.c \
+				parse/lexical_analyzer/parsing_process.c \
+
 
 OBJS		= $(SRCS:.c=.o)
 

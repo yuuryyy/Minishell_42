@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/03 16:28:53 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/08 00:35:13 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,11 @@ int	words_list(char	*line, t_args *cmd_line)
 	t_type type;
 	int		i;
 
-	word = NULL;
 	while (1)
 	{
 		i = 0;
 		word = get_word(&line, cmd_line);
-		if (errno == EXIT_FAILURE)
+		if (g_errno == EXIT_FAILURE)
 			return (0);
 		if (!word || !*word)
 			break;
@@ -121,7 +120,5 @@ int	words_list(char	*line, t_args *cmd_line)
 	}
 	if (word)
 		free (word);
-	remove_q(&cmd_line->tokens);
-	expand_var(&cmd_line);
 	return (1);
 }

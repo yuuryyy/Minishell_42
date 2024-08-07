@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/07 10:14:32 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/08 00:07:34 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lib/Libft/libft.h"
-#include <stdbool.h>
-
+# include <stdbool.h>
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
 
-extern int 	errno;
+extern int	g_errno;
 
 typedef enum s_type
 {
@@ -42,22 +41,22 @@ typedef enum s_type
 //command table
 typedef struct s_cmd_tab
 {
-	char		**cmd;
-	char		*arg;
-	char		*in;
-	char		*out;
-	bool		heredoc;
-	char		*append;
-	char	*delimiter;
+	char				**cmd;
+	char				*arg;
+	char				*in;
+	char				*out;
+	bool				heredoc;
+	char				*append;
+	char				*delimiter;
 	struct s_cmd_tab	*next;
 }	t_cmd_tab;
 
 //tokens
 typedef struct s_token
 {
-	void	*content;
-	t_type		type;
-	bool		space;
+	void			*content;
+	t_type			type;
+	bool			space;
 	struct s_token	*next;
 }	t_token;
 
@@ -73,7 +72,8 @@ typedef struct s_args
 }	t_args;
 
 void	environment(char **envp, t_args *args);
-int 	is_seperator(char c);
+int		is_seperator(char c);
+int	process_line(t_args *cmdline);
 
 void	command_table(t_args *cmdline);
 void	free_struct(t_args *cmd_line);
@@ -83,12 +83,11 @@ void	free_table(t_cmd_tab **table);
 
 void	syntax_error(t_args *cmd_line);
 
-int 	word_len(char *line);
-int 	words_list(char	*line, t_args *cmd_line);
+int		word_len(char *line);
+int		words_list(char	*line, t_args *cmd_line);
 void	expand_var(t_args **cmd_line);
 void	remove_q(t_token **lst);
 
 bool	syntax_check(t_args *cmdline);
-
 
 #endif

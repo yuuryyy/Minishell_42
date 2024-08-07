@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/07 17:41:30 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/08 00:25:45 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	parser(t_token	*current, t_cmd_tab *new)
 
 void	command_table(t_args *cmdline)
 {
-	t_token	*current;
-	t_token	*next;
+	t_token		*current;
+	t_token		*next;
 	t_cmd_tab	*new;
 
 	current = cmdline->tokens;
@@ -106,33 +106,42 @@ void	command_table(t_args *cmdline)
 			{
 				if (current->type == redin)
 				{
-					while (next && next->type >= 6 && next->space == 0)
+					while (next && next->type >= 6)
 					{
 						new->in = ft_strjoin2(new->in, next->content);
+						if (next->space)
+							break ;
 						next = next->next;
+						printf("<<%s>>\n", next->content);
 					}
 				}
 				else if (current->type == redout)
 				{
-					while (next && next->type >= 6 && next->space == 0)
+					while (next && next->type >= 6)
 					{
 						new->out = ft_strjoin2(new->out, next->content);
+						if (next->space)
+							break ;
 						next = next->next;
 					}
 				}
 				else if (current->type == append)
 				{
-					while (next && next->type >= 6 && next->space == 0)
+					while (next && next->type >= 6)
 					{
 						new->append = ft_strjoin2(new->append, next->content);
+						if (next->space)
+							break ;
 						next = next->next;
 					}
 				}
 				else if (current->type == heredoc)
 				{
-					while (next && next->type >= 6 && next->space == 0)
+					while (next && next->type >= 6)
 					{
 						new->delimiter= ft_strjoin2(new->delimiter, next->content);
+						if (next->space)
+							break ;
 						next = next->next;
 					}
 					new->heredoc = true;
@@ -150,5 +159,4 @@ void	command_table(t_args *cmdline)
 			break ;
 		current = current->next;
 	}
-	// free_tokens(&cmdline->tokens);
 }

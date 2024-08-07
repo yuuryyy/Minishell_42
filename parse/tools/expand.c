@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/05 05:49:50 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/07 23:18:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	norm(char **word)
 
 char	*expand(char *word, t_type type)
 {
-	
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
 	if (type == string)
@@ -76,7 +75,16 @@ void	expand_var(t_args **cmd_line)
 	while (tmp)
 	{
 		if(tmp->type == string || tmp->type == double_quote)
+		{
+			if (tmp->type == string && ft_strchr(tmp->content, '$')
+				&& ft_strlen(tmp->content) == 1 && tmp->space == 0
+				&& tmp->next && tmp->next->type >= 7)
+				{
+					free(tmp->content);
+					tmp->content = NULL;
+				}
 			tmp->content = expand(tmp->content, tmp->type);
+		}
 		tmp = tmp->next;
 	}
 }
