@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 01:43:45 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 17:25:10 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*new_token(char *content, int type)
 	t_token	*token;
 
 	if (!content)
-		return NULL;
+		return (NULL);
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -37,7 +37,7 @@ char	*get_word(char **line, t_args *cmd_line)
 
 	i = 0;
 	if (!*line || !line || !**line)
-		return(NULL);
+		return (NULL);
 	tmp = *line;
 	while (tmp[i] && tmp[i] == ' ')
 		i++;
@@ -78,7 +78,7 @@ void	tokenadd_back(t_token	**token, t_token	*new)
 	t_token	*tmp;
 
 	if (!new || !token)
-		return;
+		return ;
 	if (*token == NULL)
 	{
 		*token = new;
@@ -98,7 +98,7 @@ int	words_list(char	*line, t_args *cmd_line)
 {
 	char	*word;
 	t_token	*lst;
-	t_type type;
+	t_type 	type;
 	int		i;
 
 	while (1)

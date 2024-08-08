@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 02:13:07 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 17:04:39 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	process_line(t_args *cmdline)
 {
 	char	*tmp;
 
+	if (!tmp)
+		return(g_errno = 130);
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)
 		return (g_errno = EXIT_SUCCESS);

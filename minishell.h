@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/08 01:33:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:59:31 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lib/Libft/libft.h"
@@ -73,8 +74,9 @@ typedef struct s_args
 
 void	environment(char **envp, t_args *args);
 int		is_seperator(char c);
-int	process_line(t_args *cmdline);
+int		process_line(t_args *cmdline);
 
+void	free_current_cmdline(t_args *cmdline);
 void	command_table(t_args *cmdline);
 void	free_struct(t_args *cmd_line);
 void	free_array(char	**str);

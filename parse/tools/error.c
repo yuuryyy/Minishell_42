@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/07 23:55:32 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:42:46 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ bool	syntax_check(t_args *cmdline)
 		current = current->next;
 	}
 	return (true);
+}
+
+void	free_current_cmdline(t_args *cmdline)
+{
+	free(cmdline->line);
+	cmdline->line = NULL;
+	free_table(&cmdline->table);
+	cmdline->table = NULL;
+	free_tokens(&cmdline->tokens);
+	cmdline->tokens = NULL;
 }

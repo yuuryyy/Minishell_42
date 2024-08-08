@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 02:49:20 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 17:02:22 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	s()
 {
 	system("leaks minishell");
+}
+
+void	sig_handler(int signal)
+{
+	printf("\n\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
 }
 
 
@@ -26,6 +31,7 @@ int main(int ac, char **av, char **env)
 
 	// atexit(s);
 	(void)ac; (void)av;
+	signal(SIGINT, sig_handler);
 	ft_bzero(&cmd_line, sizeof(t_args));
 	environment(env, &cmd_line);
 	while (42)
@@ -34,9 +40,8 @@ int main(int ac, char **av, char **env)
 		if (cmd_line.line && *cmd_line.line)
 			add_history(cmd_line.line);
 		process_line(&cmd_line);
-		free(cmd_line.line);
-		free_table(&cmd_line.table);
-		free_tokens(&cmd_line.tokens);
+		//execution;
+		free_current_cmdline(&cmd_line);
 	}
 	free_struct(&cmd_line);
 	// char *cmd[] = {"ECHO","hello    world","wiliii",  NULL};

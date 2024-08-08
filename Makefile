@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
+#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/08/08 00:15:21 by ychagri          ###   ########.fr        #
+#    Updated: 2024/08/08 16:33:01 by youssra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra  -fsanitize=address
+#-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
 

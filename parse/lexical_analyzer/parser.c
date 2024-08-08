@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 00:39:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 17:24:04 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_cmd_tab	*new_tab()
+t_cmd_tab	*new_tab(void)
 {
 	t_cmd_tab	*new;
 
@@ -42,6 +42,15 @@ void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
 	prev->next = new;
 }
 
+char	*handle_string(t_token *current, char *new)
+{
+	char	*arg;
+
+	arg = ft_strjoin2(new, current->content);
+	if (current->space)
+		arg = ft_strjoin2(arg, "\n");
+	return (arg);
+}
 
 void	command_table(t_args *cmdline)
 {
@@ -57,11 +66,7 @@ void	command_table(t_args *cmdline)
 		{
 			next = current->next;
 			if (current->type >= 6)
-			{
-				new->arg = ft_strjoin2(new->arg, current->content);
-				if (current && current->space)
-					new->arg = ft_strjoin2(new->arg, "\n");
-			}
+				new->arg = handle_string(current, new->arg);
 			else
 			{
 				if (current->type == redin)
