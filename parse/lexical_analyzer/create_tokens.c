@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 00:35:13 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 01:43:45 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_word(char **line, t_args *cmd_line)
 	start = i;
 	len = word_len(tmp + i);
 	if (len == -1)
-		return (syntax_error(cmd_line), NULL);
+		return (syntax_error(cmd_line), ft_strdup("\'"));
 	word = ft_substr(tmp, start, (size_t)len);
 	*line = *line + len + i;
 	return (word);
@@ -105,7 +105,7 @@ int	words_list(char	*line, t_args *cmd_line)
 	{
 		i = 0;
 		word = get_word(&line, cmd_line);
-		if (g_errno == EXIT_FAILURE)
+		if (word && *word == '\'')
 			return (0);
 		if (!word || !*word)
 			break;
