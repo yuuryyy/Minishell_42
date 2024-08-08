@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 00:25:45 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 00:39:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,46 +42,6 @@ void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
 	prev->next = new;
 }
 
-void	parser(t_token	*current, t_cmd_tab *new)
-{
-	t_token	*next;
-
-	next = current->next;
-	if (current->type >= 6)
-	{
-		new->arg = ft_strjoin2(new->arg, current->content);
-		if (current->space)
-			new->arg = ft_strjoin2(new->arg, "\n");
-	}
-	else
-	{
-		if (current->type == redin)
-			new->in = next->content;
-		else if (current->type == redout)
-			new->out = next->content;
-		else if (current->type == append)
-			new->append = next->content;
-		else if (current->type == heredoc)
-		{
-			new->delimiter = next->content;
-			new->heredoc = true;
-		}
-		current = current->next;
-	}
-}
-
-// char	*full_string(t_token *current)
-// {
-// 	char	*string;
-// 	char	*tmp;
-
-// 	while (current && current->type >= 6 && current->space == 0)
-// 	{
-// 		string = ft_strjoin2(string, current->content);
-// 		current = current->next;
-// 	}
-// 	return (string);
-// }
 
 void	command_table(t_args *cmdline)
 {
@@ -112,7 +72,6 @@ void	command_table(t_args *cmdline)
 						if (next->space)
 							break ;
 						next = next->next;
-						printf("<<%s>>\n", next->content);
 					}
 				}
 				else if (current->type == redout)

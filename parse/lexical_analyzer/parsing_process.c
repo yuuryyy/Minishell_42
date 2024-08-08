@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 00:28:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/08 00:55:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int	process_line(t_args *cmdline)
 		return (g_errno);
 	expand_var(&cmdline);
 	command_table(cmdline);
-	return (0);
+	return (g_errno = EXIT_SUCCESS);
 }
