@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/08 16:59:31 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/08 23:47:30 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lib/Libft/libft.h"
 # include <stdbool.h>
+# include <termios.h>
+# include <signal.h>
+# include <stdio.h>
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1

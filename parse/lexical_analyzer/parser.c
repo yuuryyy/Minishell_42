@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 17:24:04 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/09 02:55:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,18 @@ char	*handle_string(t_token *current, char *new)
 	return (arg);
 }
 
+t_token	*handle_tokens(t_token *current, char **str)
+{
+	while(current && current->type >= 6)
+	{
+		*str = ft_strjoin2(*str, current->content);
+		if (current->space)
+			break ;
+		current = current->next;
+	}
+	return (current);
+}
+
 void	command_table(t_args *cmdline)
 {
 	t_token		*current;
@@ -71,13 +83,8 @@ void	command_table(t_args *cmdline)
 			{
 				if (current->type == redin)
 				{
-					while (next && next->type >= 6)
-					{
-						new->in = ft_strjoin2(new->in, next->content);
-						if (next->space)
-							break ;
-						next = next->next;
-					}
+					new->heredoc = false;
+					next = handle_tokens(next, &new->in);
 				}
 				else if (current->type == redout)
 				{
