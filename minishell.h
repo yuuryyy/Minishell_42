@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/08 23:47:30 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/11 02:08:24 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ extern int	g_errno;
 
 typedef enum s_type
 {
-	piipe = 1,
 	redin = 2,
 	redout = 3,
 	heredoc = 4,
-	append = 5,
+	append = 1,
+	piipe = 5,
 	string = 6,
 	single_quote = 7,
 	double_quote = 8,
@@ -73,24 +73,27 @@ typedef struct s_args
 	int			cmd_num;
 }	t_args;
 
-void	environment(char **envp, t_args *args);
-int		is_seperator(char c);
-int		process_line(t_args *cmdline);
+void		environment(char **envp, t_args *args);
+int			is_seperator(char c);
+int			process_line(t_args *cmdline);
 
-void	free_current_cmdline(t_args *cmdline);
-void	command_table(t_args *cmdline);
-void	free_struct(t_args *cmd_line);
-void	free_array(char	**str);
-void	free_tokens(t_token **lst);
-void	free_table(t_cmd_tab **table);
+void		free_current_cmdline(t_args *cmdline);
+void		command_table(t_args *cmdline);
+void		free_struct(t_args *cmd_line);
+void		free_array(char	**str);
+void		free_tokens(t_token **lst);
+void		free_table(t_cmd_tab **table);
 
-void	syntax_error(t_args *cmd_line);
+void		syntax_error(t_args *cmd_line);
 
-int		word_len(char *line);
-int		words_list(char	*line, t_args *cmd_line);
-void	expand_var(t_args **cmd_line);
-void	remove_q(t_token **lst);
+int			word_len(char *line);
+int			words_list(char	*line, t_args *cmd_line);
+void		expand_var(t_args **cmd_line);
+void		remove_q(t_token **lst);
 
-bool	syntax_check(t_args *cmdline);
+bool		syntax_check(t_args *cmdline);
+
+t_cmd_tab	*new_tab(void);
+void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 
 #endif

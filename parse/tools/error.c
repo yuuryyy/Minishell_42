@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/09 02:00:32 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/11 01:16:59 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,18 @@ bool	syntax_check(t_args *cmdline)
 	while (current)
 	{
 		next = current->next;
-		if (current->type == redout && next && next->type == piipe && current->space == false)
+		if (current->type == redout && current->next
+			&& current->next->type == piipe && current->space == false)
 		{
 			current->next = next->next;
 			free (next->content);
 			free(next);
 			next = current->next;
 		}
-		if (((current->type == redout || current->type == heredoc)
-			&& (!next || next->type < string))
+		if ((current->type < 5 && (!next || next->type < string))
 			|| (current->type == piipe && (current == cmdline->tokens
-			|| !next || next ->type == piipe)) ||  ((current->type == redin
-			|| current->type == append) && (!next || next ->type < 6)))
-				return (syntax_error(cmdline), false);
+					|| !next || next->type < string)))
+			return (syntax_error(cmdline), false);
 		if (current->type == piipe)
 			cmdline->cmd_num++;
 		current = current->next;

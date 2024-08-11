@@ -6,19 +6,47 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/09 01:38:29 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/10 23:30:28 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+t_cmd_tab	*new_tab(void)
+{
+	t_cmd_tab	*new;
+
+	new = malloc(sizeof(t_cmd_tab));
+	if (!new)
+		return (NULL);
+	ft_bzero(new, sizeof(t_cmd_tab));
+	return (new);
+}
+
+void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
+{
+	t_cmd_tab	*tmp;
+	t_cmd_tab	*prev;
+
+	tmp = *head;
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	while (tmp)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	prev->next = new;
+}
 
 int	process_line(t_args *cmdline)
 {
 	char		*tmp;
 	t_cmd_tab	*tab;
 
-	// if (!tmp)
-	// 	return(g_errno = 130);
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)
 		return (g_errno = EXIT_SUCCESS);
@@ -40,4 +68,3 @@ int	process_line(t_args *cmdline)
 	}
 	return (g_errno = EXIT_SUCCESS);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 17:25:10 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/10 23:28:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	tokenadd_back(t_token	**token, t_token	*new)
 	}
 	tmp = *token;
 	ptr = tmp;
-	while (tmp!= NULL)
+	while (tmp != NULL)
 	{
 		ptr = tmp;
 		tmp = (tmp)->next;
@@ -98,7 +98,7 @@ int	words_list(char	*line, t_args *cmd_line)
 {
 	char	*word;
 	t_token	*lst;
-	t_type 	type;
+	t_type	type;
 	int		i;
 
 	while (1)
@@ -108,7 +108,7 @@ int	words_list(char	*line, t_args *cmd_line)
 		if (word && *word == '\'')
 			return (0);
 		if (!word || !*word)
-			break;
+			break ;
 		type = get_type(word, cmd_line);
 		if (type == 0)
 			return (free(word), 0);

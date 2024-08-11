@@ -6,13 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/07/27 02:16:25 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/10 23:31:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int is_seperator(char c)
+int	is_seperator(char c)
 {
 	return (c == '|' || c == '<' || c == '>' );
 }
@@ -29,7 +29,7 @@ void	environment(char **envp, t_args *cmd_line)
 	pathh = ft_split(str, ':');
 	prev = NULL;
 	cmd_line->path = pathh;
-	i  = 0;
+	i = 0;
 	while (envp[i])
 	{
 		node = ft_lstnew(envp[i]);
@@ -39,4 +39,3 @@ void	environment(char **envp, t_args *cmd_line)
 		i++;
 	}
 }
-

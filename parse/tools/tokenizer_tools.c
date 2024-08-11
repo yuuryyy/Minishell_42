@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/02 07:17:26 by youssra          ###   ########.fr       */
+/*   Updated: 2024/08/11 02:07:28 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	quote_len(char *line)
 {
-	int 	i;
+	int		i;
 	char	c;
 	int		len;
 
@@ -23,7 +23,7 @@ int	quote_len(char *line)
 	c = line[i];
 	i++;
 	len++;
-	while(line[i] && line[i] != c)
+	while (line[i] && line[i] != c)
 	{
 		i++;
 		len++;
@@ -37,7 +37,7 @@ int	quote_len(char *line)
 int	strin_len(char *line)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	len = 0;
@@ -56,14 +56,14 @@ int	strin_len(char *line)
 		while (line[i] && !is_seperator(line[i]) && line[i] != '$'
 			&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ')
 		{
-		i++;
-		len++;
+			i++;
+			len++;
 		}
 	}
 	return (len);
 }
 
-int word_len(char *line)
+int	word_len(char *line)
 {
 	int		i;
 	int		len;
