@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/08 00:32:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/22 02:03:53 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_table(t_cmd_tab **table)
 	if (tmp->cmd)
 		free_array(tmp->cmd);
 	if (tmp->delimiter)
-		free(tmp->delimiter);
+		ft_lstclear(&tmp->delimiter, del);
 	if (tmp->in)
 		free(tmp->in);
 	if (tmp->out)

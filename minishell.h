@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/11 02:08:24 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/22 02:17:20 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ typedef struct s_cmd_tab
 	char				*in;
 	char				*out;
 	bool				heredoc;
+	int					fd_heredoc;
 	char				*append;
-	char				*delimiter;
+	t_list				*delimiter;
 	struct s_cmd_tab	*next;
 }	t_cmd_tab;
 
@@ -76,6 +77,7 @@ typedef struct s_args
 void		environment(char **envp, t_args *args);
 int			is_seperator(char c);
 int			process_line(t_args *cmdline);
+int			ft_heredoc(t_cmd_tab **cmds);
 
 void		free_current_cmdline(t_args *cmdline);
 void		command_table(t_args *cmdline);

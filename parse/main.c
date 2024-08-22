@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/10 22:20:48 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/22 03:12:59 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int main(int ac, char **av, char **env)
 	t_args	cmd_line;
 
 	// atexit(s);
-	(void)ac; (void)av;
+	(void)ac;
+	(void)av;
 	// signal(SIGINT, sig_handler);
 	
 	ft_bzero(&cmd_line, sizeof(t_args));
@@ -53,7 +54,11 @@ int main(int ac, char **av, char **env)
 			}
 			printf("arg====%s\n", tab->arg);
 			printf("append====%s\n", tab->append);
-			printf("limi====%s\n", tab->delimiter);
+			while (tab->delimiter)
+			{
+				printf("limi====%s\n",tab->delimiter->content );
+				tab->delimiter = tab->delimiter->next;
+			}
 			printf("infile====%s\n", tab->in);
 			printf("outfile====%s\n", tab->out);
 			printf("herecod====%d\n\n", tab->heredoc);

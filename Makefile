@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
+#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/08/08 16:33:01 by youssra          ###   ########.fr        #
+#    Updated: 2024/08/22 02:17:36 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS		=	parse/main.c \
 				parse/tools/error.c \
 				parse/tools/freeing.c \
 				parse/tools/expand.c \
+				parse/tools/heredoc.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \
 				parse/lexical_analyzer/parser.c \

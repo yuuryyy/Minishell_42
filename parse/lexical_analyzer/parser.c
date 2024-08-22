@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/10 23:29:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/22 03:15:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ t_token	*handle_tokens(t_token **current, char **str)
 	return (tmp);
 }
 
+t_token	*handle_limiters(t_token **current, t_list **limiter)
+{
+	t_token	*tmp;
+	char	*str;
+	t_list	*new;
+
+	tmp = *current;
+	str = NULL;
+	while (tmp && tmp->type >= 6)
+	{
+		str = ft_strjoin2(str, tmp->content);
+		if (tmp->space)
+			break ;
+		tmp = tmp->next;
+	}
+	new = ft_lstnew(str);
+	ft_lstadd_back(limiter, new);
+	return (tmp);
+}
+
 t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 {
 	if (current->type >= 6)
@@ -54,7 +74,7 @@ t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 			current = handle_tokens(&current->next, &new->append);
 		else if (current->type == heredoc)
 		{
-			current = handle_tokens(&current->next, &new->delimiter);
+			current = handle_limiters(&current->next, &new->delimiter);
 			new->heredoc = true;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/10 23:30:28 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/08/22 03:10:39 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int	process_line(t_args *cmdline)
 		tab->arg = NULL;
 		tab = tab->next;
 	}
+	ft_heredoc(&cmdline->table);
 	return (g_errno = EXIT_SUCCESS);
 }
