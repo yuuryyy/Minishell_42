@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/11 01:17:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/02 22:17:14 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,41 +27,67 @@ char	*expand_string(char *word)
 	return (word);
 }
 
-void	norm(char **word)
+int	index_ds(char *str)
 {
-	char	*befor_dolla;
-	char	*final;
-	char	*tmp;
-	size_t	len;
-	int		i;
+	int	i;
 
 	i = 0;
-	befor_dolla = ft_strdup(*word);
-	while (befor_dolla[i] && befor_dolla[i] != '$')
+	while (str[i])
+	{
+		if (str[i] == '$' && (str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_')))
+			return (i);
 		i++;
-	befor_dolla[i] = 0;
-	len = word_len(*word + i);
-	tmp = ft_substr(*word, i, len);
-	if (!getenv(tmp + 1))
-		final = ft_strjoin(befor_dolla, *word + i + len);
+	}
+	return (-1);
+}
+
+void	expand_quotes(char **word, int index)
+{
+	char	*befor_dolla;
+	char	*tmp;
+	char	*after_dolla;
+	char	*var;
+	size_t	len;
+
+	befor_dolla = NULL;
+	tmp = NULL;
+	befor_dolla = ft_strdup(*word);
+	befor_dolla[index] = 0;
+	len = word_len(*word + index);
+	var = ft_substr(*word, index, len);
+	after_dolla = ft_strdup(*word + index + len);
+	free(*word);
+	if (!getenv(var + 1))
+		*word = ft_strjoin(befor_dolla, after_dolla);
 	else
 	{
-		final = ft_strjoin(befor_dolla, getenv(tmp + 1));
-		*word = ft_strjoin(final, *word + i + len);
+		tmp = ft_strjoin(befor_dolla, getenv(var + 1));
+		*word = ft_strjoin(tmp, after_dolla);
+		free(tmp);
 	}
-	free(tmp);
+	free(var);
 	free(befor_dolla);
-	free(final);
+	free(after_dolla);
 }
 
 char	*expand(char *word, t_type type)
 {
+	int 	index;
+
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
 	if (type == string)
 		word = expand_string(word);
 	else
-		norm(&word);
+	{
+		index = index_ds(word);
+			printf("%d\n", index);
+		while (index != -1)
+		{
+			expand_quotes(&word, index);
+			index = index_ds(word);
+		}
+	}
 	return (word);
 }
 
