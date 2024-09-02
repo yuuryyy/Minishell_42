@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/02 22:22:46 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/02 22:38:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	read_line(char *limiter, int *fd, int flag)
 		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
 			break ;
 		if (flag)
+		{
 			write (fd[1], buffer, ft_strlen(buffer));
+			close(fd[1]);	
+		}
 		free(buffer);
 	}
 	free(buffer);
@@ -51,7 +54,6 @@ int	ft_heredoc(t_cmd_tab **cmds)
 					read_line(tmp->content, fd, 0);
 				tmp = tmp->next;
 			}
-			close(fd[1]);
 			cmdtable->fd_heredoc = fd[0];
 		}
 		cmdtable = cmdtable->next;
