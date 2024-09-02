@@ -6,13 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/22 03:39:49 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/02 22:22:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	read_line(char *limiter, int *fd)
+void	read_line(char *limiter, int *fd, int flag)
 {
 	char	*buffer;
 
@@ -21,7 +21,8 @@ void	read_line(char *limiter, int *fd)
 		buffer = readline("heredoc> ");
 		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
 			break ;
-		write (fd[1], buffer, ft_strlen(buffer));
+		if (flag)
+			write (fd[1], buffer, ft_strlen(buffer));
 		free(buffer);
 	}
 	free(buffer);
@@ -44,7 +45,10 @@ int	ft_heredoc(t_cmd_tab **cmds)
 			tmp = cmdtable->delimiter;
 			while (tmp)
 			{
-				read_line(tmp->content, fd);
+				if (tmp->next == NULL)
+					read_line(tmp->content, fd, 1);
+				else
+					read_line(tmp->content, fd, 0);
 				tmp = tmp->next;
 			}
 			close(fd[1]);

@@ -6,14 +6,15 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/08/22 02:17:36 by ychagri          ###   ########.fr        #
+#    Updated: 2024/09/02 22:20:03 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra  -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra  
+#-fsanitize=address
 #-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
