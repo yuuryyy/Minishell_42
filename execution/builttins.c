@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/09/13 22:20:11 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/09/14 04:15:37 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,21 @@ int ft_export(t_args *args, char **cmd)
         i++;
     }
     return (1);
+}
+
+int ft_exit(t_args *args, char **cmd)
+{
+    int exit_status;
+
+    if (!cmd[1] || !ft_isdigit(cmd[1]))
+    {
+        exit_status = 0;
+    }
+    else
+    {
+        exit_status = ft_atoi(cmd[1]);
+    }
+    free(args);
+    exit(exit_status);
+    return (0); 
 }
