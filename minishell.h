@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/08/22 02:17:20 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/14 04:29:59 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,12 @@ bool		syntax_check(t_args *cmdline);
 
 t_cmd_tab	*new_tab(void);
 void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
+
+// builtins
+int ft_echo(t_args *args, char **cmd);
+int ft_cd(t_args *args, char **cmd);
+int ft_pwd(t_args *args, char **cmd);
+int ft_export(t_args *args, char **cmd);
+int ft_exit(t_args *args, char **cmd);
 
 #endif
