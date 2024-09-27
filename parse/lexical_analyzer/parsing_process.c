@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/22 03:10:39 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/26 19:55:38 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	process_line(t_args *cmdline)
 
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)
-		return (g_errno = EXIT_SUCCESS);
+		return (g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
 		return (free(tmp), g_errno);
 	free(tmp);
@@ -57,7 +57,9 @@ int	process_line(t_args *cmdline)
 	if (!syntax_check(cmdline))
 		return (g_errno);
 	expand_var(&cmdline);
+	// fprintf(stderr, "heeere i am \n");
 	command_table(cmdline);
+	// printf("heere\n");
 	tab = cmdline->table;
 	while (tab)
 	{
@@ -67,5 +69,5 @@ int	process_line(t_args *cmdline)
 		tab = tab->next;
 	}
 	ft_heredoc(&cmdline->table);
-	return (g_errno = EXIT_SUCCESS);
+	return (0);
 }

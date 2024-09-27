@@ -6,13 +6,47 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/02 22:38:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/22 00:08:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	read_line(char *limiter, int *fd, int flag)
+t_lim	*new_lim(char *content, bool quote)
+{
+	t_lim	*new;
+
+	new = malloc(sizeof(t_lim));
+	new->content = content;
+	new->quoted = quote;
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_limadd_back(t_lim **lst, t_lim *new)
+{
+	t_lim	*ptr;
+	t_lim	*tmp;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp)
+	{
+		if (tmp->next == NULL)
+			ptr = tmp;
+		tmp = tmp->next;
+	}
+	ptr->next = new;
+}
+
+
+void	read_line(char *limiter, int *fd, int flag, bool quote)
 {
 	char	*buffer;
 
@@ -23,8 +57,10 @@ void	read_line(char *limiter, int *fd, int flag)
 			break ;
 		if (flag)
 		{
+			if (quote == true)
+				buffer = expand(buffer, double_quote);
 			write (fd[1], buffer, ft_strlen(buffer));
-			close(fd[1]);	
+			close(fd[1]);
 		}
 		free(buffer);
 	}
@@ -34,7 +70,7 @@ void	read_line(char *limiter, int *fd, int flag)
 int	ft_heredoc(t_cmd_tab **cmds)
 {
 	t_cmd_tab	*cmdtable;
-	t_list		*tmp;
+	t_lim		*tmp;
 	int			fd[2];
 
 	cmdtable = *cmds;
@@ -49,9 +85,14 @@ int	ft_heredoc(t_cmd_tab **cmds)
 			while (tmp)
 			{
 				if (tmp->next == NULL)
-					read_line(tmp->content, fd, 1);
+				{
+					if (tmp->quoted == true)
+						read_line(tmp->content, fd, 1, true);
+					else
+						read_line(tmp->content, fd, 1, false);
+				}
 				else
-					read_line(tmp->content, fd, 0);
+					read_line(tmp->content, fd, 0, false);
 				tmp = tmp->next;
 			}
 			cmdtable->fd_heredoc = fd[0];

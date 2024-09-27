@@ -6,15 +6,19 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/11 01:16:59 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/27 21:57:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	syntax_error(t_args *cmd_line)
+void	put_error(t_args *cmd_line, char *msg, char *name)
 {
-	ft_putstr_fd("minionshell: \033[31msyntax error\033[0m\n", 2);
+	ft_putstr_fd("minionshell :"RED, 2);
+	ft_putstr_fd(msg, 2);
+	if (name)
+		ft_putstr_fd(name, 2);
+	ft_putstr_fd("\n"RESET, 2);
 	free(cmd_line->line);
 	cmd_line->line = NULL;
 	if (cmd_line->tokens)
@@ -44,7 +48,7 @@ bool	syntax_check(t_args *cmdline)
 		if ((current->type < 5 && (!next || next->type < string))
 			|| (current->type == piipe && (current == cmdline->tokens
 					|| !next || next->type < string)))
-			return (syntax_error(cmdline), false);
+			return (put_error(cmdline, SYNTAX, NULL), false);
 		if (current->type == piipe)
 			cmdline->cmd_num++;
 		current = current->next;

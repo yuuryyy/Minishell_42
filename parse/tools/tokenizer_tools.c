@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/08/11 02:07:28 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/22 02:35:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	word_len(char *line)
 			len++;
 		}
 	}
+	else if (line[i] == '$' && line[i + 1] == '?')
+		return (2);
 	else
 		return (strin_len(line));
 	return (len);

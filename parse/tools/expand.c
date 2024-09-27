@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/02 22:17:14 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/22 02:48:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	index_ds(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && (str[i + 1] && (ft_isalnum(str[i + 1]) || str[i + 1] == '_')))
+		if (str[i] == '$' && (str[i + 1] && (ft_isalnum(str[i + 1]) 
+			|| str[i + 1] == '_' || str[i + 1] == '?')))
 			return (i);
 		i++;
 	}
@@ -57,7 +58,13 @@ void	expand_quotes(char **word, int index)
 	var = ft_substr(*word, index, len);
 	after_dolla = ft_strdup(*word + index + len);
 	free(*word);
-	if (!getenv(var + 1))
+	if (var && var[1] == '?')
+	{
+		var = ft_itoa(g_errno);
+		tmp = ft_strjoin(befor_dolla, var);
+		*word = ft_strjoin(tmp, after_dolla);
+	}
+	else if (!getenv(var + 1))
 		*word = ft_strjoin(befor_dolla, after_dolla);
 	else
 	{
@@ -76,12 +83,16 @@ char	*expand(char *word, t_type type)
 
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
-	if (type == string)
+	if (word[0] == '$' && word[1] == '?')
+	{
+		free(word);
+		word = ft_itoa(g_errno);
+	}
+	else if (type == string)
 		word = expand_string(word);
 	else
 	{
 		index = index_ds(word);
-			printf("%d\n", index);
 		while (index != -1)
 		{
 			expand_quotes(&word, index);
@@ -100,7 +111,13 @@ void	expand_var(t_args **cmd_line)
 	tmp = (*cmd_line)->tokens;
 	while (tmp)
 	{
-		if (tmp->type == string || tmp->type == double_quote)
+		if (tmp->type == heredoc)
+		{
+			tmp = tmp->next;
+			while (tmp && tmp->type >= string && tmp->space == 0)
+				tmp = tmp->next;
+		}
+		if (tmp && (tmp->type == string || tmp->type == double_quote))
 		{
 			if (tmp->type == string && ft_strchr(tmp->content, '$')
 				&& ft_strlen(tmp->content) == 1 && tmp->space == 0
@@ -111,6 +128,7 @@ void	expand_var(t_args **cmd_line)
 			}
 			tmp->content = expand(tmp->content, tmp->type);
 		}
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 	}
 }

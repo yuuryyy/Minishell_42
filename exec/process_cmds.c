@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   process_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 11:59:28 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/26 21:13:59 by ychagri          ###   ########.fr       */
+/*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
+/*   Updated: 2024/09/26 19:54:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strchr(const char *s, int c)
+
+// int	single_command()
+
+int	execute_cmds(t_args *args)
 {
-	int	i;
+	t_cmd_tab	*table;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i])
+	table = args->table;
+	if (table->next == NULL)
 	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		i++;
+		if (single_cmd(table))
+			return (1);
 	}
-	if (!(char)c == !s[i])
-		return ((char *)(s + i));
 	return (0);
 }
