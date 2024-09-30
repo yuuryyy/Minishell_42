@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/30 04:21:55 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/09/30 04:24:41 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int main(int ac, char **av, char **env)
             {
                 if (exec_builtin(&cmd_line, tab) == 0)
                 {
-                    single_cmd(tab);  // Si ce n'est pas un builtin, essayez d'exécuter une commande normale
+                    single_cmd(tab); 
                 }
             }
             tab = tab->next;
@@ -81,5 +81,5 @@ int main(int ac, char **av, char **env)
     }
     
     free_struct(&cmd_line);
-    return 0;  // Ajout d'un retour de statut à la fin
+    return 0;
 }
