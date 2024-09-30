@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/09/30 04:08:30 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/09/30 04:18:26 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 void		ft_limadd_back(t_lim **lst, t_lim *new);
 
 // builtins
-void exec_builtin(t_args *args, t_cmd_tab *cmd);
+int exec_builtin(t_args *args, t_cmd_tab *cmd);
 void echo(t_args *args, t_cmd_tab *cmd);
 int cd(t_cmd_tab *cmd, t_list *env);
 int pwd(t_args *arg, char **cmd);

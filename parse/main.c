@@ -6,49 +6,80 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/30 04:08:05 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/09/30 04:21:55 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	s()
-{
-	system("leaks minishell");
-}
+// void	s()
+// {
+// 	system("leaks minishell");
+// }
 
-int main(int argc, char **argv, char **envp)
+// void	sig_handler(int signal)
+// {
+// 	printf("\n\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
+// 	rl_on_new_line();
+// 	rl_redisplay();
+// }
+
+
+// int g_errno = 0;
+
+int main(int ac, char **av, char **env)
 {
-    atexit(s);
-    (void)argc;
-    (void)argv;
-    t_args args;
-    t_cmd_tab cmd;
-    char *input_line;
-    
-    args.env = NULL;
-    environment(envp, &args);
+    t_args cmd_line;
+
+    (void)ac;
+    (void)av;
+
+    ft_bzero(&cmd_line, sizeof(t_args));
+    environment(env, &cmd_line);
 
     while (1)
     {
-        // dekhla
-        input_line = readline("minishell:)> ");
-        if (!input_line)
-            break;
+        cmd_line.line = readline("\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
         
-        // ajouti cmd lreadline
-        add_history(input_line);
+        if (cmd_line.line && *cmd_line.line)
+            add_history(cmd_line.line);
+
+        process_line(&cmd_line);
+        t_cmd_tab *tab = cmd_line.table;
+
+        while (tab)
+        {
+            if (tab->cmd)
+            {
+                // Affichage des commandes pour le débogage
+                for (int i = 0; tab->cmd[i]; i++)
+                    printf("cmd[%d]====%s\n", i, tab->cmd[i]);
+            }
+            printf("arg====%s\n", tab->arg);
+            printf("append====%s\n", tab->append);
+            while (tab->delimiter)
+            {
+                printf("limi====%s\n", tab->delimiter->content);
+                tab->delimiter = tab->delimiter->next;
+            }
+            printf("infile====%s\n", tab->in);
+            printf("outfile====%s\n", tab->out);
+            printf("herecod====%d\n\n", tab->heredoc);
+            
+            // Exécution des commandes
+            if (tab->cmd)
+            {
+                if (exec_builtin(&cmd_line, tab) == 0)
+                {
+                    single_cmd(tab);  // Si ce n'est pas un builtin, essayez d'exécuter une commande normale
+                }
+            }
+            tab = tab->next;
+        }
         
-        // Initialise lcmd bach tester
-        cmd.cmd = ft_split(input_line, ' ');
-        cmd.arg = cmd.cmd[1]; // arg optionnel
-        
-        // Exécution
-        if (cmd.cmd[0])
-            exec_builtin(&args, &cmd);
-        free_array(cmd.cmd);
-        free(input_line);
+        free_current_cmdline(&cmd_line);
     }
-    free_struct(&args);
-    return 0;
+    
+    free_struct(&cmd_line);
+    return 0;  // Ajout d'un retour de statut à la fin
 }

@@ -6,13 +6,13 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/09/30 04:10:23 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/09/30 04:16:59 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void exec_builtin(t_args *args, t_cmd_tab *cmd)
+int exec_builtin(t_args *args, t_cmd_tab *cmd)
 {
     printf("test :: %s\n", cmd->cmd[0]);
     
@@ -28,4 +28,7 @@ void exec_builtin(t_args *args, t_cmd_tab *cmd)
         exec_exit(args, cmd);
     else if (ft_strcmp(cmd->cmd[0], "env") == 0)
         exec_env(cmd, args->env);
+    else
+        return 0; 
+    return 1;
 }
