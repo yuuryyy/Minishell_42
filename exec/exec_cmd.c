@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/27 21:48:48 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/30 02:20:03 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	single_cmd(t_cmd_tab *table)
 	int		status;
 	pid_t	pid;
 	int		err;
+	int g_errno = 0;
 
 	// fprintf(stderr, BLUE"heeeeeeeere>>>>>>>\n"RESET);
 	pid = fork();

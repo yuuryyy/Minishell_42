@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-		"iterator": "c",
-		"numbers": "c",
-		"minishell.h": "c"
-	}
-}

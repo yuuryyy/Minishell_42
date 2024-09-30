@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
+#    By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/09/26 19:53:06 by ychagri          ###   ########.fr        #
+#    Updated: 2024/09/30 03:41:05 by kaafkhar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -Werror 
+# -fsanitize=address
 #-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
@@ -35,6 +36,9 @@ SRCS		=	parse/main.c \
 				exec/exec_cmd.c \
 				exec/tools.c \
 				exec/process_cmds.c \
+				exec/builtins.c \
+				exec/builtins2.c \
+				exec/exuc_built.c \
 
 OBJS		= $(SRCS:.c=.o)
 

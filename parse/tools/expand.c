@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/22 02:48:35 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/30 02:16:06 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	index_ds(char *str)
 
 void	expand_quotes(char **word, int index)
 {
+	int g_errno = 0;
 	char	*befor_dolla;
 	char	*tmp;
 	char	*after_dolla;
@@ -79,6 +80,7 @@ void	expand_quotes(char **word, int index)
 
 char	*expand(char *word, t_type type)
 {
+	int g_errno = 0;
 	int 	index;
 
 	if (!word || !ft_strchr(word, '$'))

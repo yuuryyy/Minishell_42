@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/27 21:57:42 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/30 02:12:14 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	put_error(t_args *cmd_line, char *msg, char *name)
 {
+	int g_errno = 0;
 	ft_putstr_fd("minionshell :"RED, 2);
 	ft_putstr_fd(msg, 2);
 	if (name)

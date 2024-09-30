@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/22 00:08:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/09/30 02:16:42 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	ft_heredoc(t_cmd_tab **cmds)
 	t_cmd_tab	*cmdtable;
 	t_lim		*tmp;
 	int			fd[2];
+	int			g_errno = 0;
 
 	cmdtable = *cmds;
 	while (cmdtable)
