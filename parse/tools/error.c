@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/30 02:12:14 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/07 00:03:06 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 void	put_error(t_args *cmd_line, char *msg, char *name)
 {
-	int g_errno = 0;
 	ft_putstr_fd("minionshell :"RED, 2);
 	ft_putstr_fd(msg, 2);
 	if (name)

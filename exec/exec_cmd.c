@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/30 02:20:03 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:23:21 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	infile_opn(t_cmd_tab *cmd)
 {
@@ -25,14 +25,14 @@ int	infile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->heredoc == false)
 		{
-			if (dup2(cmd->data->fdin, fdin) == -1)
+			if (dup2(fdin, cmd->data->fdin) == -1)
 				return (close(fdin), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(fdin);
 	}
 	if (cmd->heredoc == true)
 	{
-		if (dup2(cmd->data->fdin, cmd->fd_heredoc) == -1)
+		if (dup2(cmd->fd_heredoc, cmd->data->fdin) == -1)
 			return (close(cmd->fd_heredoc), put_error(cmd->data, DUP2SG, NULL), 1);
 		close(cmd->fd_heredoc);
 	}
@@ -54,7 +54,7 @@ int	outfile_opn(t_cmd_tab *cmd)
 		if (cmd->red_out == REDOUT)
 		{
 			printf("heeeeeeere  %d\n", cmd->data->fdout);
-			if (dup2(cmd->data->fdout, fdout) == -1)
+			if (dup2(fdout, cmd->data->fdout) == -1)
 				return (close(fdout), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(fdout);
@@ -68,7 +68,7 @@ int	outfile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->red_out == APND)
 		{
-			if (dup2(cmd->data->fdout, apnd) == -1)
+			if (dup2(apnd, cmd->data->fdout) == -1)
 				return (close(apnd), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(apnd);
@@ -85,7 +85,6 @@ int	single_cmd(t_cmd_tab *table)
 	int		status;
 	pid_t	pid;
 	int		err;
-	int g_errno = 0;
 
 	// fprintf(stderr, BLUE"heeeeeeeere>>>>>>>\n"RESET);
 	pid = fork();

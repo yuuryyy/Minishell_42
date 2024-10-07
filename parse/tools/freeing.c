@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/25 18:33:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/07 00:04:00 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "minishell.h"
 
 void	free_array(char	**str)
 {
@@ -41,7 +41,8 @@ void	free_tokens(t_token **lst)
 
 void	del(void *content)
 {
-	content = NULL;
+	if (content)
+		content = NULL;
 }
 
 void	free_table(t_cmd_tab **table)

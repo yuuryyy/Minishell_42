@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+         #
+#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/09/30 03:41:05 by kaafkhar         ###   ########.fr        #
+#    Updated: 2024/10/06 22:19:27 by youssra          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror 
+CFLAGS		=	-g -Wall -Wextra -Werror -I./inc
 # -fsanitize=address
 #-Werror
 
@@ -23,7 +23,7 @@ HEADER		=	minishell.h
 
 LIBRARY		=	lib/libft.a
 
-SRCS		=	parse/main.c \
+SRCS		=	main.c \
 				parse/tools/before_parse.c \
 				parse/tools/error.c \
 				parse/tools/freeing.c \

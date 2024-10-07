@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exuc_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/09/30 04:29:45 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/07 00:08:15 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int exec_builtin(t_args *args, t_cmd_tab *cmd)
 {
     printf("test :: %s\n", cmd->cmd[0]);
-    
     if (ft_strcmp(cmd->cmd[0], "echo") == 0)
         echo(args, cmd);
     else if (ft_strcmp(cmd->cmd[0], "cd") == 0)

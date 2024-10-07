@@ -1,0 +1,11 @@
+exec
+inc
+lib
+m
+main.c
+main.o
+Makefile
+minishell
+parse
+subject
+y
