@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 14:23:21 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/08 18:24:25 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	infile_opn(t_cmd_tab *cmd)
 	}
 	if (cmd->heredoc == true)
 	{
+		printf("here %d\n", cmd->data->fdin);
 		if (dup2(cmd->fd_heredoc, cmd->data->fdin) == -1)
 			return (close(cmd->fd_heredoc), put_error(cmd->data, DUP2SG, NULL), 1);
 		close(cmd->fd_heredoc);

@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 15:06:20 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/08 18:13:03 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ int main(int ac, char **av, char **env)
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
 
+	cmd_line.fdin = dup(0);
+	cmd_line.fdout = dup(1);
+	if (cmd_line.fdin == -1 || cmd_line.fdout == -1)
+		return (put_error(&cmd_line, DUPMSG, NULL), 130);
     while (1)
     {
+        free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
         if (cmd_line.line && *cmd_line.line)
             add_history(cmd_line.line);
@@ -78,7 +83,6 @@ int main(int ac, char **av, char **env)
         // }
         while (wait(0) != -1)
 			continue ;
-        free_current_cmdline(&cmd_line);
     }
     free_struct(&cmd_line);
     return 0;

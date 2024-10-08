@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 00:05:22 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/08 01:50:53 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	process_line(t_args *cmdline)
 {
 	char		*tmp;
 	t_cmd_tab	*tab;
-	int g_errno = 0;
 
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)

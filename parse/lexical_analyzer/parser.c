@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 00:05:12 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/08 18:19:31 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 	else
 	{
 		if (current->type == redin)
+		{
+			new->heredoc = false;
 			current = handle_tokens(&current->next, &new->in);
+		}
 		else if (current->type == redout)
 		{
 			new->red_out = REDOUT;
@@ -81,8 +84,8 @@ t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 		}
 		else if (current->type == heredoc)
 		{
-			current = handle_limiters(&current->next, &new->delimiter);
 			new->heredoc = true;
+			current = handle_limiters(&current->next, &new->delimiter);
 		}
 	}
 	return (current);

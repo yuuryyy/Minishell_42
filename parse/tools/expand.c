@@ -6,7 +6,7 @@
 /*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 00:04:13 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/08 01:51:14 by youssra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	index_ds(char *str)
 
 void	expand_quotes(char **word, int index)
 {
-	int g_errno = 0;
 	char	*befor_dolla;
 	char	*tmp;
 	char	*after_dolla;
@@ -80,7 +79,6 @@ void	expand_quotes(char **word, int index)
 
 char	*expand(char *word, t_type type)
 {
-	int g_errno = 0;
 	int 	index;
 
 	if (!word || !ft_strchr(word, '$'))
