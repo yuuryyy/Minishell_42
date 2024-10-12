@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/07 00:08:03 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/12 23:46:54 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,34 @@ t_env *create_env_node(char *var, char *value)
     return new;
 }
 
-void ft_export(t_args *args, char **cmd)
+void ft_export(t_args *args, char **cmd, t_env **env)
 {
     (void)args;
     int i = 1;
+    int j = 0;
 
     if (cmd[1] == NULL) 
     {
         extern char **environ; 
-        for (int j = 0; environ[j] != NULL; j++)
+        while (environ[j] != NULL)
         {
-            ft_putstr_fd(environ[j], 1); 
-            ft_putstr_fd("\n", 1);
+            char *equal_sign = ft_strchr(environ[j], '=');
+            if (equal_sign)
+            {
+                *equal_sign = '\0';
+                printf("declare -x %s=\"%s\"\n", environ[j], equal_sign + 1);
+                *equal_sign = '=';
+            }
+            else
+            {
+                printf("declare -x %s\n", environ[j]);
+            }
+            j++;
         }
         return;
     }
-
-    while (cmd[i])
-    {
-        if (ft_strchr(cmd[i], '=') == NULL)
-        {
-            ft_putstr_fd("minishell: export: `", 2);
-            ft_putstr_fd(cmd[i], 2);
-            ft_putendl_fd("': not a valid identifier", 2);
-            return;
-        }
-        if (setenv(cmd[i], "", 1) == -1)
-        {
-            perror("setenv");
-            return; 
-        }
-        i++;
-    }
 }
+
 
 int ft_unset(t_args *args, char **cmd)
 {
