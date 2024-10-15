@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/15 01:05:36 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:55:56 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+#include <readline/readline.h>
+#include <readline/rltypedefs.h>
 // #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -89,8 +93,6 @@ typedef struct s_args
     t_token *tokens;
     t_cmd_tab *table;
     int     cmd_num;
-    int     fdin;
-    int     fdout;
 } t_args;
 
 void		environment(char **envp, t_args *args);
@@ -127,6 +129,7 @@ int exec_builtin(t_args *args, t_cmd_tab *cmd);
 void echo(t_args *args, t_cmd_tab *cmd);
 int cd(t_cmd_tab *cmd, t_list *env);
 int pwd(t_args *arg, char **cmd);
+
 // void ft_export(t_args *args, char **cmd);
 int ft_unset(t_args *args, char **cmd);
 void exec_exit(t_args *args, t_cmd_tab *cmd);
@@ -137,6 +140,12 @@ void exec_env(t_cmd_tab *cmd, t_list *env);
 int	execute_cmds(t_args *args);
 int	single_cmd(t_cmd_tab *table);
 int	check_files(t_args *args, char *filename, int flag);
+
+
+//signals
+void sigint_handler(int signum);
+void sigquit_handler(int signum);
+void setup_signal_handlers();
 
 // tools 
 int own_strchr(char *str, char c);

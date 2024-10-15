@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 00:04:00 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 21:59:07 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	free_table(t_cmd_tab **table)
 		free(tmp->arg);
 	if (tmp->cmd)
 		free_array(tmp->cmd);
-	// if (tmp->delimiter)
-	// 	ft_lstclear(&tmp->delimiter, del); // free later
+	if (tmp->delimiter)
+		ft_lstclear(&tmp->delimiter, del); // free later
 	if (tmp->in)
 		free(tmp->in);
 	if (tmp->out)
@@ -73,14 +73,14 @@ void	free_struct(t_args *cmd_line)
 {
 	if (!cmd_line)
 		return ;
-	if (cmd_line->line)
-		free(cmd_line->line);
-	if (cmd_line->tokens)
-		free_tokens(&cmd_line->tokens);
 	if (cmd_line->env)
 		ft_lstclear(&cmd_line->env, del);
 	if (cmd_line->path)
 		free_array(cmd_line->path);
+	if (cmd_line->line)
+		free(cmd_line->line);
+	if (cmd_line->tokens)
+		free_tokens(&cmd_line->tokens);
 	if (cmd_line->table)
 		free_table(&cmd_line->table);
 	ft_bzero(cmd_line, sizeof(t_args *));

@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youssra <youssra@student.42.fr>            +#+  +:+       +#+         #
+#    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/10/06 22:19:27 by youssra          ###   ########.fr        #
+#    Updated: 2024/10/15 20:54:24 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	minishell
+
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror -I./inc
-# -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include -fsanitize=address
 #-Werror
 
-LFLAGS 		=	"-L$(shell brew --prefix readline)/lib"
+LFLAGS 		=	"-L$(shell brew --prefix readline)/lib" -lreadline 
 
 HEADER		=	minishell.h
 
@@ -26,6 +26,7 @@ LIBRARY		=	lib/libft.a
 SRCS		=	main.c \
 				parse/tools/before_parse.c \
 				parse/tools/error.c \
+				parse/tools/signals.c \
 				parse/tools/freeing.c \
 				parse/tools/expand.c \
 				parse/tools/heredoc.c \
@@ -48,7 +49,7 @@ lib :
 	make -C lib
 
 $(NAME) : $(OBJS) lib
-	$(CC)  $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) -lreadline $(LFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
 
 %.o: %.c $(HEADER)
 		$(CC)  $(CFLAGS) -c $< -o $@

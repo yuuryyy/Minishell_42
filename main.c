@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/15 17:09:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/15 23:58:04 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ int main(int ac, char **av, char **env)
     (void)av;
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
-	cmd_line.fdin = dup(0);
-	cmd_line.fdout = dup(1);
-	if (cmd_line.fdin == -1 || cmd_line.fdout == -1)
-		return (put_error(&cmd_line, DUPMSG, NULL), 130);
+    setup_signal_handlers();
     while (1)
     {
         free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
-        if (cmd_line.line && *cmd_line.line)
+		 if (cmd_line.line == NULL)
+        {
+            free_struct(&cmd_line);
+            exit(0);
+        }
+        if (*cmd_line.line)
             add_history(cmd_line.line);
         if (process_line(&cmd_line) != 0)
 			continue ;
@@ -52,7 +54,6 @@ int main(int ac, char **av, char **env)
         while (wait(0) != -1)
 			continue ;
     }
-    free_struct(&cmd_line);
     return 0;
 }
 
