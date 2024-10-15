@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 19:03:41 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 00:07:35 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 16:49:38 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ int	check_files(t_args *args, char *filename, int flag)
 	int	err;
 
 	err = 0;
+	if (ft_strchr(filename, '/') && access(filename, F_OK) != 0)
+		err = 2;
 	if (access(filename, F_OK) == 0)
 	{
 		if (access(filename, R_OK) == -1)
 			err = 1;
 	}
-	if (flag == INPUT && access(filename, F_OK) == -1)
+	if (flag == INPUT && access(filename, F_OK) != 0)
 		err = 2;
 	if (err == 2)
 		return (put_error(args, INTROUVABLE_FILE, filename), 1);

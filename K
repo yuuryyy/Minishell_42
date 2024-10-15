@@ -1,0 +1,12 @@
+K
+Makefile
+dfdf
+exec
+inc
+l
+lib
+main.c
+main.o
+minishell
+parse
+subject

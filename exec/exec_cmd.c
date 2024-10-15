@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/08 18:24:25 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 17:59:10 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	infile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->heredoc == false)
 		{
-			if (dup2(fdin, cmd->data->fdin) == -1)
+			if (dup2(fdin, STDIN_FILENO == -1))
 				return (close(fdin), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(fdin);
 	}
 	if (cmd->heredoc == true)
 	{
-		printf("here %d\n", cmd->data->fdin);
-		if (dup2(cmd->fd_heredoc, cmd->data->fdin) == -1)
+		printf("here heredoc %d\n", STDIN_FILENO);
+		if (dup2(cmd->fd_heredoc, STDIN_FILENO == -1))
 			return (close(cmd->fd_heredoc), put_error(cmd->data, DUP2SG, NULL), 1);
 		close(cmd->fd_heredoc);
 	}
@@ -54,8 +54,8 @@ int	outfile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->red_out == REDOUT)
 		{
-			printf("heeeeeeere  %d\n", cmd->data->fdout);
-			if (dup2(fdout, cmd->data->fdout) == -1)
+			printf("heeeeeeere  %d\n", STDOUT_FILENO);
+			if (dup2(fdout, STDOUT_FILENO) == -1)
 				return (close(fdout), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(fdout);
@@ -69,7 +69,7 @@ int	outfile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->red_out == APND)
 		{
-			if (dup2(apnd, cmd->data->fdout) == -1)
+			if (dup2(apnd, STDOUT_FILENO) == -1)
 				return (close(apnd), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
 		close(apnd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/08 18:13:03 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 17:09:51 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ int main(int ac, char **av, char **env)
 
     (void)ac;
     (void)av;
-
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
-
 	cmd_line.fdin = dup(0);
 	cmd_line.fdout = dup(1);
 	if (cmd_line.fdin == -1 || cmd_line.fdout == -1)
@@ -51,6 +49,14 @@ int main(int ac, char **av, char **env)
 			continue ;
 		if (execute_cmds(&cmd_line) != 0)
 			continue ;
+        while (wait(0) != -1)
+			continue ;
+    }
+    free_struct(&cmd_line);
+    return 0;
+}
+
+
         // t_cmd_tab *tab = cmd_line.table;
 
         // while (tab)
@@ -81,9 +87,3 @@ int main(int ac, char **av, char **env)
         //     }
         //     tab = tab->next;
         // }
-        while (wait(0) != -1)
-			continue ;
-    }
-    free_struct(&cmd_line);
-    return 0;
-}
