@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exuc_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/07 00:08:15 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 01:05:01 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int exec_builtin(t_args *args, t_cmd_tab *cmd)
         cd(cmd, args->env);
     else if (ft_strcmp(cmd->cmd[0], "pwd") == 0)
         pwd(args, cmd->cmd);
-    else if (ft_strcmp(cmd->cmd[0], "export") == 0)
-        ft_export(args, cmd->cmd);
+    // else if (ft_strcmp(cmd->cmd[0], "export") == 0)
+    //     ft_export(args, cmd->cmd);
     else if (ft_strcmp(cmd->cmd[0], "exit") == 0)
         exec_exit(args, cmd);
     else if (ft_strcmp(cmd->cmd[0], "env") == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/07 00:07:14 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/15 01:05:36 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int exec_builtin(t_args *args, t_cmd_tab *cmd);
 void echo(t_args *args, t_cmd_tab *cmd);
 int cd(t_cmd_tab *cmd, t_list *env);
 int pwd(t_args *arg, char **cmd);
-void ft_export(t_args *args, char **cmd);
+// void ft_export(t_args *args, char **cmd);
 int ft_unset(t_args *args, char **cmd);
 void exec_exit(t_args *args, t_cmd_tab *cmd);
 void exec_env(t_cmd_tab *cmd, t_list *env);
