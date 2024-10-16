@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/07 15:10:51 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/16 00:34:26 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lim	*new_lim(char *content, bool quote)
+t_list	*new_lim(char *content, bool quote)
 {
-	t_lim	*new;
+	t_list	*new;
 
-	new = malloc(sizeof(t_lim));
-	new->content = content;
-	new->quoted = quote;
+	new = ft_lstnew(content);
 	new->next = NULL;
+	new->quoted = quote;
 	return (new);
 }
 
-void	ft_limadd_back(t_lim **lst, t_lim *new)
+void	ft_limadd_back(t_list **lst, t_list *new)
 {
-	t_lim	*ptr;
-	t_lim	*tmp;
+	t_list	*ptr;
+	t_list	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -70,7 +69,7 @@ void	read_line(char *limiter, int *fd, int flag, bool quote)
 int	ft_heredoc(t_cmd_tab **cmds)
 {
 	t_cmd_tab	*cmdtable;
-	t_lim		*tmp;
+	t_list		*tmp;
 	int			fd[2];
 
 	cmdtable = *cmds;

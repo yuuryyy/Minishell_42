@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/15 21:55:56 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/16 00:06:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,6 @@ typedef struct s_env
     struct s_env *next;
 } t_env;
 
-typedef	struct s_lim
-{
-	char			*content;
-	bool			quoted;
-	struct s_lim	*next;
-}	t_lim;
-
 //command table
 typedef struct s_cmd_tab
 {
@@ -70,7 +63,7 @@ typedef struct s_cmd_tab
 	int					red_out;
 	int					fd_heredoc;
 	char				*append;
-	t_lim				*delimiter;
+	t_list				*delimiter;
 	struct s_cmd_tab	*next;
 	struct s_args		*data;
 }	t_cmd_tab;
@@ -120,9 +113,9 @@ void		remove_q(t_token **lst);
 bool		syntax_check(t_args *cmdline);
 
 t_cmd_tab	*new_tab(void);
-t_lim		*new_lim(char *content, bool quote);
+t_list		*new_lim(char *content, bool quote);
 void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
-void		ft_limadd_back(t_lim **lst, t_lim *new);
+void		ft_limadd_back(t_list **lst, t_list *new);
 
 // builtins
 int exec_builtin(t_args *args, t_cmd_tab *cmd);

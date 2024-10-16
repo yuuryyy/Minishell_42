@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/08 18:19:31 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/16 00:33:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ t_token	*handle_tokens(t_token **current, char **str)
 	return (tmp);
 }
 
-t_token	*handle_limiters(t_token **current, t_lim **limiter)
+t_token	*handle_limiters(t_token **current, t_list **limiter)
 {
 	t_token	*tmp;
 	char	*str;
-	t_lim	*new;
+	t_list	*new;
 	bool	flag;
 
 	tmp = *current;
