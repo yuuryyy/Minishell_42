@@ -6,7 +6,7 @@
 #    By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/10/15 20:54:24 by ychagri          ###   ########.fr        #
+#    Updated: 2024/10/16 23:41:54 by ychagri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS		=	main.c \
 				exec/builtins.c \
 				exec/builtins2.c \
 				exec/exuc_built.c \
+				exec/pipe_line.c \
 
 OBJS		= $(SRCS:.c=.o)
 

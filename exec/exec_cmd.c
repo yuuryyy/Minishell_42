@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/15 17:59:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/16 22:40:18 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	infile_opn(t_cmd_tab *cmd)
 	}
 	if (cmd->heredoc == true)
 	{
-		printf("here heredoc %d\n", STDIN_FILENO);
 		if (dup2(cmd->fd_heredoc, STDIN_FILENO == -1))
 			return (close(cmd->fd_heredoc), put_error(cmd->data, DUP2SG, NULL), 1);
 		close(cmd->fd_heredoc);
@@ -77,45 +76,51 @@ int	outfile_opn(t_cmd_tab *cmd)
 	return (0);
 }
 
-
-int	single_cmd(t_cmd_tab *table)
+int	execute(t_cmd_tab *table)
 {
 	int		i;
 	char	**env;
 	char	*path;
-	int		status;
-	pid_t	pid;
 	int		err;
 
-	// fprintf(stderr, BLUE"heeeeeeeere>>>>>>>\n"RESET);
+	if (table->cmd)
+	{
+		env = lst_to_array(table->data->env);
+		err = 0;
+		i = 0;
+		if (ft_strchr(table->cmd[0], '/'))
+		{
+			if (execve(table->cmd[0],table->cmd, env) == -1)
+				return (put_error(table->data, INTROUVABLE_FILE, table->cmd[0]), free_array(env), 127);
+		}
+		while (table->data->path[i])
+		{
+			path = ft_strjoin(table->data->path[i], "/");
+			path = ft_strjoin2(path, table->cmd[0]);
+			err = execve(path, table->cmd, env);
+			free(path);
+			i++;
+		}
+		if (err == -1)
+			return (put_error(table->data, NOTFOUNDMSG, table->cmd[0]), free_array(env), 127);
+	}
+	return (0);
+}
+
+int	single_cmd(t_cmd_tab *table)
+{
+	int		status;
+	pid_t	pid;
+
 	pid = fork();
 	if (pid == -1)
 		return (put_error(table->data, FORKMSG, NULL), 1);
 	else if (pid == 0)
 	{
+		printf("hihuhuu");
 		if (infile_opn(table) || outfile_opn(table))
 			exit(EXIT_FAILURE);
-		if (table->cmd)
-		{
-			env = lst_to_array(table->data->env);
-			err = 0;
-			i = 0;
-			if (ft_strchr(table->cmd[0], '/'))
-			{
-				if (execve(table->cmd[0],table->cmd, env) == -1)
-					return (put_error(table->data, INTROUVABLE_FILE, table->cmd[0]), free_array(env), exit(127), 1);
-			}
-			while (table->data->path[i])
-			{
-				path = ft_strjoin(table->data->path[i], "/");
-				path = ft_strjoin2(path, table->cmd[0]);
-				err = execve(path, table->cmd, env);
-				free(path);
-				i++;
-			}
-			if (err == -1)
-				return (put_error(table->data, NOTFOUNDMSG, table->cmd[0]), free_array(env), exit(127), 1);
-		}
+		exit(execute(table));
 	}
 	else
 	{

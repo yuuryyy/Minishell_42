@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/16 00:34:26 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/16 20:22:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	read_line(char *limiter, int *fd, int flag, bool quote)
 	while (1)
 	{
 		buffer = readline("heredoc> ");
-		if (ft_strncmp(buffer, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
 			break ;
 		if (flag)
 		{

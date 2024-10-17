@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/16 00:06:02 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/16 23:41:34 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void exec_env(t_cmd_tab *cmd, t_list *env);
 
 
 //exec
+int	exec_pipes(t_cmd_tab *table);
+int	execute(t_cmd_tab *table);
 int	execute_cmds(t_args *args);
 int	single_cmd(t_cmd_tab *table);
 int	check_files(t_args *args, char *filename, int flag);
