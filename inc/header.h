@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/09/26 19:52:15 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 05:41:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
 
-# define PIPEMSG "pipe() has failed\n"
-# define OPENMSG "open() has failed\n"
-# define DUPMSG "dup() has failed\n"
-# define DUP2SG "dup2() has failed\n"
-# define FORKMSG "fork() has failed\n"
+# define PIPEMSG "pipe() has failed"
+# define OPENMSG "open() has failed"
+# define DUPMSG "dup() has failed"
+# define DUP2SG "dup2() has failed"
+# define FORKMSG "fork() has failed"
 # define INTROUVABLE_FILE "No such file or directory: "
 # define NOTFOUNDMSG "command not found: "
-# define WAITMSG	"wait() has failed .\n"
-# define WAITPIDMSG "waitpid() has failed .\n"
-# define SYNTAX "syntax error\n"
+# define WAITMSG	"wait() has failed ."
+# define WAITPIDMSG "waitpid() has failed ."
+# define SYNTAX "syntax error"
 # define PERMISSION "permission denied : "
 // # define
 # define INPUT 0

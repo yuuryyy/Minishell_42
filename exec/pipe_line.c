@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/17 02:43:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 04:09:05 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,15 @@ int	exec_pipes(t_cmd_tab *table)
 	tab = table;
 	while (tab)
 	{
-		printf("<<<<lllllllll>>>>");
 		if (tab->next == NULL)
-			single_cmd(tab);
+		{
+			g_errno = single_cmd(tab);
+			if (dup2(tab->data->fdout, STDOUT_FILENO) == -1)
+				return (close (tab->data->fdout), put_error(table->data, DUP2SG, NULL), 1);
+			if (dup2(tab->data->fdin, STDIN_FILENO) == -1)
+				return (close (tab->data->fdin), put_error(table->data, DUP2SG, NULL), 1);
+			return (0);
+		}
 		if (pipe(fd) == -1)
 			return (put_error(table->data, PIPEMSG, NULL), 1);
 		pid = fork();
@@ -35,16 +41,18 @@ int	exec_pipes(t_cmd_tab *table)
 			if (dup2(fd[1], STDOUT_FILENO) == -1)
 				return (close (fd[1]), put_error(table->data, DUP2SG, NULL), 1);
 			close(fd[1]);
-			execute(tab);
+			exit(execute(tab));
 		}
-		else
+		else if (pid > 0)
 		{
 			close(fd[1]);
 			if (dup2(fd[0], STDIN_FILENO) == -1)
 				return (close (fd[0]), put_error(table->data, DUP2SG, NULL), 1);
 			close(fd[0]);
+			if (tab->heredoc)
+				close(tab->fd_heredoc);
+			tab = tab->next;
 		}
-		tab = tab->next;
 	}
 	return (0);
 }

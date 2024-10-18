@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/17 02:41:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 04:08:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_cmds(t_args *args)
 		if (single_cmd(table))
 			return (1);
 	}
-	else
-		exec_pipes(table);
+	else if (exec_pipes(table))
+		return (1);
 	return (0);
 }

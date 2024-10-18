@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/17 02:48:41 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 06:16:30 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // void	sig_handler(int signal)
 // {
 // 	printf("\n\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
-// 	rl_on_new_line();
+	// rl_on_new_line();
 // 	rl_redisplay();
 // }
 
@@ -36,14 +36,19 @@ int main(int ac, char **av, char **env)
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
     setup_signal_handlers();
+	cmd_line.fdin = dup(0);
+	cmd_line.fdout = dup(1);
     while (1)
     {
-		printf("round in\n");
+		// printf("round in\n");
         free_current_cmdline(&cmd_line);
-        cmd_line.line = readline("\033[38;2;255;192;203m\033[1mminionshell^~^ \033[34m>$ \033[0m");
+        cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
 		 if (cmd_line.line == NULL)
         {
+			// printf("exit\n");
             free_struct(&cmd_line);
+			// while(1)
+			// 	;
             exit(0);
         }
         if (*cmd_line.line)
@@ -52,10 +57,8 @@ int main(int ac, char **av, char **env)
 			continue ;
 		if (execute_cmds(&cmd_line) != 0)
 			continue ;
-        while (wait(0) != -1)
-			continue ;
-		dup2(0, STDIN_FILENO);
-		dup2(1, STDOUT_FILENO);
+		while (wait(0) != -1)
+   			continue;
     }
     return 0;
 }

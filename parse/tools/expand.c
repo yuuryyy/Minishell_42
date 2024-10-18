@@ -3,27 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/08 01:51:14 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/18 09:19:08 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_string(char *word)
+char	*ft_getenv(char *word, t_list *env)
+{
+	char	*var;
+	char	*expanded_str;
+
+	if (!word || !env)
+		return (NULL);
+	var = ft_strjoin(word, "=");
+	expanded_str = NULL;
+	while (env)
+	{
+		if (ft_strncmp(var, env->content, ft_strlen(var)) == 0)
+		{
+			expanded_str = ft_strchr(env->content, '=');
+			break ;
+		}
+		env = env->next;
+	}
+	free(word);
+	free(var);
+	return (expanded_str);
+}
+
+char	*expand_string(char *word, t_list *env)
 {
 	char	*value;
 
 	if (!ft_strchr(word, '$') || !word || ft_strncmp(word, "$", 2) == 0)
 		return (word);
 	value = getenv(word + 1);
-	free(word);
 	if (value)
+	{
+		free(word);
 		word = ft_strdup(value);
-	else
+	}
+	else if (!ft_getenv(word + 1, env))
+	{
+		free(word);
 		word = NULL;
+	}
 	return (word);
 }
 
@@ -42,7 +70,8 @@ int	index_ds(char *str)
 	return (-1);
 }
 
-void	expand_quotes(char **word, int index)
+
+void	expand_quotes(char **word, int index, t_list *env)
 {
 	char	*befor_dolla;
 	char	*tmp;
@@ -65,7 +94,12 @@ void	expand_quotes(char **word, int index)
 		*word = ft_strjoin(tmp, after_dolla);
 	}
 	else if (!getenv(var + 1))
+	{
+		tmp = ft_getenv(var + 1, env);
+		if (tmp)
+			befor_dolla = ft_strjoin2(tmp, befor_dolla);
 		*word = ft_strjoin(befor_dolla, after_dolla);
+	}
 	else
 	{
 		tmp = ft_strjoin(befor_dolla, getenv(var + 1));
@@ -77,26 +111,29 @@ void	expand_quotes(char **word, int index)
 	free(after_dolla);
 }
 
-char	*expand(char *word, t_type type)
+char	*expand(char *word, t_type type, t_list *env)
 {
 	int 	index;
+	t_list	*tmp;
 
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
+	tmp = env;
 	if (word[0] == '$' && word[1] == '?')
 	{
 		free(word);
 		word = ft_itoa(g_errno);
 	}
 	else if (type == string)
-		word = expand_string(word);
+		word = expand_string(word, tmp);
 	else
 	{
 		index = index_ds(word);
 		while (index != -1)
 		{
-			expand_quotes(&word, index);
+			expand_quotes(&word, index, tmp);
 			index = index_ds(word);
+			tmp = env;
 		}
 	}
 	return (word);
@@ -126,7 +163,7 @@ void	expand_var(t_args **cmd_line)
 				free(tmp->content);
 				tmp->content = NULL;
 			}
-			tmp->content = expand(tmp->content, tmp->type);
+			tmp->content = expand(tmp->content, tmp->type, (*cmd_line)->env);
 		}
 		if (tmp)
 			tmp = tmp->next;

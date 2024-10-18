@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/16 23:41:34 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 09:18:48 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ typedef struct s_args
     t_token *tokens;
     t_cmd_tab *table;
     int     cmd_num;
+	int		fdin;
+	int		fdout;
 } t_args;
 
 void		environment(char **envp, t_args *args);
@@ -102,7 +104,7 @@ void		free_table(t_cmd_tab **table);
 
 void		put_error(t_args *cmd_line, char *msg, char *name);
 
-char		*expand(char *word, t_type type);
+char		*expand(char *word, t_type type, t_list *env);
 char		**lst_to_array(t_list *lst);
 
 int			word_len(char *line);

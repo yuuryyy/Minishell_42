@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/16 20:33:19 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/17 22:12:16 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	free_table(t_cmd_tab **table)
 
 void	free_struct(t_args *cmd_line) 
 {
+	close(cmd_line->fdin);
+	close(cmd_line->fdout);
 	if (!cmd_line)
 		return ;
 	if (cmd_line->env)

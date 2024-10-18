@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/16 22:40:18 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/17 23:15:13 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	infile_opn(t_cmd_tab *cmd)
 
 	if (cmd->in != NULL)
 	{
+		printf("innn ahubi\n");
 		if (check_files(cmd->data, cmd->in, INPUT))
 			return (1);
 		fdin = open(cmd->in, O_RDONLY, 0644);
@@ -53,7 +54,6 @@ int	outfile_opn(t_cmd_tab *cmd)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
 		if (cmd->red_out == REDOUT)
 		{
-			printf("heeeeeeere  %d\n", STDOUT_FILENO);
 			if (dup2(fdout, STDOUT_FILENO) == -1)
 				return (close(fdout), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
@@ -83,6 +83,8 @@ int	execute(t_cmd_tab *table)
 	char	*path;
 	int		err;
 
+	if (infile_opn(table) || outfile_opn(table))
+		exit(EXIT_FAILURE);
 	if (table->cmd)
 	{
 		env = lst_to_array(table->data->env);
@@ -116,19 +118,16 @@ int	single_cmd(t_cmd_tab *table)
 	if (pid == -1)
 		return (put_error(table->data, FORKMSG, NULL), 1);
 	else if (pid == 0)
-	{
-		printf("hihuhuu");
-		if (infile_opn(table) || outfile_opn(table))
-			exit(EXIT_FAILURE);
 		exit(execute(table));
-	}
 	else
 	{
 		waitpid(pid, &status, 0);
+		if (table->heredoc)
+			close(table->fd_heredoc);
 		if (WIFEXITED(status))
 		{
 			g_errno = WEXITSTATUS(status);
-			return (0);
+			return (g_errno);
 		}
 	}
 	return (0);
