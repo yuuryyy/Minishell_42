@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/16 20:22:41 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/18 10:37:48 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_limadd_back(t_list **lst, t_list *new)
 }
 
 
-void	read_line(char *limiter, int *fd, int flag, bool quote)
+void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline)
 {
 	char	*buffer;
 
@@ -57,7 +57,7 @@ void	read_line(char *limiter, int *fd, int flag, bool quote)
 		if (flag)
 		{
 			if (quote == false)
-				buffer = expand(buffer, double_quote);
+				buffer = expand(buffer, double_quote, cmdline->env);
 			buffer = ft_strjoin2(buffer, "\n");
 			write (fd[1], buffer, ft_strlen(buffer));
 		}
@@ -86,12 +86,12 @@ int	ft_heredoc(t_cmd_tab **cmds)
 				if (tmp->next == NULL)
 				{
 					if (tmp->quoted == true)
-						read_line(tmp->content, fd, 1, true);
+						read_line(tmp->content, fd, 1, true, (*cmds)->data);
 					else
-						read_line(tmp->content, fd, 1, false);
+						read_line(tmp->content, fd, 1, false, (*cmds)->data);
 				}
 				else
-					read_line(tmp->content, fd, 0, false);
+					read_line(tmp->content, fd, 0, false, (*cmds)->data);
 				tmp = tmp->next;
 			}
 			cmdtable->fd_heredoc = fd[0];
