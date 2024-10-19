@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/17 23:15:13 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/19 12:34:56 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	infile_opn(t_cmd_tab *cmd)
 
 	if (cmd->in != NULL)
 	{
-		printf("innn ahubi\n");
 		if (check_files(cmd->data, cmd->in, INPUT))
 			return (1);
 		fdin = open(cmd->in, O_RDONLY, 0644);

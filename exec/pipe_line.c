@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/18 04:09:05 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/19 09:06:58 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ int	exec_pipes(t_cmd_tab *table)
 		if (tab->next == NULL)
 		{
 			g_errno = single_cmd(tab);
-			if (dup2(tab->data->fdout, STDOUT_FILENO) == -1)
-				return (close (tab->data->fdout), put_error(table->data, DUP2SG, NULL), 1);
-			if (dup2(tab->data->fdin, STDIN_FILENO) == -1)
-				return (close (tab->data->fdin), put_error(table->data, DUP2SG, NULL), 1);
 			return (0);
 		}
 		if (pipe(fd) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/08 01:50:53 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/19 12:34:39 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	process_line(t_args *cmdline)
 
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)
-		return (g_errno = EXIT_SUCCESS, 1);
+		return (free(tmp), g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
 		return (free(tmp), g_errno);
 	free(tmp);
@@ -59,7 +59,6 @@ int	process_line(t_args *cmdline)
 	expand_var(&cmdline);
 	// fprintf(stderr, "heeere i am \n");
 	command_table(cmdline);
-	// printf("heere\n");
 	tab = cmdline->table;
 	while (tab)
 	{

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/18 05:41:25 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/19 09:50:12 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	put_error(t_args *cmd_line, char *msg, char *name)
 		free_tokens(&cmd_line->tokens);
 	if (cmd_line->table)
 		free_table(&cmd_line->table);
-	close(cmd_line->fdin);
-	close(cmd_line->fdout);
 	g_errno = EXIT_FAILURE;
 }
 
