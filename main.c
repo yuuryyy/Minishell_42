@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 16:06:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:47:29 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,47 @@ int main(int ac, char **av, char **env)
 
     (void)ac;
     (void)av;
-	
-	// atexit(s);
+
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
     setup_signal_handlers();
-	cmd_line.fdin = dup(0);
-	cmd_line.fdout = dup(1);
+    cmd_line.fdin = dup(STDIN_FILENO);
+    cmd_line.fdout = dup(STDOUT_FILENO);
+
     while (1)
     {
         free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
-		 if (cmd_line.line == NULL)
+        
+        if (cmd_line.line == NULL)
         {
             free_struct(&cmd_line);
             exit(0);
         }
+
         if (*cmd_line.line)
             add_history(cmd_line.line);
+
         if (process_line(&cmd_line) != 0)
-			continue ;
-		if (execute_cmds(&cmd_line) != 0)
-			continue ;
-		while (wait(0) != -1)
-   			continue;
-		if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
-				return (put_error(&cmd_line, DUP2SG, NULL), free_struct(&cmd_line), 1);
-		if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
-				return (put_error(&cmd_line, DUP2SG, NULL),free_struct(&cmd_line), 1);
+            continue;
+
+        if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
+            continue;  
+
+        if (execute_cmds(&cmd_line) != 0)
+            continue; 
+
+        while (wait(0) != -1)
+            continue;
+
+        if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
+            return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
+        if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
+            return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
     }
+
     return 0;
 }
-
 
         // t_cmd_tab *tab = cmd_line.table;
 
