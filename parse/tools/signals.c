@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/14 02:39:11 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:24:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void sigint_handler(int signum)
 void sigquit_handler(int signum) 
 {
     (void)signum;
-    write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
+    // write(STDOUT_FILENO, "Quit (core dumped)\n", 20);
 }
 
 void setup_signal_handlers()

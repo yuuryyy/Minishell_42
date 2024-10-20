@@ -6,7 +6,15 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/20 12:08:14 by kaafkhar         ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2024/10/20 11:52:56 by ychagri          ###   ########.fr       */
+=======
+/*   Updated: 2024/10/20 00:22:37 by kaafkhar         ###   ########.fr       */
+>>>>>>> bf5cf76c3ff4c099d24c5ff4386ccf32e0c742d4
+>>>>>>> 2b6b296cde2daf84b6e579431db3426404e183c7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +149,7 @@ void sigquit_handler(int signum);
 void setup_signal_handlers();
 
 // tools 
+void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline);
 int own_strchr(char *str, char c);
 int ft_strcmp(const char *s1, const char *s2);
 int is_num(char *str);
