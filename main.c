@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 14:55:39 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 16:37:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int main(int ac, char **av, char **env)
     {
         free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
-        
         if (cmd_line.line == NULL)
         {
 			write(STDOUT_FILENO, "exit", 5);
@@ -56,7 +55,7 @@ int main(int ac, char **av, char **env)
             continue;
 
         if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
-            continue;  
+            continue;
 
         if (execute_cmds(&cmd_line) != 0)
             continue; 

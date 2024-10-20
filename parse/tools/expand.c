@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 15:20:15 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 15:56:34 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_getenv(char *word, t_list *env)
 
 	if (!word || !env)
 		return (NULL);
-	var = ft_strjoin(word, "=");
+	var = ft_strjoin(word + 1, "=");
 	expanded_str = NULL;
 	while (env)
 	{
@@ -31,7 +31,8 @@ char	*ft_getenv(char *word, t_list *env)
 		env = env->next;
 	}
 	free(var);
-	return (expanded_str + 1);
+	free(word);
+	return (strdup(expanded_str + 1));
 }
 
 char	*expand_string(char *word, t_list *env)
@@ -46,10 +47,9 @@ char	*expand_string(char *word, t_list *env)
 		free(word);
 		word = ft_strdup(value);
 	}
-	else if (!ft_getenv(word + 1, env))
+	else
 	{
-		free(word);
-		word = NULL;
+		word = ft_getenv(word , env);
 	}
 	return (word);
 }
@@ -96,7 +96,7 @@ void	expand_quotes(char **word, int index, t_list *env)
 	{
 		tmp = ft_getenv(var + 1, env);
 		if (tmp)
-			befor_dolla = ft_strjoin2(tmp, befor_dolla);
+			befor_dolla = ft_strjoin(tmp, befor_dolla);
 		*word = ft_strjoin(befor_dolla, after_dolla);
 	}
 	else

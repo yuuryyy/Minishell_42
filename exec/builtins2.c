@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/20 12:01:12 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:23:15 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
         printf("export: invalid argument: %s\n", cmd->cmd[1]);
         return 1;
     }
-
     name_vari = ft_substr(cmd->cmd[1], 0, equal_sign - cmd->cmd[1]);
     var_value = ft_strdup(equal_sign + 1);
 
@@ -140,6 +139,9 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
 
     free(name_vari);
     free(var_value);
+    printf("%s>>>>\n", equal_sign);
+    printf("%s>>>>\n", name_vari);
+    printf("%s>>>>\n", var_value);
 
     return 0;
 }

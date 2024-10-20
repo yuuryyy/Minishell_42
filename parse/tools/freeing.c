@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/17 22:12:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 15:30:23 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_tokens(t_token **lst)
 		return ;
 	tmp = (*lst);
 	*lst = tmp->next;
+	printf("%s>>>>>\n", (tmp)->content);
 	if ((tmp)->content)
 		free((tmp)->content);
 	free(tmp);
