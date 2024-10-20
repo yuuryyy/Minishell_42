@@ -6,7 +6,11 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/10/20 16:45:07 by kaafkhar         ###   ########.fr       */
+=======
 /*   Updated: 2024/10/20 18:18:41 by ychagri          ###   ########.fr       */
+>>>>>>> 23903e7e0f077d7ceae8cffaff4844aba731697f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +28,7 @@ int g_errno = 0;
 int main(int ac, char **av, char **env)
 {
     t_args cmd_line;
+    atexit(s);
 
     (void)ac;
     (void)av;
