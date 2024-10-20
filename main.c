@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/20 09:45:18 by ychagri          ###   ########.fr       */
-=======
-/*   Updated: 2024/10/19 20:47:29 by kaafkhar         ###   ########.fr       */
->>>>>>> bf5cf76c3ff4c099d24c5ff4386ccf32e0c742d4
+/*   Updated: 2024/10/20 14:55:39 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 

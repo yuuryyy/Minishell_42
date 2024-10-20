@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/18 10:48:50 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 15:20:15 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_getenv(char *word, t_list *env)
 		env = env->next;
 	}
 	free(var);
-	return (expanded_str);
+	return (expanded_str + 1);
 }
 
 char	*expand_string(char *word, t_list *env)
