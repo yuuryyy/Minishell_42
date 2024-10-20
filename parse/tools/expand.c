@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 15:56:34 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 19:32:25 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_getenv(char *word, t_list *env)
 {
 	char	*var;
 	char	*expanded_str;
+	char	*temp;
 
 	if (!word || !env)
 		return (NULL);
@@ -25,14 +26,15 @@ char	*ft_getenv(char *word, t_list *env)
 	{
 		if (ft_strncmp(var, env->content, ft_strlen(var)) == 0)
 		{
-			expanded_str = ft_strchr(env->content, '=');
+			temp = ft_strchr(env->content, '=') + 1;
+			expanded_str = ft_strdup(temp);
 			break ;
 		}
 		env = env->next;
 	}
 	free(var);
 	free(word);
-	return (strdup(expanded_str + 1));
+	return (expanded_str);
 }
 
 char	*expand_string(char *word, t_list *env)
@@ -138,9 +140,26 @@ char	*expand(char *word, t_type type, t_list *env)
 	return (word);
 }
 
+char	*replace_sp(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			str[i] = '\n';
+		i++;
+	}
+	return (str);
+}
+
 void	expand_var(t_args **cmd_line)
 {
 	t_token	*tmp;
+	char	*old_str;
 
 	if (!*cmd_line)
 		return ;
@@ -162,7 +181,13 @@ void	expand_var(t_args **cmd_line)
 				free(tmp->content);
 				tmp->content = NULL;
 			}
+			old_str = tmp->content;
 			tmp->content = expand(tmp->content, tmp->type, (*cmd_line)->env);
+			if (ft_strncmp(old_str, tmp->content, ft_strlen(old_str) + 1))
+			{
+				tmp->content = replace_sp(tmp->content);
+				tmp->type = string;
+			}
 		}
 		if (tmp)
 			tmp = tmp->next;

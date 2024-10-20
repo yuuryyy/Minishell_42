@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 16:37:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 18:18:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	s()
 {
-	system("lsof -c minishell");
-	// system("leaks minishell");
+	// system("lsof -c minishell");
+	system("leaks minishell");
 }
 
 int g_errno = 0;
@@ -28,6 +28,7 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
 
+	// atexit(s);
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
     setup_signal_handlers();
@@ -58,7 +59,7 @@ int main(int ac, char **av, char **env)
             continue;
 
         if (execute_cmds(&cmd_line) != 0)
-            continue; 
+            continue;
 
         while (wait(0) != -1)
             continue;
@@ -68,7 +69,6 @@ int main(int ac, char **av, char **env)
         if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
     }
-
     return 0;
 }
 

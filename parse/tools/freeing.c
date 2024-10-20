@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 15:30:23 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 19:42:21 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	free_tokens(t_token **lst)
 		return ;
 	tmp = (*lst);
 	*lst = tmp->next;
-	printf("%s>>>>>\n", (tmp)->content);
 	if ((tmp)->content)
 		free((tmp)->content);
 	free(tmp);
@@ -81,10 +80,10 @@ void	free_table(t_cmd_tab **table)
 
 void	free_struct(t_args *cmd_line) 
 {
-	close(cmd_line->fdin);
-	close(cmd_line->fdout);
 	if (!cmd_line)
 		return ;
+	close(cmd_line->fdin);
+	close(cmd_line->fdout);
 	if (cmd_line->env)
 		ft_lstclear(&cmd_line->env, del);
 	if (cmd_line->path)
