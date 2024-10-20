@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youssra <youssra@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/07 00:07:55 by youssra          ###   ########.fr       */
+/*   Updated: 2024/10/19 20:52:42 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,20 @@ void echo(t_args *args, t_cmd_tab *cmd)
 
 int cd(t_cmd_tab *cmd, t_list *env)
 {
-    if (cmd->arg)
+    if (cmd->cmd[1])
     {
-        if (chdir(cmd->arg) != 0)
+        if (chdir(cmd->cmd[1]) != 0)
             perror("cd");
     }
     else
     {
-        if (chdir(path(env, "HOME")) != 0)
+        char *home = path(env, "HOME");
+        if (!home || chdir(home) != 0)
             perror("cd");
     }
-    return 1;
+    return 0;
 }
+
 
 int pwd(t_args *arg, char **cmd)
 {

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/20 11:52:56 by ychagri          ###   ########.fr       */
+=======
+/*   Updated: 2024/10/20 00:22:37 by kaafkhar         ###   ########.fr       */
+>>>>>>> bf5cf76c3ff4c099d24c5ff4386ccf32e0c742d4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +48,6 @@ typedef enum s_type
 	single_quote = 7,
 	double_quote = 8,
 }	t_type;
-
-typedef struct s_env
-{
-    char *var;
-    char *value;
-    struct s_env *next;
-} t_env;
 
 //command table
 typedef struct s_cmd_tab
@@ -121,11 +118,14 @@ void		ft_limadd_back(t_list **lst, t_list *new);
 
 // builtins
 int exec_builtin(t_args *args, t_cmd_tab *cmd);
+void print_exported_vars(t_list *env);
 void echo(t_args *args, t_cmd_tab *cmd);
 int cd(t_cmd_tab *cmd, t_list *env);
 int pwd(t_args *arg, char **cmd);
-
-// void ft_export(t_args *args, char **cmd);
+int export_variable(t_args *args, t_cmd_tab *cmd);
+t_list	*find_env_node(t_list *env, char *name_vari);
+void    update_env_value(t_list *env_node, char *new_value);
+void	add_env_node(t_list **env, char *name_vari, char *var_value);
 int ft_unset(t_args *args, char **cmd);
 void exec_exit(t_args *args, t_cmd_tab *cmd);
 void exec_env(t_cmd_tab *cmd, t_list *env);
@@ -147,7 +147,6 @@ void setup_signal_handlers();
 // tools 
 void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline);
 int own_strchr(char *str, char c);
-t_env *create_env_node(char *var, char *value);
 int check_is_env(char *var, t_list *env);
 int ft_strcmp(const char *s1, const char *s2);
 int is_num(char *str);
