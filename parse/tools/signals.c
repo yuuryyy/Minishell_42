@@ -6,12 +6,11 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/20 19:56:38 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:00:35 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void sigint_handler(int signum)
 {

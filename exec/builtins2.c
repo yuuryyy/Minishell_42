@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/20 19:42:39 by kaafkhar         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/20 18:22:32 by ychagri          ###   ########.fr       */
+>>>>>>> 23903e7e0f077d7ceae8cffaff4844aba731697f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +127,6 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
         printf("export: invalid argument: %s\n", cmd->cmd[1]);
         return 1;
     }
-
     name_vari = ft_substr(cmd->cmd[1], 0, equal_sign - cmd->cmd[1]);
     var_value = ft_strdup(equal_sign + 1);
 

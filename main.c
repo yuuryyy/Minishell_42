@@ -3,12 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/10/20 16:45:07 by kaafkhar         ###   ########.fr       */
+=======
+/*   Updated: 2024/10/20 18:18:41 by ychagri          ###   ########.fr       */
+>>>>>>> 23903e7e0f077d7ceae8cffaff4844aba731697f
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -28,6 +33,7 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
 
+	// atexit(s);
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
     setup_signal_handlers();
@@ -38,7 +44,6 @@ int main(int ac, char **av, char **env)
     {
         free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
-        
         if (cmd_line.line == NULL)
         {
 			write(STDOUT_FILENO, "exit", 5);
@@ -56,10 +61,10 @@ int main(int ac, char **av, char **env)
             continue;
 
         if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
-            continue;  
+            continue;
 
         if (execute_cmds(&cmd_line) != 0)
-            continue; 
+            continue;
 
         while (wait(0) != -1)
             continue;
@@ -69,7 +74,6 @@ int main(int ac, char **av, char **env)
         if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
     }
-
     return 0;
 }
 

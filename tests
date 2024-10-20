@@ -7,3 +7,7 @@ export var=a ; export $var=test ; echo $var $a
 =======
 must handle ctrl+\
 >>>>>>> 2b6b296cde2daf84b6e579431db3426404e183c7
+kawtar leak f export
+
+➜  Minishell_42 git:(main) ✗ export l=ls -l
+export: not valid in this context: -l
