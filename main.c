@@ -6,11 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/10/20 09:45:18 by ychagri          ###   ########.fr       */
-=======
-/*   Updated: 2024/10/19 20:47:29 by kaafkhar         ###   ########.fr       */
->>>>>>> bf5cf76c3ff4c099d24c5ff4386ccf32e0c742d4
+/*   Updated: 2024/10/20 16:45:07 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +14,8 @@
 
 void	s()
 {
-	system("lsof -c minishell");
-	// system("leaks minishell");
+	// system("lsof -c minishell");
+	system("leaks minishell");
 }
 
 int g_errno = 0;
@@ -27,6 +23,7 @@ int g_errno = 0;
 int main(int ac, char **av, char **env)
 {
     t_args cmd_line;
+    atexit(s);
 
     (void)ac;
     (void)av;

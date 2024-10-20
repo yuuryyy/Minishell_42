@@ -1,24 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/10/20 11:29:03 by kaafkhar         ###   ########.fr        #
-=======
-#    Updated: 2024/10/20 12:07:08 by ychagri          ###   ########.fr        #
->>>>>>> 2b6b296cde2daf84b6e579431db3426404e183c7
-#                                                                              #
-# **************************************************************************** #
 
 NAME 		=	minishell
 
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include  -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include  
+#-fsanitize=address
 #-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib" -lreadline 
