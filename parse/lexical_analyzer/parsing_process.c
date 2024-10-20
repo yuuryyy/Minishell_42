@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 19:50:06 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 21:27:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	process_line(t_args *cmdline)
 	if (!syntax_check(cmdline))
 		return (heredoc_check(cmdline->tokens), g_errno);
 	expand_var(&cmdline);
-	// fprintf(stderr, "heeere i am \n");
 	command_table(cmdline);
 	tab = cmdline->table;
 	while (tab)
