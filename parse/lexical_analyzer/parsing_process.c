@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 12:34:39 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 12:20:44 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,34 @@ void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
 	prev->next = new;
 }
 
+void	heredoc_check(t_token *token)
+{
+	t_token	*temp;
+	char	*lim;
+
+	temp = token;
+	while (temp && temp->type != piipe)
+	{
+		if (temp->type == heredoc)
+		{
+			lim = NULL;
+			temp = temp->next;
+			while (temp && temp->type >= string)
+			{
+				lim = ft_strjoin2(lim, temp->content);
+				if (temp->space == true)
+					break ;
+				temp = temp->next;
+			}
+			// printf("%s>>\n", lim);
+			read_line(lim, NULL, 0, 0, NULL);
+			free(lim);
+		}
+		else if (temp)
+			temp = temp->next;
+	}
+}
+
 int	process_line(t_args *cmdline)
 {
 	char		*tmp;
@@ -51,11 +79,14 @@ int	process_line(t_args *cmdline)
 	if (!*tmp)
 		return (free(tmp), g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
-		return (free(tmp), g_errno);
+		return (heredoc_check(cmdline->tokens),free(tmp), g_errno);
 	free(tmp);
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
-		return (g_errno);
+	{
+		printf("ypoooooo\n");
+		return (heredoc_check(cmdline->tokens), g_errno);
+	}
 	expand_var(&cmdline);
 	// fprintf(stderr, "heeere i am \n");
 	command_table(cmdline);

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 09:50:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 12:01:15 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 void	put_error(t_args *cmd_line, char *msg, char *name)
 {
+	(void) cmd_line;
 	ft_putstr_fd("minionshell: "RED, 2);
 	ft_putstr_fd(msg, 2);
 	if (name)
 		ft_putstr_fd(name, 2);
 	ft_putstr_fd("\n"RESET, 2);
-	free(cmd_line->line);
-	cmd_line->line = NULL;
-	if (cmd_line->tokens)
-		free_tokens(&cmd_line->tokens);
-	if (cmd_line->table)
-		free_table(&cmd_line->table);
 	g_errno = EXIT_FAILURE;
 }
 

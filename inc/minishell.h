@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/18 10:37:37 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 11:52:56 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void sigquit_handler(int signum);
 void setup_signal_handlers();
 
 // tools 
+void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline);
 int own_strchr(char *str, char c);
 t_env *create_env_node(char *var, char *value);
 int check_is_env(char *var, t_list *env);

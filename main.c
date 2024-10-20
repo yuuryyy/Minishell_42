@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 16:06:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 09:45:18 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int main(int ac, char **av, char **env)
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
 		 if (cmd_line.line == NULL)
         {
-            free_struct(&cmd_line);
+			write(STDOUT_FILENO, "exit", 5);
+    		// rl_on_new_line();
+    		// rl_replace_line("", 0);
+    		// rl_redisplay();
+    		free_struct(&cmd_line);
             exit(0);
         }
         if (*cmd_line.line)
