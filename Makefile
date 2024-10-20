@@ -39,7 +39,7 @@ lib :
 	make -C lib
 
 $(NAME) : $(OBJS) lib
-	$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
 
 %.o: %.c $(HEADER)
 		$(CC)  $(CFLAGS) -c $< -o $@

@@ -11,3 +11,5 @@ kawtar leak f export
 
 ➜  Minishell_42 git:(main) ✗ export l=ls -l
 export: not valid in this context: -l
+
+kawtar segfault f ctrl+d + heredoc 
