@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/20 11:08:15 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 12:01:12 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,33 @@ t_list	*find_env_node(t_list *env, char *name_vari)
 	return (NULL);
 }
 
+void ordre_alpha(t_list **env)
+{
+    t_list *i;
+    t_list *j;
+    char *temp;
+
+    if (!env || !(*env))
+        return;
+
+    i = *env;
+    while (i)
+    {
+        j = i->next;
+        while (j)
+        {
+            if (ft_strcmp((char *)i->content, (char *)j->content) > 0)
+            {
+                temp = i->content;
+                i->content = j->content;
+                j->content = temp;
+            }
+            j = j->next;
+        }
+        i = i->next;
+    }
+}
+
 int export_variable(t_args *args, t_cmd_tab *cmd)
 {
     char *name_vari;
@@ -80,6 +107,8 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
 
     if (cmd->cmd[1] == NULL)
     {
+        ordre_alpha(&(args->env));
+
         t_list *current = args->env;
         while (current)
         {
@@ -115,49 +144,35 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
     return 0;
 }
 
+int ft_unset(t_args *args, char **cmd)
+{
+    int i;
 
+    i = 1;
 
-// int ft_unset(t_args *args, char **cmd)
-// {
-//     int i = 1;
-//     while (cmd[i])
-//     {
-//         t_list *prev = NULL;
-//         t_list *current = args->env;
+    while (cmd[i])
+    {
+        t_list *prev = NULL;
+        t_list *current = args->env;
 
-//         while (current)
-//         {
-//             t_env *var = (t_env *)current->content;
-//             if (strcmp(var->var, cmd[i]) == 0) // Comparaison avec strcmp
-//             {
-//                 if (prev)
-//                     prev->next = current->next;
-//                 else
-//                     args->env = current->next;
+        while (current)
+        {
+            char *env_var = (char *)current->content;
+            if (ft_strncmp(env_var, cmd[i], ft_strlen(cmd[i])) == 0 && env_var[ft_strlen(cmd[i])] == '=')
+            {
+                if (prev)
+                    prev->next = current->next;
+                else
+                    args->env = current->next;
 
-//                 free(var->var);
-//                 free(var->value);
-//                 free(var);
-//                 free(current);
-//                 break;
-//             }
-//             prev = current;
-//             current = current->next;
-//         }
-//         i++;
-//     }
-//     return 0;
-// }
-
-// int check_is_env(char *var, t_list *env)
-// {
-//     t_list *tmp = env;
-//     while (tmp)
-//     {
-//         t_env *env_var = (t_env *)tmp->content;
-//         if (ft_strcmp(env_var->var, var) == 0)
-//             return 1;
-//         tmp = tmp->next;
-//     }
-//     return 0;
-// }
+                free(current->content);
+                free(current);
+                break;
+            }
+            prev = current;
+            current = current->next;
+        }
+        i++;
+    }
+    return (0);
+}

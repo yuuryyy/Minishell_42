@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/18 10:37:48 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 13:37:58 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline)
 	while (1)
 	{
 		buffer = readline("heredoc> ");
-		if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
+		if (!buffer || ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
 			break ;
 		if (flag)
 		{

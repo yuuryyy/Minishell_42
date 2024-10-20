@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/20 00:22:37 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 12:08:14 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ void		ft_limadd_back(t_list **lst, t_list *new);
 
 // builtins
 int exec_builtin(t_args *args, t_cmd_tab *cmd);
-void print_exported_vars(t_list *env);
 void echo(t_args *args, t_cmd_tab *cmd);
 int cd(t_cmd_tab *cmd, t_list *env);
 int pwd(t_args *arg, char **cmd);
 int export_variable(t_args *args, t_cmd_tab *cmd);
+void ordre_alpha(t_list **env);
 t_list	*find_env_node(t_list *env, char *name_vari);
 void    update_env_value(t_list *env_node, char *new_value);
 void	add_env_node(t_list **env, char *name_vari, char *var_value);
@@ -142,7 +142,6 @@ void setup_signal_handlers();
 
 // tools 
 int own_strchr(char *str, char c);
-int check_is_env(char *var, t_list *env);
 int ft_strcmp(const char *s1, const char *s2);
 int is_num(char *str);
 char *path(t_list *env, const char *var_name);
