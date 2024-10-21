@@ -6,11 +6,11 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:19:01 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 12:22:44 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:43:27 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 char	*ft_getenv(char *word, t_list *env)
 {
@@ -69,13 +69,13 @@ int	index_ds(char *str)
 	return (-1);
 }
 
-char *get_value(char *befor_dolla, char *var, char *after_dolla, t_list *env)
+char	*get_value(char *befor_dolla, char *var, char *after_dolla, t_list *env)
 {
 	char	*tmp;
 	char	*word;
 
 	tmp = NULL;
-		if (var && var[1] == '?')
+	if (var && var[1] == '?')
 	{
 		var = ft_itoa(g_errno);
 		tmp = ft_strjoin(befor_dolla, var);
