@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 20:05:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:03:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	s()
 {
 	// system("lsof -c minishell");
-	system("leaks minishell");
+	// system("leaks minishell");
 }
 
 int g_errno = 0;
@@ -34,7 +34,6 @@ int main(int ac, char **av, char **env)
     setup_signal_handlers();
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
-
     while (1)
     {
         free_current_cmdline(&cmd_line);
@@ -42,9 +41,6 @@ int main(int ac, char **av, char **env)
         if (cmd_line.line == NULL)
         {
 			write(STDOUT_FILENO, "exit", 5);
-    		// rl_on_new_line();
-    		// rl_replace_line("", 0);
-    		// rl_redisplay();
     		free_struct(&cmd_line);
             exit(0);
         }

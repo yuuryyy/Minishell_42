@@ -19,6 +19,7 @@ SRCS		=	main.c \
 				parse/tools/signals.c \
 				parse/tools/freeing.c \
 				parse/tools/expand.c \
+				parse/tools/expand_tools.c \
 				parse/tools/heredoc.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \

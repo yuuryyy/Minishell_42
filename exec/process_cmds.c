@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 12:35:47 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 07:57:57 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	execute_cmds(t_args *args)
 		return (0);
 	if (table && table->next == NULL)
 	{
+		// check for built in;
 		if (single_cmd(table))
 			return (1);
 	}

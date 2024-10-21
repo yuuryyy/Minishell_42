@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 21:27:02 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 11:02:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	heredoc_check(t_token *token)
 					break ;
 				temp = temp->next;
 			}
-			// printf("%s>>\n", lim);
-			read_line(lim, NULL, 0, 0, NULL);
+			read_line(lim, NULL, NO_EXW, NULL);
 			free(lim);
 		}
 		else if (temp)
@@ -79,7 +78,7 @@ int	process_line(t_args *cmdline)
 	if (!*tmp)
 		return (free(tmp), g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
-		return (heredoc_check(cmdline->tokens),free(tmp), g_errno);
+		return (heredoc_check(cmdline->tokens), free(tmp), g_errno);
 	free(tmp);
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))

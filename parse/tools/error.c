@@ -6,11 +6,17 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/20 12:01:15 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:04:50 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	del(void *content)
+{
+	if (content)
+		content = NULL;
+}
 
 void	put_error(t_args *cmd_line, char *msg, char *name)
 {

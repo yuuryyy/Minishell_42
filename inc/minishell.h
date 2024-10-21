@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/20 20:05:24 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:21:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,14 @@ void		free_struct(t_args *cmd_line);
 void		free_array(char	**str);
 void		free_tokens(t_token **lst);
 void		free_table(t_cmd_tab **table);
-
+void		del(void *content);
 void		put_error(t_args *cmd_line, char *msg, char *name);
 
 char		*expand(char *word, t_type type, t_list *env);
+void		expand_quotes(char **word, int index, t_list *env);
+int			index_ds(char *str);
 char		**lst_to_array(t_list *lst);
+char		*expand_string(char *word, t_list *env);
 
 int			word_len(char *line);
 int			words_list(char	*line, t_args *cmd_line);
@@ -141,7 +144,7 @@ void sigquit_handler(int signum);
 void setup_signal_handlers();
 
 // tools 
-void	read_line(char *limiter, int *fd, int flag, bool quote, t_args *cmdline);
+void	read_line(char *limiter, int *fd, int flag, t_args *cmdline);
 int own_strchr(char *str, char c);
 int ft_strcmp(const char *s1, const char *s2);
 int is_num(char *str);

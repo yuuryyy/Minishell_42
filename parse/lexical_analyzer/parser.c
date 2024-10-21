@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/16 00:33:22 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 10:03:39 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 	else
 	{
 		if (current->type == redin)
-		{
-			new->heredoc = false;
 			current = handle_tokens(&current->next, &new->in);
-		}
 		else if (current->type == redout)
 		{
 			new->red_out = REDOUT;
@@ -96,8 +93,6 @@ void	command_table(t_args *cmdline)
 	t_token		*current;
 	t_cmd_tab	*new;
 
-	// printf("holaaa\n");
-	// ft_bzero(cmdline->table, sizeof(t_cmd_tab));
 	current = cmdline->tokens;
 	while (current)
 	{
