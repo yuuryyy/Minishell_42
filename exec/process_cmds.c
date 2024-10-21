@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 07:57:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:54:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	execute_cmds(t_args *args)
 {
 	t_cmd_tab	*table;
+
 	table = args->table;
 	if (!table)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 12:04:50 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:18:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ bool	syntax_check(t_args *cmdline)
 			|| (current->type == piipe && (current == cmdline->tokens
 					|| !next || next->type < string)))
 			return (put_error(cmdline, SYNTAX, NULL), false);
-		if (current->type == piipe)
-			cmdline->cmd_num++;
 		current = current->next;
 	}
 	return (true);

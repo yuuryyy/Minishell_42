@@ -6,11 +6,39 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 09:51:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:53:33 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	forking(t_cmd_tab *tab, int *fd)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (put_error(tab->data, FORKMSG, NULL), 1);
+	else if (pid == 0)
+	{
+		close(fd[0]);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			return (close (fd[1]), put_error(tab->data, DUP2SG, NULL), 1);
+		close(fd[1]);
+		//check bi
+		exit(execute(tab));
+	}
+	else if (pid > 0)
+	{
+		close(fd[1]);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			return (close (fd[0]), put_error(tab->data, DUP2SG, NULL), 1);
+		close(fd[0]);
+		if (tab->heredoc)
+			close(tab->fd_heredoc);
+		tab = tab->next;
+	}
+}
 
 int	exec_pipes(t_cmd_tab *table)
 {
@@ -29,28 +57,8 @@ int	exec_pipes(t_cmd_tab *table)
 		}
 		if (pipe(fd) == -1)
 			return (put_error(table->data, PIPEMSG, NULL), 1);
-		pid = fork();
-		if (pid == -1)
-			return (put_error(table->data, FORKMSG, NULL), 1);
-		else if (pid == 0)
-		{
-			close(fd[0]);
-			if (dup2(fd[1], STDOUT_FILENO) == -1)
-				return (close (fd[1]), put_error(table->data, DUP2SG, NULL), 1);
-			close(fd[1]);
-			//check bi
-			exit(execute(tab));
-		}
-		else if (pid > 0)
-		{
-			close(fd[1]);
-			if (dup2(fd[0], STDIN_FILENO) == -1)
-				return (close (fd[0]), put_error(table->data, DUP2SG, NULL), 1);
-			close(fd[0]);
-			if (tab->heredoc)
-				close(tab->fd_heredoc);
-			tab = tab->next;
-		}
+		if (forking(table, fd))
+			return (1);
 	}
 	return (0);
 }
