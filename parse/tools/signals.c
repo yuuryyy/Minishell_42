@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/22 16:32:30 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:44:45 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void sigint_handler(int signum)
 void setup_signal_handlers()
 {
     signal(SIGINT, sigint_handler);
-    sigignore(SIGQUIT);
+    signal(SIGQUIT, SIG_IGN);
 }
