@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 16:34:59 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:32:49 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	s()
 {
-	system("lsof -c minishell");
-	// system("leaks minishell");
+	// system("lsof -c minishell");
+	system("leaks minishell");
 }
 
 int g_errno = 0;
@@ -23,24 +23,25 @@ int g_errno = 0;
 int main(int ac, char **av, char **env)
 {
     t_args cmd_line;
+    atexit(s);
 
     (void)ac;
     (void)av;
 
+	atexit(s);
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
     setup_signal_handlers();
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
-
     while (1)
     {
         free_current_cmdline(&cmd_line);
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
-        
         if (cmd_line.line == NULL)
         {
-            free_struct(&cmd_line);
+			write(STDOUT_FILENO, "exit", 5);
+    		free_struct(&cmd_line);
             exit(0);
         }
 
@@ -51,10 +52,10 @@ int main(int ac, char **av, char **env)
             continue;
 
         if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
-            continue;  
+            continue;
 
         if (execute_cmds(&cmd_line) != 0)
-            continue; 
+            continue;
 
         while (wait(0) != -1)
             continue;
@@ -64,7 +65,6 @@ int main(int ac, char **av, char **env)
         if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
     }
-
     return 0;
 }
 

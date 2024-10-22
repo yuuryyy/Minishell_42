@@ -1,5 +1,0 @@
-should handle expand after exporting new var;
-(->  MinionHell^~^ >$ cd -
-cd: No such file or directory
-->  MinionHell^~^ >$ )
-export var=a ; export $var=test ; echo $var $a

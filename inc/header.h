@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/18 05:41:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/21 19:03:38 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@
 # define WAITPIDMSG "waitpid() has failed ."
 # define SYNTAX "syntax error"
 # define PERMISSION "permission denied : "
-// # define
+
+# define NO_EXW 11
+# define EXPND_W 12
+# define WRITE_FD 13
+
 # define INPUT 0
 # define OUTPUT 1
 
 # define APND 7
 # define REDOUT 8
 
-
-#define RED   "\x1B[31m"
-#define GREEN "\x1B[32m"
-#define BLUE  "\x1B[34m"
-#define RESET "\x1B[0m"
-
+# define RED   "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define BLUE  "\x1B[34m"
+# define RESET "\x1B[0m"
 
 #endif

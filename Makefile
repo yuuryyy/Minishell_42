@@ -1,20 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/17 00:25:27 by youssra           #+#    #+#              #
-#    Updated: 2024/10/20 11:29:03 by kaafkhar         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 NAME 		=	minishell
 
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include  -fsanitize=address
+CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include  
+#-fsanitize=address
 #-Werror
 
 LFLAGS 		=	"-L$(shell brew --prefix readline)/lib" -lreadline 
@@ -29,6 +19,7 @@ SRCS		=	main.c \
 				parse/tools/signals.c \
 				parse/tools/freeing.c \
 				parse/tools/expand.c \
+				parse/tools/expand_tools.c \
 				parse/tools/heredoc.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \
@@ -41,6 +32,7 @@ SRCS		=	main.c \
 				exec/builtins2.c \
 				exec/exuc_built.c \
 				exec/pipe_line.c \
+				exec/redirections.c \
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -50,7 +42,7 @@ lib :
 	make -C lib
 
 $(NAME) : $(OBJS) lib
-	$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
 
 %.o: %.c $(HEADER)
 		$(CC)  $(CFLAGS) -c $< -o $@

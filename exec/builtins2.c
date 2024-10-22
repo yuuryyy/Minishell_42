@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/20 12:01:12 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/20 20:05:01 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -24,31 +25,30 @@ int own_strchr(char *str, char c)
     return -1;
 }
 
-void	add_env_node(t_list **env, char *name_vari, char *var_value)
+void add_env_node(t_list **env, char *name_vari, char *var_value)
 {
-	char	*new_var;
-	t_list	*new_node;
+    char *new_var;
+    t_list *new_node;
 
-	new_var = ft_strjoin(name_vari, "=");
-	new_var = ft_strjoin(new_var, var_value);
-	new_node = ft_lstnew(new_var);
-	ft_lstadd_back(env, new_node);
+    new_var = ft_strjoin(name_vari, "=");
+    char *temp = new_var;
+    new_var = ft_strjoin(new_var, var_value);
+    free(temp);
+    new_node = ft_lstnew(new_var);
+    ft_lstadd_back(env, new_node);
 }
 
 void update_env_value(t_list *env_node, char *new_value)
 {
-    char *env_var;
-    char *equal_sign;
-    char *new_var;
+    char *env_var = (char *)env_node->content;
+    char *equal_sign = ft_strchr(env_var, '=');
 
-    env_var = (char *)env_node->content;
-    equal_sign = ft_strchr(env_var, '=');
-
-    if (equal_sign != NULL)
-    {
+    if (equal_sign != NULL) {
         char *name_vari = ft_substr(env_var, 0, equal_sign - env_var);
-        new_var = ft_strjoin(name_vari, "=");
+        char *new_var = ft_strjoin(name_vari, "=");
+        char *temp = new_var;
         new_var = ft_strjoin(new_var, new_value);
+        free(temp);
         free(env_node->content);
         env_node->content = new_var;
         free(name_vari);
@@ -124,7 +124,6 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
         printf("export: invalid argument: %s\n", cmd->cmd[1]);
         return 1;
     }
-
     name_vari = ft_substr(cmd->cmd[1], 0, equal_sign - cmd->cmd[1]);
     var_value = ft_strdup(equal_sign + 1);
 

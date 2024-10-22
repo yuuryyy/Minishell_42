@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:47:17 by ychagri           #+#    #+#             */
-/*   Updated: 2023/11/03 15:56:13 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/20 12:18:04 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
 
+	if (!s1 || !s2)
+		return (-1);
 	i = 0;
 	if (n == 0)
 		return (0);
