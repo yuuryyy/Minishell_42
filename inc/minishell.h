@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/21 15:43:21 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:34:01 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ typedef struct s_cmd_tab
 {
 	char				**cmd;
 	char				*arg;
-	char				*in;
-	char				*out;
+	t_list				*in;
+	t_list				*out;
 	bool				heredoc;
 	int					red_out;
 	int					fd_heredoc;
-	char				*append;
+	t_list				*append;
 	t_list				*delimiter;
 	struct s_cmd_tab	*next;
 	struct s_args		*data;

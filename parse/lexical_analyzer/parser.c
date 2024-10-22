@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 10:03:39 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:41:31 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,23 @@ char	*handle_string(t_token *current, char *new)
 	return (arg);
 }
 
-t_token	*handle_tokens(t_token **current, char **str)
+t_token	*handle_tokens(t_token **current, t_list **list)
 {
 	t_token	*tmp;
+	t_list	*new;
+	char	*str;
 
 	tmp = *current;
+	str = NULL;
 	while (tmp && tmp->type >= 6)
 	{
-		*str = ft_strjoin2(*str, tmp->content);
+		str = ft_strjoin2(str, tmp->content);
 		if (tmp->space)
 			break ;
 		tmp = tmp->next;
 	}
+	new = ft_lstnew(str);
+	ft_lstadd_back(list, new);
 	return (tmp);
 }
 

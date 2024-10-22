@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 12:01:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/22 15:36:03 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	open_heredoc(t_list *tab, int *fd, t_args *data)
 		if (tab->next == NULL)
 		{
 			if (tab->quoted == true)
-				read_line(tab->content, fd, EXPND_W, data);
-			else
 				read_line(tab->content, fd, WRITE_FD, data);
+			else
+				read_line(tab->content, fd, EXPND_W, data);
 		}
 		else
 			read_line(tab->content, fd, NO_EXW, data);
