@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/22 14:34:01 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:44:04 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_args
 	t_cmd_tab	*table;
 	int			fdin;
 	int			fdout;
+	bool		heredoc_flag;
 }	t_args;
 
 void		environment(char **envp, t_args *args);

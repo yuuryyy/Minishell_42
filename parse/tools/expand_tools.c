@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:19:01 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 12:43:27 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:54:43 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char	*get_value(char *befor_dolla, char *var, char *after_dolla, t_list *env)
 	tmp = NULL;
 	if (var && var[1] == '?')
 	{
+		if (g_errno == -1)
+			g_errno = 1;
 		var = ft_itoa(g_errno);
 		tmp = ft_strjoin(befor_dolla, var);
 		word = ft_strjoin(tmp, after_dolla);

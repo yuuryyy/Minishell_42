@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:41:54 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/22 15:28:47 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 18:12:08 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int	outfile_opn(t_cmd_tab *cmd)
 			if (dup2(fdout, STDOUT_FILENO) == -1)
 				return (close(fdout), put_error(cmd->data, DUP2SG, NULL), 1);
 		}
+		close(fdout);
 	}
 	if (cmd->append != NULL)
 		return (append_red(cmd));
-	close(fdout);
 	return (0);
 }

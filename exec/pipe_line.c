@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 15:39:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 18:28:24 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	forking(t_cmd_tab *tab, int *fd)
 		close(fd[0]);
 		if (tab->heredoc)
 			close(tab->fd_heredoc);
-		tab = tab->next;
 	}
 	return (0);
 }

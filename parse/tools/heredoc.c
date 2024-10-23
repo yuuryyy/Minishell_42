@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/22 15:36:03 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:47:01 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,18 @@ void	ft_limadd_back(t_list **lst, t_list *new)
 	ptr->next = new;
 }
 
+void	heredc_sig(int signal)
+{
+	(void)signal;
+	g_errno = -1;
+	close(STDIN_FILENO);
+}
+
 void	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 {
 	char	*buffer;
 
+	signal(SIGINT, heredc_sig);
 	while (1)
 	{
 		buffer = readline("heredoc> ");
