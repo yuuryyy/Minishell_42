@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 18:07:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 19:35:56 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int main(int ac, char **av, char **env)
    				rl_on_new_line();
    				rl_replace_line("", 0);
    				rl_redisplay();
+				continue;
 			}
 			write(STDOUT_FILENO, "exit", 5);
     		free_struct(&cmd_line);
@@ -70,6 +71,7 @@ int main(int ac, char **av, char **env)
             return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
         if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
+		// printf("\n\n<<%d>>\n\n", g_errno);
     }
     return 0;
 }

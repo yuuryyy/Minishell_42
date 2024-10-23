@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 13:18:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 18:48:38 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	put_error(t_args *cmd_line, char *msg, char *name)
 		ft_putstr_fd(name, 2);
 	ft_putstr_fd("\n"RESET, 2);
 	g_errno = EXIT_FAILURE;
+	// printf("\n\n<<%d>>\n\n", g_errno);
 }
 
 bool	syntax_check(t_args *cmdline)

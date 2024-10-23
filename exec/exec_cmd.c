@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 18:38:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 19:39:06 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	single_cmd(t_cmd_tab *table)
 		if (WIFEXITED(status))
 		{
 			g_errno = WEXITSTATUS(status);
+			// ;
 			return (g_errno);
 		}
 	}
