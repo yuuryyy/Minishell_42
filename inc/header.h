@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 19:03:38 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 20:14:15 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
 
-# define PIPEMSG "pipe() has failed"
-# define OPENMSG "open() has failed"
-# define DUPMSG "dup() has failed"
-# define DUP2SG "dup2() has failed"
-# define FORKMSG "fork() has failed"
-# define INTROUVABLE_FILE "No such file or directory: "
-# define NOTFOUNDMSG "command not found: "
-# define WAITMSG	"wait() has failed ."
-# define WAITPIDMSG "waitpid() has failed ."
+# define PIPEMSG "pipe() has failed\x1B[0m"
+# define OPENMSG "open() has failed\x1B[0m"
+# define DUPMSG "dup() has failed\x1B[0m"
+# define DUP2SG "dup2() has failed\x1B[0m"
+# define FORKMSG "fork() has failed\x1B[0m"
+# define INTROUVABLE_FILE "No such file or directory: \x1B[0m"
+# define NOTFOUNDMSG "command not found: \x1B[0m"
+# define WAITMSG	"wait() has failed .\x1B[0m"
+# define WAITPIDMSG "waitpid() has failed .\x1B[0m"
 # define SYNTAX "syntax error"
-# define PERMISSION "permission denied : "
+# define PERMISSION "permission denied : \x1B[0m"
 
 # define NO_EXW 11
 # define EXPND_W 12

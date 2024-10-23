@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 19:39:06 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 21:39:06 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,19 @@ int	single_cmd(t_cmd_tab *table)
 	if (pid == -1)
 		return (put_error(table->data, FORKMSG, NULL), 1);
 	else if (pid == 0)
-		exit(execute(table));
+	{
+		g_errno = execute(table);
+		exit(g_errno);
+	}
 	else
 	{
 		close(STDIN_FILENO);
-		waitpid(pid, &status, WNOHANG);
+		waitpid(pid, &status, 0);
 		if (table->heredoc)
 			close(table->fd_heredoc);
 		if (WIFEXITED(status))
 		{
 			g_errno = WEXITSTATUS(status);
-			// ;
 			return (g_errno);
 		}
 	}

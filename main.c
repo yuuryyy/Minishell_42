@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 19:35:56 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 21:38:43 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int main(int ac, char **av, char **env)
         // if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
         //     continue;
 
-        if (execute_cmds(&cmd_line) != 0)
-            continue;
+        execute_cmds(&cmd_line);
+            // continue;
 
         while (wait(0) != -1)
             continue;

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 18:28:24 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 20:11:33 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	exec_pipes(t_cmd_tab *table)
 		}
 		if (pipe(fd) == -1)
 			return (put_error(table->data, PIPEMSG, NULL), 1);
-		if (forking(table, fd))
+		if (forking(tab, fd))
 		{
 			close(fd[1]);
 			close(fd[0]);
