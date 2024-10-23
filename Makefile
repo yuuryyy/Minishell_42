@@ -60,7 +60,7 @@ re: fclean all
 
 push: fclean
 	git add .
-	git commit -m "parse"
+	git commit -m "exec done, sig herdc left"
 	git push
 
 .PHONY: clean fclean re lib
