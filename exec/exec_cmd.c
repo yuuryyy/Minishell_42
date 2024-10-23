@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 18:41:27 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/23 18:38:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	single_cmd(t_cmd_tab *table)
 		exit(execute(table));
 	else
 	{
-		waitpid(pid, &status, 0);
+		close(STDIN_FILENO);
+		waitpid(pid, &status, WNOHANG);
 		if (table->heredoc)
 			close(table->fd_heredoc);
 		if (WIFEXITED(status))
