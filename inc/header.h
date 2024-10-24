@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 20:14:15 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 11:17:44 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define EXIT_FAILURE 1
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
+# define PATH_MAX 100
 
 # define PIPEMSG "pipe() has failed\x1B[0m"
 # define OPENMSG "open() has failed\x1B[0m"
