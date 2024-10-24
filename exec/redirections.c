@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:41:54 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 16:46:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:05:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,16 @@ int	append_red(t_cmd_tab *cmd)
 {
 	int		apnd;
 	t_list	*tmp;
+	char	*str;
 
 	tmp = cmd->append;
 	while (tmp)
 	{
 		if (check_files(cmd->data, tmp->content, OUTPUT))
 			return (1);
+		str = tmp->content;
+		if (*str == 0)
+			return (put_error(cmd->data, INTROUVABLE_FILE, NULL), 1);
 		apnd = open(tmp->content, O_CREAT | O_APPEND | O_RDWR, 0644);
 		if (apnd == -1)
 			return (put_error(cmd->data, OPENMSG, NULL), 1);
@@ -84,6 +88,7 @@ int	outfile_opn(t_cmd_tab *cmd)
 {
 	int		fdout;
 	t_list	*tmp;
+	char	*outfile;
 
 	if (cmd->out != NULL)
 	{
@@ -96,6 +101,9 @@ int	outfile_opn(t_cmd_tab *cmd)
                 fdout = STDOUT_FILENO;
 			else
 			{
+				outfile = tmp->content;
+				if (*outfile == 0)
+					return (put_error(cmd->data, INTROUVABLE_FILE, NULL), 1);
                 fdout = open(tmp->content, O_CREAT | O_TRUNC | O_RDWR, 0644);
 				if (fdout == -1)
 					return (put_error(cmd->data, OPENMSG, NULL), 1);
