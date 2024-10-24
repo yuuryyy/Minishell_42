@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 15:46:17 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 19:06:19 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_limadd_back(t_list **lst, t_list *new)
 void	heredc_sig(int signal)
 {
 	(void)signal;
+	g_errno = -1;
 	rl_replace_line("", 0); // Clear the current line
 	write(STDOUT_FILENO, "\n", 1);
     rl_on_new_line(); // Move to the next line
@@ -59,15 +60,19 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 	char	*buffer;
 
 	signal(SIGINT, heredc_sig);
-	
 	while (1)
 	{
 		buffer = readline("heredoc> ");
 		if (!buffer)
 		{
-			free_current_cmdline(cmdline);
-			g_errno = 1;
-			return (1);
+			if (g_errno == -1)
+			{
+				free_current_cmdline(cmdline);
+				g_errno = 1;
+				return (1);
+			}
+			else
+				break ;
 		}
 		if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
 			break ;

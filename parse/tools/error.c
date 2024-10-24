@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 20:15:04 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 18:55:51 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	syntax_check(t_args *cmdline)
 
 void	free_current_cmdline(t_args *cmdline)
 {
+	if (!cmdline)
+		return ;
 	free(cmdline->line);
 	cmdline->line = NULL;
 	free_table(&cmdline->table);

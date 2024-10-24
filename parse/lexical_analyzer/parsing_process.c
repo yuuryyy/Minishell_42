@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 17:07:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 19:09:12 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
 	prev->next = new;
 }
 
-void	heredoc_check(t_token *token)
+int	heredoc_check(t_token *token)
 {
 	t_token	*temp;
 	char	*lim;
@@ -61,12 +61,14 @@ void	heredoc_check(t_token *token)
 					break ;
 				temp = temp->next;
 			}
-			read_line(lim, NULL, NO_EXW, NULL);
+			if (read_line(lim, NULL, NO_EXW, NULL))
+				return (free(lim), 1);
 			free(lim);
 		}
 		else if (temp)
 			temp = temp->next;
 	}
+	return (0);
 }
 
 int	process_line(t_args *cmdline)
@@ -78,11 +80,26 @@ int	process_line(t_args *cmdline)
 	if (!*tmp)
 		return (free(tmp), g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
-		return (heredoc_check(cmdline->tokens), free(tmp), g_errno);
+	{
+		if (heredoc_check(cmdline->tokens))
+		{
+			free(tmp);
+			if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
+          		return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
+			return (g_errno = 1, 1);
+		}
+	}
 	free(tmp);
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
-		return (heredoc_check(cmdline->tokens), g_errno);
+	{
+		if (heredoc_check(cmdline->tokens))
+		{
+			if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
+          		return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
+			return (g_errno = 1, 1);
+		}
+	}
 	expand_var(&cmdline);
 	command_table(cmdline);
 	tab = cmdline->table;
@@ -98,6 +115,5 @@ int	process_line(t_args *cmdline)
 		if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
            return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
 	}
-	g_errno = 0;
-	return (0);
+	return (g_errno = 0, 0);
 }
