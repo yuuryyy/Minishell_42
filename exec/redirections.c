@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:41:54 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 18:12:08 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 16:46:58 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,14 @@ int	infile_opn(t_cmd_tab *cmd)
 				infile = tmp->content;
 			tmp = tmp->next;
 		}
-		fdin = open(infile, O_RDONLY, 0644);
-		if (fdin == -1)
-			return (put_error(cmd->data, OPENMSG, NULL), 1);
+		if (ft_strncmp(tmp->content, "/dev/stdin", ft_strlen(infile) + 1) == 0)
+           fdin = STDIN_FILENO;
+		else
+		{
+			fdin = open(infile, O_RDONLY, 0644);
+			if (fdin == -1)
+				return (put_error(cmd->data, OPENMSG, NULL), 1);
+		}
 		if (cmd->heredoc == false)
 		{
 			if (dup2(fdin, STDIN_FILENO == -1))
@@ -87,11 +92,16 @@ int	outfile_opn(t_cmd_tab *cmd)
 		{
 			if (check_files(cmd->data,tmp->content, OUTPUT))
 				return (1);
-			fdout = open(tmp->content, O_CREAT | O_TRUNC | O_RDWR, 0644);
-			if (fdout == -1)
-				return (put_error(cmd->data, OPENMSG, NULL), 1);
-			if (tmp->next != NULL)
-				close (fdout);
+			if (ft_strncmp(tmp->content, "/dev/stdout", ft_strlen(tmp->content) + 1) == 0)
+                fdout = STDOUT_FILENO;
+			else
+			{
+                fdout = open(tmp->content, O_CREAT | O_TRUNC | O_RDWR, 0644);
+				if (fdout == -1)
+					return (put_error(cmd->data, OPENMSG, NULL), 1);
+				if (tmp->next != NULL)
+					close (fdout);
+			}
 			tmp = tmp->next;
 		}
 		if (cmd->red_out == REDOUT)
