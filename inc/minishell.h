@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/24 10:15:45 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:34:51 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void		setup_signal_handlers(void);
 // tools
 int			outfile_opn(t_cmd_tab *cmd);
 int			infile_opn(t_cmd_tab *cmd);
-void		read_line(char *limiter, int *fd, int flag, t_args *cmdline);
+int			read_line(char *limiter, int *fd, int flag, t_args *cmdline);
 int			own_strchr(char *str, char c);
 int			ft_strcmp(const char *s1, const char *s2);
 int			is_num(char *str);

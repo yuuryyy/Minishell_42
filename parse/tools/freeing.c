@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 09:51:57 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:23:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	free_table(t_cmd_tab **table)
 	if (tmp->append)
 		ft_lstclear(&tmp->append, free_del);
 	free(tmp);
+	tmp = NULL;
 	free_table(table);
 }
 

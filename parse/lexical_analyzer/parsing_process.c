@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 18:50:05 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 15:40:25 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ int	process_line(t_args *cmdline)
 		tab->arg = NULL;
 		tab = tab->next;
 	}
-	ft_heredoc(&cmdline->table);
+	if (ft_heredoc(&cmdline->table))
+	{
+		if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
+           return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
+	}
 	return (0);
 }

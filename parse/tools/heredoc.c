@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 22:13:25 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 15:38:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ void	ft_limadd_back(t_list **lst, t_list *new)
 void	heredc_sig(int signal)
 {
 	(void)signal;
-	g_errno = -1;
+	rl_replace_line("", 0); // Clear the current line
+	write(STDOUT_FILENO, "\n", 1);
+    rl_on_new_line(); // Move to the next line
+    // rl_redisplay(); //
 	close(STDIN_FILENO);
 }
 
-void	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
+int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 {
 	char	*buffer;
 
@@ -59,7 +62,13 @@ void	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 	while (1)
 	{
 		buffer = readline("heredoc> ");
-		if (!buffer || ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
+		if (!buffer)
+		{
+			free_current_cmdline(cmdline);
+			g_errno = 1;
+			return (1);
+		}
+		if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
 			break ;
 		if (flag != NO_EXW)
 		{
@@ -72,23 +81,30 @@ void	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 	}
 	if (buffer)
 		free(buffer);
+	return (0);
 }
 
-void	open_heredoc(t_list *tab, int *fd, t_args *data)
+int	open_heredoc(t_list *tab, int *fd, t_args *data)
 {
+	int	err;
+
+	err = 0;
 	while (tab)
 	{
 		if (tab->next == NULL)
 		{
 			if (tab->quoted == true)
-				read_line(tab->content, fd, WRITE_FD, data);
+				err = read_line(tab->content, fd, WRITE_FD, data);
 			else
-				read_line(tab->content, fd, EXPND_W, data);
+				err = read_line(tab->content, fd, EXPND_W, data);
 		}
 		else
-			read_line(tab->content, fd, NO_EXW, data);
+			err = read_line(tab->content, fd, NO_EXW, data);
+		if (err)
+			return (1);
 		tab = tab->next;
 	}
+	return (0);
 }
 
 int	ft_heredoc(t_cmd_tab **cmds)
@@ -96,7 +112,9 @@ int	ft_heredoc(t_cmd_tab **cmds)
 	t_cmd_tab	*cmdtable;
 	t_list		*tmp;
 	int			fd[2];
+	int			err;
 
+	err = 0;
 	cmdtable = *cmds;
 	while (cmdtable)
 	{
@@ -106,7 +124,9 @@ int	ft_heredoc(t_cmd_tab **cmds)
 				return (ft_putstr_fd("pipe has failed", 2),
 					g_errno = EXIT_FAILURE, 1);
 			tmp = cmdtable->delimiter;
-			open_heredoc(tmp, fd, (*cmds)->data);
+			err = open_heredoc(tmp, fd, (*cmds)->data);
+			if (err)
+				return (close(fd[1]), close(fd[0]), 1);
 			cmdtable->fd_heredoc = fd[0];
 			close(fd[1]);
 		}
