@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/23 17:45:14 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:01:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void sigint_handler(int signum)
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
+    g_errno = 1;
 }
 
 void setup_signal_handlers()
