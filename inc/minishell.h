@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/23 17:44:04 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 10:15:45 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int			cd(t_cmd_tab *cmd, t_list *env);
 int			pwd(t_args *arg, char **cmd);
 int			export_variable(t_args *args, t_cmd_tab *cmd);
 void		ordre_alpha(t_list **env);
-t_list		*find_env_node(t_list *env, char *name_vari);
-void		update_env_value(t_list *env_node, char *new_value);
-void		add_env_node(t_list **env, char *name_vari, char *var_value);
+t_list		*find_env_node(t_list *env, char *cmd);
+void		update_env_value(t_list *env_node, char *cmd);
+void		add_env_node(t_list **env, char *cmd);
 int			ft_unset(t_args *args, char **cmd);
 void		exec_exit(t_args *args, t_cmd_tab *cmd);
 void		exec_env(t_cmd_tab *cmd, t_list *env);

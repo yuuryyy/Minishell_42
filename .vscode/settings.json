@@ -3,6 +3,7 @@
         "string": "cpp",
         "array": "c",
         "string_view": "c",
-        "vector": "c"
+        "vector": "c",
+        "iterator": "c"
     }
 }

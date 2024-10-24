@@ -6,9 +6,10 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/23 23:02:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 14:04:08 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -24,7 +25,7 @@ int main(int ac, char **av, char **env)
 {
     t_args cmd_line;
 
-	// atexit(s);
+	atexit(s);
     (void)ac;
     (void)av;
     ft_bzero(&cmd_line, sizeof(t_args));
@@ -48,7 +49,7 @@ int main(int ac, char **av, char **env)
 				continue;
 			}
 			write(STDOUT_FILENO, "exit", 5);
-    		free_struct(&cmd_line);
+    		// free_struct(&cmd_line);
             exit(0);
         }
 
@@ -58,7 +59,11 @@ int main(int ac, char **av, char **env)
         if (process_line(&cmd_line) != 0)
             continue;
 
+<<<<<<< HEAD
         if (cmd_line.table && cmd_line.table->cmd && exec_builtin(&cmd_line, cmd_line.table) == 0)
+=======
+        if (cmd_line.table && exec_builtin(&cmd_line, cmd_line.table) == 0)
+>>>>>>> e908fd282e27abbd6457d668bf11517d7f9fddd7
             continue;
 
         execute_cmds(&cmd_line);
