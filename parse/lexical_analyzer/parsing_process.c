@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 19:09:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/24 22:25:54 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ int	process_line(t_args *cmdline)
 		if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
            return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
 	}
-	return (g_errno = 0, 0);
+	return (0);
 }

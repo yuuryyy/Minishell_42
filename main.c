@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 15:43:48 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/25 00:24:20 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,20 @@ int main(int ac, char **av, char **env)
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
         if (cmd_line.line == NULL)
         {
-			write(STDOUT_FILENO, "exit", 5);
-    		free_struct(&cmd_line);
-            exit(0);
+			if (g_errno == -1)
+			{
+       			 if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
+            			return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
+				g_errno = 1;
+				continue;
+			}
+			else
+			{
+				write(STDOUT_FILENO, "exit", 5);
+    			free_struct(&cmd_line);
+            	exit(0);
+
+			}
         }
         if (*cmd_line.line)
             add_history(cmd_line.line);
@@ -50,8 +61,8 @@ int main(int ac, char **av, char **env)
             continue;
 		if (cmd_line.table == NULL)
 			continue ;
-        if (cmd_line.table && cmd_line.table->cmd && exec_builtin(&cmd_line, cmd_line.table) == 0)
-            continue;
+        // if (cmd_line.table && cmd_line.table->cmd && exec_builtin(&cmd_line, cmd_line.table) == 0)
+        //     continue;
 
         execute_cmds(&cmd_line);
             // continue;
