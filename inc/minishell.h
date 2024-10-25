@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/24 15:34:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/25 13:00:38 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,16 @@ void		ft_limadd_back(t_list **lst, t_list *new);
 int			exec_builtin(t_args *args, t_cmd_tab *cmd);
 void		echo(t_args *args, t_cmd_tab *cmd);
 int			cd(t_cmd_tab *cmd, t_list *env);
+t_list		*find_env_node2(t_list *env, char *cmd);
 int			pwd(t_args *arg, char **cmd);
 int			export_variable(t_args *args, t_cmd_tab *cmd);
 void		ordre_alpha(t_list **env);
 t_list		*find_env_node(t_list *env, char *cmd);
-void		update_env_value(t_list *env_node, char *cmd);
-void		add_env_node(t_list **env, char *cmd);
+int 		update_env_value(t_list *env_node, char *cmd, int append);
 int			ft_unset(t_args *args, char **cmd);
 void		exec_exit(t_args *args, t_cmd_tab *cmd);
 void		exec_env(t_cmd_tab *cmd, t_list *env);
+int 		is_valid_identifier(const char *str);
 //exec
 int			exec_pipes(t_cmd_tab *table);
 int			execute(t_cmd_tab *table);
@@ -134,13 +135,11 @@ int			single_cmd(t_cmd_tab *table);
 int			check_files(t_args *args, char *filename, int flag);
 //signals
 void		sigint_handler(int signum);
-void		sigquit_handler(int signum);
 void		setup_signal_handlers(void);
 // tools
 int			outfile_opn(t_cmd_tab *cmd);
 int			infile_opn(t_cmd_tab *cmd);
 int			read_line(char *limiter, int *fd, int flag, t_args *cmdline);
-int			own_strchr(char *str, char c);
 int			ft_strcmp(const char *s1, const char *s2);
 int			is_num(char *str);
 char		*path(t_list *env, const char *var_name);
