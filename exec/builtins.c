@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/24 12:37:15 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:52:53 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int cd(t_cmd_tab *cmd, t_list *env)
             return 1;
         }
     }
-    // Mettri à jour PWD l OLDPWD f l'environnement
     char new_path[PATH_MAX];
     if (getcwd(new_path, PATH_MAX) != NULL)
     {
@@ -104,8 +103,8 @@ int cd(t_cmd_tab *cmd, t_list *env)
         
         if (pwd_str && oldpwd_str)
         {
-            t_list *pwd_node = find_env_node(env, "PWD=");
-            t_list *oldpwd_node = find_env_node(env, "OLDPWD=");
+            t_list *pwd_node = find_env_node2(env, "PWD=");
+            t_list *oldpwd_node = find_env_node2(env, "OLDPWD=");
             
             if (pwd_node)
             {

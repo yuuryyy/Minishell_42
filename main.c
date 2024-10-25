@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 00:24:20 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/25 14:51:58 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int g_errno = 0;
 
 int main(int ac, char **av, char **env)
 {
-    t_args cmd_line;
+    t_args  cmd_line;
 
-	// atexit(s);
+    // atexit(s);
     (void)ac;
     (void)av;
     ft_bzero(&cmd_line, sizeof(t_args));
@@ -33,6 +33,7 @@ int main(int ac, char **av, char **env)
     setup_signal_handlers();
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
+
     while (1)
     {
         free_current_cmdline(&cmd_line);
@@ -44,19 +45,18 @@ int main(int ac, char **av, char **env)
        			 if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
             			return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
 				g_errno = 1;
-				continue;
+				// continue;
 			}
 			else
 			{
 				write(STDOUT_FILENO, "exit", 5);
     			free_struct(&cmd_line);
             	exit(0);
-
 			}
         }
         if (*cmd_line.line)
             add_history(cmd_line.line);
-
+		printf("heeere\n");
         if (process_line(&cmd_line) != 0)
             continue;
 		if (cmd_line.table == NULL)
@@ -64,17 +64,17 @@ int main(int ac, char **av, char **env)
         // if (cmd_line.table && cmd_line.table->cmd && exec_builtin(&cmd_line, cmd_line.table) == 0)
         //     continue;
 
-        execute_cmds(&cmd_line);
-            // continue;
+        if (execute_cmds(&cmd_line))
+            continue;
 
         while (wait(0) != -1)
             continue;
 
         if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
+
         if (dup2(cmd_line.fdout, STDOUT_FILENO) == -1)
             return (put_error(&cmd_line, "dup2 error on fdout", NULL), free_struct(&cmd_line), 1);
-		// printf("\n\n<<%d>>\n\n", g_errno);
     }
     return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exuc_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/20 11:56:07 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:28:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int exec_builtin(t_args *args, t_cmd_tab *cmd)
 {
+    if (!cmd || !cmd->cmd)
+		return (-1);
     if (ft_strcmp(cmd->cmd[0], "echo") == 0)
         echo(args, cmd);
     else if (ft_strcmp(cmd->cmd[0], "cd") == 0)

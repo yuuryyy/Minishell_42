@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 15:23:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/25 13:21:53 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	free_struct(t_args *cmd_line)
 	close(cmd_line->fdin);
 	close(cmd_line->fdout);
 	if (cmd_line->env)
-		ft_lstclear(&cmd_line->env, del);
+		ft_lstclear(&cmd_line->env, free_del);
 	if (cmd_line->path)
 		free_array(cmd_line->path);
 	if (cmd_line->line)

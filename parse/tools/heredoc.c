@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 00:18:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/25 13:42:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 	int		tmp;
 
 	// signal(SIGINT, heredc_sig);
-	setup_signal_handlers();
+	// setup_signal_handlers();
 	buffer = NULL;
 	tmp = g_errno;
 	while (1)
