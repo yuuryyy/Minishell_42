@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 09:15:27 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/26 00:58:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	syntax_check(t_args *cmdline)
 		if ((current->type < 5 && (!next || next->type < string))
 			|| (current->type == piipe && (current == cmdline->tokens
 					|| !next || next->type < string)))
-			return (put_error(cmdline, SYNTAX, NULL), false);
+			return (false);
 		current = current->next;
 	}
 	return (true);

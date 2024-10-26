@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 14:51:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 00:34:26 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ int main(int ac, char **av, char **env)
     (void)av;
     ft_bzero(&cmd_line, sizeof(t_args));
     environment(env, &cmd_line);
-    setup_signal_handlers();
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
 
     while (1)
     {
+        rl_catch_signals = 0;
         free_current_cmdline(&cmd_line);
+        setup_signal_handlers();
         cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
         if (cmd_line.line == NULL)
         {
@@ -45,7 +46,7 @@ int main(int ac, char **av, char **env)
        			 if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
             			return (put_error(&cmd_line, "dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
 				g_errno = 1;
-				// continue;
+				continue;
 			}
 			else
 			{
@@ -56,9 +57,10 @@ int main(int ac, char **av, char **env)
         }
         if (*cmd_line.line)
             add_history(cmd_line.line);
-		printf("heeere\n");
+		// printf("heeere\n");
         if (process_line(&cmd_line) != 0)
             continue;
+
 		if (cmd_line.table == NULL)
 			continue ;
         // if (cmd_line.table && cmd_line.table->cmd && exec_builtin(&cmd_line, cmd_line.table) == 0)

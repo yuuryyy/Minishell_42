@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 13:42:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 00:11:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,34 @@ void	ft_limadd_back(t_list **lst, t_list *new)
 	ptr->next = new;
 }
 
-// void	heredc_sig(int signal)
-// {
-// 	(void)signal;
-// 	g_errno = -1;
-// 	printf("heere\n");
-// 	rl_replace_line("", 0); // Clear the current line
-// 	write(STDOUT_FILENO, "\n", 1);
-//     rl_on_new_line(); // Move to the next line
-// 	close(STDIN_FILENO);
-// }
+void	heredc_sig(int signal)
+{
+	(void)signal;
+	g_errno = -1;
+	// fprintf(stderr ,"heere\n");
+	        // printf("herdoc = %d",g_errno);
+
+	rl_replace_line("", 0); // Clear the current line
+	// if (g_errno = -1)
+	// write(STDOUT_FILENO, "\n", 1);
+    rl_on_new_line(); // Move to the next line
+	// rl_redisplay();
+	close(STDIN_FILENO);
+}
 
 int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 {
 	char	*buffer;
 	int		tmp;
 
-	// signal(SIGINT, heredc_sig);
+	// signal()
+	signal(SIGINT, heredc_sig);
 	// setup_signal_handlers();
 	buffer = NULL;
 	tmp = g_errno;
 	while (1)
 	{
-		g_errno = 123;
+		// g_errno = 123;
 		buffer = readline("heredoc> ");
 		if (!buffer)
 		{

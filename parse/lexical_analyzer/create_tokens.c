@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/19 12:33:59 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 01:02:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,19 @@ t_type	get_type(char *word, t_args *cmd_line)
 {
 	if (*word == '<' && ft_strlen(word) == 2)
 		return (heredoc);
-	if (*word == '>' && ft_strlen(word) == 2)
+	else if (*word == '>' && ft_strlen(word) == 2)
 		return (append);
-	if (*word == '<' && ft_strlen(word) == 1)
+	else if (*word == '<' && ft_strlen(word) == 1)
 		return (redin);
-	if (*word == '>' && ft_strlen(word) == 1)
+	else if (*word == '>' && ft_strlen(word) == 1)
 		return (redout);
-	if (*word == '|' && ft_strlen(word) == 1)
+	else if (*word == '|' && ft_strlen(word) == 1)
 		return (piipe);
-	if (*word == '\'')
+	else if (*word == '\'')
 		return (single_quote);
-	if (*word == '\"')
+	else if (*word == '\"')
 		return (double_quote);
-	if (is_seperator(*word))
+	else if (is_seperator(*word))
 		return (put_error(cmd_line, SYNTAX, NULL), 0);
 	else
 		return (string);
