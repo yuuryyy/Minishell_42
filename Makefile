@@ -36,7 +36,7 @@ SRCS		=	main.c \
 
 OBJS		= $(SRCS:.c=.o)
 
-M := AUTO_PUSH
+M			:= AUTO_PUSH
 
 
 
