@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/26 13:20:41 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:53:47 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int pwd(t_args *arg, char **cmd)
 void exec_exit(t_args *args, t_cmd_tab *cmd)
 {
     (void)args;
-    if (cmd->arg && cmd->arg[0])
+    if (cmd->arg && cmd->arg[0])//changer arg aver cmd
     {
         if (cmd->next)
         {
@@ -71,8 +71,9 @@ void exec_exit(t_args *args, t_cmd_tab *cmd)
         }
         else if (is_num(cmd->arg))
         {
+            printf()
             printf("exit\n");
-            g_errno = ft_atoi(cmd->arg);
+            g_errno = ft_atoi(cmd->cmd[1]);
             exit(g_errno);
         }
         else
