@@ -36,6 +36,10 @@ SRCS		=	main.c \
 
 OBJS		= $(SRCS:.c=.o)
 
+M := "AUTO_PUSH"
+
+
+
 all : $(NAME)
 
 lib :
@@ -60,7 +64,7 @@ re: fclean all
 
 push: fclean
 	git add .
-	git commit -m "exec done, sig herdc left"
+	git commit -m $(M)
 	git push
 
 .PHONY: clean fclean re lib
