@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/25 12:59:48 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/26 13:15:54 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,26 @@ int update_env_value(t_list *env_node, char *cmd, int append)
     char *key;
     char *equal_sign;
     char *append_pos;
-    
+
     append_pos = ft_strnstr(cmd, "+=", ft_strlen(cmd));
-    if (append)
+
+    if (append) {
         equal_sign = append_pos + 1;
-    else
+    } else {
         equal_sign = ft_strchr(cmd, '=');
+    }
         
     if (!equal_sign)
         return (1);
 
-    key = ft_substr(cmd, 0, append ? (append_pos - cmd) : (equal_sign - cmd));
+    size_t key_length;
+    if (append) {
+        key_length = append_pos - cmd;
+    } else {
+        key_length = equal_sign - cmd;
+    }
+
+    key = ft_substr(cmd, 0, key_length);
     if (!key)
         return (1);
 
@@ -108,18 +117,19 @@ int update_env_value(t_list *env_node, char *cmd, int append)
     return (0);
 }
 
+
 int is_valid_identifier(const char *str)
 {
     if (!str || !*str)
         return (0);
 
-    if (!isalpha(*str) && *str != '_')
+    if (!ft_isalpha(*str) && *str != '_')
         return 0;
 
     str++;
     while (*str)
     {
-        if (!isalnum(*str) && *str != '_')
+        if (!ft_isalnum(*str) && *str != '_')
             return 0;
         str++;
     }
@@ -142,7 +152,13 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
     }
 
     char *append_sign = ft_strnstr(cmd->cmd[1], "+=", ft_strlen(cmd->cmd[1]));
-    char *equal_sign = append_sign ? append_sign + 1 : ft_strchr(cmd->cmd[1], '=');
+    char *equal_sign;
+
+    if (append_sign) {
+        equal_sign = append_sign + 1;
+    } else {
+        equal_sign = ft_strchr(cmd->cmd[1], '=');
+    }
 
     if (!equal_sign && !append_sign)
     {
@@ -172,25 +188,28 @@ int export_variable(t_args *args, t_cmd_tab *cmd)
     else
     {
         char *new_content;
+
         if (append_sign)
         {
             char *key = ft_substr(cmd->cmd[1], 0, append_sign - cmd->cmd[1]);
             if (!key)
                 return (1);
-            
+
             char *value = ft_strjoin("=", equal_sign + 1);
             if (!value)
             {
                 free(key);
                 return (1);
             }
-            
+
             new_content = ft_strjoin(key, value);
             free(key);
             free(value);
         }
         else
+        {
             new_content = ft_strdup(cmd->cmd[1]);
+        }
 
         if (!new_content)
             return (1);
