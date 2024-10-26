@@ -36,7 +36,7 @@ SRCS		=	main.c \
 
 OBJS		= $(SRCS:.c=.o)
 
-M := "AUTO_PUSH"
+M := AUTO_PUSH
 
 
 
@@ -64,7 +64,7 @@ re: fclean all
 
 push: fclean
 	git add .
-	git commit -m $(M)
+	git commit -m "$(M)"
 	git push
 
 .PHONY: clean fclean re lib
