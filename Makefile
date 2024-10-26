@@ -30,6 +30,7 @@ SRCS		=	main.c \
 				exec/process_cmds.c \
 				exec/builtins.c \
 				exec/builtins2.c \
+				exec/builtins3.c \
 				exec/exuc_built.c \
 				exec/pipe_line.c \
 				exec/toolsbuilts.c \
