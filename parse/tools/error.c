@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 02:17:18 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 16:29:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	put_error(t_args *cmd_line, char *msg, char *name)
 		ft_putstr_fd(name, 2);
 	ft_putstr_fd("\n"RESET, 2);
 	g_errno = 258;
-	// printf("\n\n<<%d>>\n\n", g_errno);
 }
 
 bool	syntax_check(t_args *cmdline)
@@ -48,7 +47,7 @@ bool	syntax_check(t_args *cmdline)
 		}
 		if ((current->type < 5 && (!next || next->type < piipe))
 			|| (current->type == piipe && (current == cmdline->tokens
-					|| !next || next->type < string)))
+					|| !next || next->type == piipe)))
 			return (false);
 		current = current->next;
 	}

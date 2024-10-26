@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 00:58:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 16:27:07 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int	process_line(t_args *cmdline)
 		if (heredoc_check(cmdline->tokens))
 		{
 			free(tmp);
-			if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
-          		return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
 			return (g_errno = 1, 1);
 		}
 		return (1);
@@ -94,13 +92,9 @@ int	process_line(t_args *cmdline)
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
+		printf("heere\n");
 		if (heredoc_check(cmdline->tokens))
-		{
-			if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
-          		return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
-			put_error(cmdline, SYNTAX , NULL);
 			return (g_errno = 1, 1);
-		}
 		put_error(cmdline, SYNTAX , NULL);
 		return (1);
 	}
@@ -115,9 +109,6 @@ int	process_line(t_args *cmdline)
 		tab = tab->next;
 	}
 	if (ft_heredoc(&cmdline->table))
-	{
-		if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
-           return (put_error(cmdline, "dup2 error on fdin", NULL), free_struct(cmdline), 1);
-	}
+		return (1);
 	return (0);
 }
