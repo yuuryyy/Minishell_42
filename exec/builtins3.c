@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/26 16:53:47 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 17:20:37 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,33 @@ int pwd(t_args *arg, char **cmd)
     return g_errno; 
 }
 
-void exec_exit(t_args *args, t_cmd_tab *cmd)
+void exec_exit(t_args *args, t_cmd_tab *cmd_table)
 {
     (void)args;
-    if (cmd->arg && cmd->arg[0])//changer arg aver cmd
+
+    if (cmd_table->cmd && cmd_table->cmd[0])
     {
-        if (cmd->next)
+        if (cmd_table->next)
         {
             printf("exit\nSHELL: exit: too many arguments\n");
             g_errno = 1;
         }
-        else if (is_num(cmd->arg))
+        else if (is_num(cmd_table->cmd[0]))
         {
-            printf()
             printf("exit\n");
-            g_errno = ft_atoi(cmd->cmd[1]);
+            g_errno = ft_atoi(cmd_table->cmd[0]);
             exit(g_errno);
         }
         else
         {
-            printf("exit\nSHELL: exit: %s: numeric argument required\n", cmd->arg);
+            printf("exit\nSHELL: exit: %s: numeric argument required\n", cmd_table->cmd[0]);
             g_errno = 255;
             exit(g_errno);
         }
     }
     exit(g_errno);
 }
+
 
 void exec_env(t_cmd_tab *cmd, t_list *env)
 {
