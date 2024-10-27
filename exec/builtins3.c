@@ -6,58 +6,57 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 01:17:03 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 02:13:12 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo(t_args *args, t_cmd_tab *cmd)
+int echo(t_args *args, t_cmd_tab *table)
 {
+    bool newline;
+    int i;
+
     (void)args;
-
-    int newline = 1;
-    int i = 0;
-
-    if (cmd && !cmd->cmd[1])
+	newline = true;
+	i = 0;
+    if (table && !table->cmd[1])
+        write(STDOUT_FILENO,"\n", 1);
+    else if (table->cmd[1] && ft_strncmp(table->cmd[1], "-n", 3) == 0)
     {
-        printf("\n");
-        return (0);
-    }
-
-    if (cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-n") == 0)
-    {
-        newline = 0;
+        newline = false;
         i++;
     }
-
-    while (cmd->cmd[++i])
+    while (table->cmd[++i])
     {
-        printf("%s", cmd->cmd[i]);
-        if (cmd->cmd[i + 1])
-            printf(" ");
+       write(STDOUT_FILENO, table->cmd[i], ft_strlen(table->cmd[i]));
+        if (table->cmd[i + 1])
+           write(STDOUT_FILENO, " ", 1);
     }
-
     if (newline)
-        printf("\n");
+       write(STDOUT_FILENO, "\n", 1);
+	g_errno = 0;
 	return (0);
 }
 
-int pwd(t_args *arg, char **cmd)
+int pwd(char **cmd)
 {
-    (void)arg;
+	char	*cwd;
+
     (void)cmd;
-    char *cwd = getcwd(NULL, 0);
+	if (cmd[1] && *cmd[1] == '-')
+		return (put_built_err("pwd: ", NULL, "extra options!!"), 1);
+    cwd = getcwd(NULL, 0);
     if (cwd == NULL)
     {
         perror("pwd");
         g_errno = 1;
         return g_errno;
     }
-    ft_putendl_fd(cwd, 1);
+    ft_putendl_fd(cwd, STDOUT_FILENO);
     free(cwd);
     g_errno = 0;
-    return g_errno; 
+    return (g_errno); 
 }
 
 int	array_len(char **str)
@@ -107,19 +106,21 @@ int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
 }
 
 
-int exec_env(t_cmd_tab *cmd, t_list *env)
+int exec_env(t_cmd_tab *table, t_list *env)
 {
-    if (cmd->arg && ft_strcmp(cmd->arg, "|") != 0)
-    {
-        printf("env: %s: No such file or directory\n", cmd->arg);
-        g_errno = 127;
-        return (0);
-    }
+	t_list *tmp;
 
-    t_list *tmp = env;
+    if (table->cmd[1])
+    {
+        printf("env: %s: No such file or directory\n", table->cmd[1]);//write stderr azbi
+        g_errno = 127;
+        return (1);
+    }
+    tmp = env;
     while (tmp)
     {
-        printf("%s\n", (char *)tmp->content);
+        write(STDOUT_FILENO, (char *)tmp->content, ft_strlen(tmp->content));
+		write(STDOUT_FILENO, "\n", 1);
         tmp = tmp->next;
     }
     g_errno = 0;

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 01:15:25 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 02:03:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 int exec_builtin(t_args *args, t_cmd_tab *cmd, int flag)
 {
-	printf("innnn\n");
     if (!cmd || !cmd->cmd)
-		return (-1);
+		return (NOT_BUITIN);
     if (ft_strncmp(cmd->cmd[0], "echo", 6) == 0)
         return (echo(args, cmd));
     else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
         cd(cmd, args->env);
     else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-        pwd(args, cmd->cmd);
+        return (pwd(cmd->cmd));
     else if (ft_strncmp(cmd->cmd[0], "export", 8) == 0)
         export_variable(args, cmd);
     else if (ft_strncmp(cmd->cmd[0], "exit", 6) == 0)
         return (exec_exit(args, cmd, flag));
     else if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
-        exec_env(cmd, args->env);
+        return (exec_env(cmd, args->env));
     else if (ft_strncmp(cmd->cmd[0], "unset", 7) == 0)
         ft_unset(args, cmd->cmd);
 	return (NOT_BUITIN);
