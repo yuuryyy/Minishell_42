@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 15:13:56 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:50:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 			if (g_errno == -1)
 			{
 				if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
-					return (put_error(cmdline, DUP2SG, NULL), 1);
+					return (put_error(DUP2SG, NULL), 1);
 				free_current_cmdline(cmdline);
 				return (1);
 			}

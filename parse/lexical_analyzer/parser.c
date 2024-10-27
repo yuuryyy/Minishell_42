@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/22 14:41:31 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 22:13:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	command_table(t_args *cmdline)
 		while (current && current->type != piipe)
 		{
 			current = cmd_tab2(new, current);
-			if (!current)
+			if (!current || current->type == piipe)
 				break ;
 			current = current->next;
 		}

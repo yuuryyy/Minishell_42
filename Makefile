@@ -7,9 +7,10 @@ CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/inc
 #-fsanitize=address
 #-Werror
 
-LFLAGS 		=	"-L$(shell brew --prefix readline)/lib" -lreadline 
+LFLAGS 		=	-L$(shell brew --prefix readline)/lib -lreadline
 
-HEADER		=	minishell.h
+HEADER		=	./inc/minishell.h \
+				./inc/header.h \
 
 LIBRARY		=	lib/libft.a
 
@@ -40,18 +41,16 @@ OBJS		= $(SRCS:.c=.o)
 
 M			:= AUTO_PUSH
 
-
-
 all : $(NAME)
 
 lib :
 	make -C lib
 
-$(NAME) : $(OBJS) lib
+$(NAME) : $(OBJS)  lib
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBRARY) -o $(NAME) $(LFLAGS)
 
 %.o: %.c $(HEADER)
-		$(CC)  $(CFLAGS) -c $< -o $@
+		$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C lib

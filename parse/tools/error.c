@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 16:29:35 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:46:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,21 @@ void	del(void *content)
 	free(content);
 }
 
-void	put_error(t_args *cmd_line, char *msg, char *name)
+
+void	put_built_err(char *built, char *name, char *err)
 {
-	(void) cmd_line;
+	ft_putstr_fd("minionshell: "RED, 2);
+	ft_putstr_fd(built, 2);
+	ft_putstr_fd(RESET, 2);
+	if (name)
+		ft_putstr_fd(name, 2);
+	ft_putstr_fd(err, 2);
+	ft_putstr_fd("\n", 2);
+	g_errno = 1;
+}
+
+void	put_error(char *msg, char *name)
+{
 	ft_putstr_fd("minionshell: "RED, 2);
 	ft_putstr_fd(msg, 2);
 	if (name)

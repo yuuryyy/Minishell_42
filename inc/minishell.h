@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/25 13:20:20 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 01:20:24 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void		free_array(char	**str);
 void		free_tokens(t_token **lst);
 void		free_table(t_cmd_tab **table);
 void		del(void *content);
-void		put_error(t_args *cmd_line, char *msg, char *name);
+void		put_error(char *msg, char *name);
+void		put_built_err(char *built, char *name, char *err);
 
 char		*expand(char *word, t_type type, t_list *env);
 void		expand_quotes(char **word, int index, t_list *env);
@@ -114,8 +115,8 @@ void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 void		ft_limadd_back(t_list **lst, t_list *new);
 
 // builtins
-int			exec_builtin(t_args *args, t_cmd_tab *cmd);
-void		echo(t_args *args, t_cmd_tab *cmd);
+int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
+int			echo(t_args *args, t_cmd_tab *cmd);
 int			cd(t_cmd_tab *cmd, t_list *env);
 t_list		*find_env_node2(t_list *env, char *cmd);
 int			pwd(t_args *arg, char **cmd);
@@ -124,15 +125,15 @@ void		ordre_alpha(t_list **env);
 t_list		*find_env_node(t_list *env, char *cmd);
 int 		update_env_value(t_list *env_node, char *cmd, int append);
 int			ft_unset(t_args *args, char **cmd);
-void		exec_exit(t_args *args, t_cmd_tab *cmd);
-void		exec_env(t_cmd_tab *cmd, t_list *env);
+int			exec_exit(t_args *args, t_cmd_tab *cmd, int flag);
+int			exec_env(t_cmd_tab *cmd, t_list *env);
 int 		is_valid_identifier(const char *str);
 //exec
 int			exec_pipes(t_cmd_tab *table);
 int			execute(t_cmd_tab *table);
 int			execute_cmds(t_args *args);
 int			single_cmd(t_cmd_tab *table);
-int			check_files(t_args *args, char *filename, int flag);
+int			check_files(char *filename, int flag);
 //signals
 void		sigint_handler(int signum);
 void		setup_signal_handlers(void);

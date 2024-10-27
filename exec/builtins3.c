@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/26 17:20:37 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/27 01:17:03 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void echo(t_args *args, t_cmd_tab *cmd)
+int echo(t_args *args, t_cmd_tab *cmd)
 {
     (void)args;
-    
+
     int newline = 1;
     int i = 0;
 
     if (cmd && !cmd->cmd[1])
     {
         printf("\n");
-        return;
+        return (0);
     }
 
     if (cmd->cmd[1] && ft_strcmp(cmd->cmd[1], "-n") == 0)
@@ -40,6 +40,7 @@ void echo(t_args *args, t_cmd_tab *cmd)
 
     if (newline)
         printf("\n");
+	return (0);
 }
 
 int pwd(t_args *arg, char **cmd)
@@ -59,41 +60,60 @@ int pwd(t_args *arg, char **cmd)
     return g_errno; 
 }
 
-void exec_exit(t_args *args, t_cmd_tab *cmd_table)
+int	array_len(char **str)
 {
-    (void)args;
+	int	i;
 
-    if (cmd_table->cmd && cmd_table->cmd[0])
-    {
-        if (cmd_table->next)
-        {
-            printf("exit\nSHELL: exit: too many arguments\n");
-            g_errno = 1;
-        }
-        else if (is_num(cmd_table->cmd[0]))
-        {
-            printf("exit\n");
-            g_errno = ft_atoi(cmd_table->cmd[0]);
-            exit(g_errno);
-        }
-        else
-        {
-            printf("exit\nSHELL: exit: %s: numeric argument required\n", cmd_table->cmd[0]);
-            g_errno = 255;
-            exit(g_errno);
-        }
-    }
-    exit(g_errno);
+	if (!str || !*str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
+{
+	int	len;
+
+	(void)cmdline;
+	len = array_len(cmd_table->cmd);
+	if (flag == SINGLE)
+	{
+		if (len == 1)
+			return (printf("exit\n"), free_struct(cmd_table->data), exit (0), 1);
+		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
+			return (printf("exit\n"), put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),
+					free_struct(cmd_table->data), exit(255), 1);
+		else if (len == 2 && is_num(cmd_table->cmd[1]))
+			return (printf("exit\n"), free_struct(cmd_table->data), exit (ft_atoi(cmd_table->cmd[1])), 0);
+		else
+			return (printf("exit\n"), put_built_err("exit: ",NULL, TOOMANYARG), 1);
+		}
+	else
+	{
+		if (len == 1 || (len == 2 && is_num(cmd_table->cmd[1])))
+		{
+			if (len == 2)
+				g_errno = ft_atoi(cmd_table->cmd[1]);
+			return (0);
+		}
+		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
+			return (put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),1);
+		else
+			return (put_built_err("exit: ",NULL, TOOMANYARG), 1);
+	}
+	return (0);
 }
 
 
-void exec_env(t_cmd_tab *cmd, t_list *env)
+int exec_env(t_cmd_tab *cmd, t_list *env)
 {
     if (cmd->arg && ft_strcmp(cmd->arg, "|") != 0)
     {
         printf("env: %s: No such file or directory\n", cmd->arg);
         g_errno = 127;
-        return;
+        return (0);
     }
 
     t_list *tmp = env;
@@ -103,6 +123,7 @@ void exec_env(t_cmd_tab *cmd, t_list *env)
         tmp = tmp->next;
     }
     g_errno = 0;
+	return (0);
 }
 
 int ft_unset(t_args *args, char **cmd)
@@ -124,7 +145,6 @@ int ft_unset(t_args *args, char **cmd)
                     prev->next = current->next;
                 else
                     args->env = current->next;
-
                 free(current->content);
                 free(current);
                 break;

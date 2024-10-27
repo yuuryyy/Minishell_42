@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 01:02:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 19:03:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*new_token(char *content, int type)
 	return (token);
 }
 
-char	*get_word(char **line, t_args *cmd_line)
+char	*get_word(char **line)
 {
 	int		i;
 	int		start;
@@ -44,13 +44,13 @@ char	*get_word(char **line, t_args *cmd_line)
 	start = i;
 	len = word_len(tmp + i);
 	if (len == -1)
-		return (put_error(cmd_line, SYNTAX, NULL), ft_strdup("\'"));
+		return (put_error(SYNTAX, NULL), ft_strdup("\'"));
 	word = ft_substr(tmp, start, (size_t)len);
 	*line = *line + len + i;
 	return (word);
 }
 
-t_type	get_type(char *word, t_args *cmd_line)
+t_type	get_type(char *word)
 {
 	if (*word == '<' && ft_strlen(word) == 2)
 		return (heredoc);
@@ -67,7 +67,7 @@ t_type	get_type(char *word, t_args *cmd_line)
 	else if (*word == '\"')
 		return (double_quote);
 	else if (is_seperator(*word))
-		return (put_error(cmd_line, SYNTAX, NULL), 0);
+		return (put_error(SYNTAX, NULL), 0);
 	else
 		return (string);
 }
@@ -104,12 +104,12 @@ int	words_list(char	*line, t_args *cmd_line)
 	while (1)
 	{
 		i = 0;
-		word = get_word(&line, cmd_line);
+		word = get_word(&line);
 		if (word && ft_strncmp(word, "\'", 2) == 0)
 			return (0);
 		if (!word || !*word)
 			break ;
-		type = get_type(word, cmd_line);
+		type = get_type(word);
 		if (type == 0)
 			return (free(word), 0);
 		lst = new_token(word, type);

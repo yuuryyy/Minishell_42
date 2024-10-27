@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 13:00:47 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/10/27 00:46:01 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 int execute_cmds(t_args *args)
 {
-    t_cmd_tab *table;
+    t_cmd_tab	*table;
+    int			err;
 
     table = args->table;
     if (!table)
         return (0);
     if (table && table->next == NULL)
     {
-        if (exec_builtin(args, table) == 0)
-        // single_cmd(table);
+		err = exec_builtin(args, table, SINGLE);
+        if (err == 1)
             return (1);
+		else if (err == -1)
+			return(single_cmd(table));
     }
     else if (exec_pipes(table))
         return (1);

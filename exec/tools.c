@@ -6,13 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 19:03:41 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 15:40:46 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/26 18:57:17 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_files(t_args *args, char *filename, int flag)
+int	check_files(char *filename, int flag)
 {
 	int	err;
 
@@ -27,9 +27,9 @@ int	check_files(t_args *args, char *filename, int flag)
 	if (flag == INPUT && access(filename, F_OK) != 0)
 		err = 2;
 	if (err == 2)
-		return (put_error(args, INTROUVABLE_FILE, filename), 1);
+		return (put_error(INTROUVABLE_FILE, filename), 1);
 	else if (err == 1)
-		return (put_error(args, PERMISSION, filename), 1);
+		return (put_error(PERMISSION, filename), 1);
 	return (0);
 }
 

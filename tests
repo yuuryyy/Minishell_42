@@ -1,2 +1,23 @@
-->  MinionHell^~^ >$ << eof |  ++++  more oped herdocs then it should be
 
+
+->  MinionHell^~^ >$  ls < sdds | true
+====> 0
+built check
+-1>>>>>>>>
+====> 1
+built check
+minionshell: No such file or directory: sdds
+->  MinionHell^~^ >$  ls < sdds| true
+built check
+minionshell: No such file or directory: sdds
+
+##############################################################################
+====> reason
+
+->  MinionHell^~^ >$  ls < sdds| ls| ls
+ ls | ls |
+ ls |
+====> 0
+built check
+-1>>>>>>>>
+====> 1 done

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/24 22:44:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 01:22:59 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	execute(t_cmd_tab *table)
 		if (ft_strchr(table->cmd[0], '/'))
 		{
 			if (execve(table->cmd[0], table->cmd, env) == -1)
-				return (put_error(table->data, INTROUVABLE_FILE, table->cmd[0]),
+				return (put_error(INTROUVABLE_FILE, table->cmd[0]),
 					free_array(env), exit(127), 1);
 		}
 		err = exec(table, env);
 		if (err == -1)
-			return (put_error(table->data, NOTFOUNDMSG, table->cmd[0]),
+			return (put_error(NOTFOUNDMSG, table->cmd[0]),
 				free_array(env), exit(127), 1);
 	}
 	exit(0);
@@ -62,7 +62,7 @@ int	single_cmd(t_cmd_tab *table)
 
 	pid = fork();
 	if (pid == -1)
-		return (put_error(table->data, FORKMSG, NULL), 1);
+		return (put_error(FORKMSG, NULL), 1);
 	else if (pid == 0)
 		execute(table);
 	else
