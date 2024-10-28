@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 01:36:20 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 02:45:05 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,31 @@ int	heredoc_check(t_token *token)
 	return (0);
 }
 
+char	*remove_quotes(char *str, int c)
+{
+	char	*update;
+	int		len;
+	int		j;
+	int		i;
+
+	i = -1;
+	len = 0;
+	while (str[++i])
+		if (str[i] != c)
+			len++;
+	update = malloc((len + 1) * sizeof(char));
+	i = -1;
+	j = -1;
+	while (str[++i])
+	{
+		if (str[i] != c)
+			update[++j] = str[i];
+	}
+	update[++j] = '\0';
+	free(str);
+	return (update);
+}
+
 int	process_line(t_args *cmdline)
 {
 	char		*tmp;
@@ -109,9 +134,9 @@ int	process_line(t_args *cmdline)
 		while (tab->cmd[i])
 		{
 			if (tab->cmd[i][0] == '\"')//hard coded
-				tab->cmd[i] = ft_strtrim(tab->cmd[i], "\"");
+				tab->cmd[i] = remove_quotes(tab->cmd[i], '\"');
 			else if (tab->cmd[i][0] == '\'')
-				tab->cmd[i] = ft_strtrim(tab->cmd[i], "\'");
+				tab->cmd[i] = remove_quotes(tab->cmd[i], '\'');
 			i++;
 		}
 		free(tab->arg);
