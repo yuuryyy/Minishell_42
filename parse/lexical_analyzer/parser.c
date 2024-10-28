@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 22:13:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 01:20:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*handle_string(t_token *current, char *new)
 {
 	char	*arg;
 
+	if (!new)
+		current->flag = false;
 	arg = ft_strjoin2(new, current->content);
 	if (current->space)
 		arg = ft_strjoin2(arg, "\n");

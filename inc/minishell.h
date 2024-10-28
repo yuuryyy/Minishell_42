@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/27 02:02:28 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 01:19:38 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include "header.h"
+# include "limits.h"
 # include <fcntl.h>
 # include <stdio.h>
 
@@ -62,9 +63,10 @@ typedef struct s_cmd_tab
 //tokens
 typedef struct s_token
 {
-	void			*content;
+	char			*content;
 	t_type			type;
 	bool			space;
+	bool			flag;
 	struct s_token	*next;
 }	t_token;
 

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 02:13:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:08:06 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int pwd(char **cmd)
     {
         perror("pwd");
         g_errno = 1;
-        return g_errno;
+        return (g_errno);
     }
     ft_putendl_fd(cwd, STDOUT_FILENO);
     free(cwd);
@@ -80,10 +80,10 @@ int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
 	if (flag == SINGLE)
 	{
 		if (len == 1)
-			return (printf("exit\n"), free_struct(cmd_table->data), exit (0), 1);
+			return (printf("exit\n"), free_struct(cmd_table->data), exit (0), 0);
 		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
 			return (printf("exit\n"), put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),
-					free_struct(cmd_table->data), exit(255), 1);
+					free_struct(cmd_table->data), exit(255), 255);
 		else if (len == 2 && is_num(cmd_table->cmd[1]))
 			return (printf("exit\n"), free_struct(cmd_table->data), exit (ft_atoi(cmd_table->cmd[1])), 0);
 		else
@@ -95,7 +95,7 @@ int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
 		{
 			if (len == 2)
 				g_errno = ft_atoi(cmd_table->cmd[1]);
-			return (0);
+			return (g_errno);
 		}
 		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
 			return (put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),1);
@@ -112,9 +112,12 @@ int exec_env(t_cmd_tab *table, t_list *env)
 
     if (table->cmd[1])
     {
-        printf("env: %s: No such file or directory\n", table->cmd[1]);//write stderr azbi
+		ft_putstr_fd("env: "RED, 2);
+		ft_putstr_fd(table->cmd[1], 2);
+		ft_putstr_fd(RESET, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
         g_errno = 127;
-        return (1);
+        return (127);
     }
     tmp = env;
     while (tmp)
@@ -129,14 +132,18 @@ int exec_env(t_cmd_tab *table, t_list *env)
 
 int ft_unset(t_args *args, char **cmd)
 {
-    int i;
-    i = 1;
+    int		i;
+	t_list	*prev;
+	t_list	*current;
 
+    i = 1;
+	g_errno = 0;
     while (cmd[i])
     {
-        t_list *prev = NULL;
-        t_list *current = args->env;
-
+		if (ft_isdigit(*cmd[i]))
+			put_built_err("unset: ", cmd[i], NOTVALID);
+       prev = NULL;
+       current = args->env;
         while (current)
         {
             char *env_var = (char *)current->content;
@@ -155,6 +162,5 @@ int ft_unset(t_args *args, char **cmd)
         }
         i++;
     }
-    g_errno = 0;
-    return (0);
+    return (g_errno);
 }

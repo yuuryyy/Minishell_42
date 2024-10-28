@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/27 01:22:59 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 02:24:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,30 @@ int	execute(t_cmd_tab *table)
 {
 	char	**env;
 	int		err;
+	int		built;
 
+			// printf("%s>>>>>>\n", table->cmd[0]);
 	if (infile_opn(table) || outfile_opn(table))
 		exit(EXIT_FAILURE);
 	if (table->cmd)
 	{
-		env = lst_to_array(table->data->env);
-		err = 0;
-		if (ft_strchr(table->cmd[0], '/'))
+		built = exec_builtin(table->data, table, MULTI);
+		if (built == NOT_BUITIN)
 		{
-			if (execve(table->cmd[0], table->cmd, env) == -1)
-				return (put_error(INTROUVABLE_FILE, table->cmd[0]),
+			env = lst_to_array(table->data->env);
+			err = 0;
+			if (ft_strchr(table->cmd[0], '/'))
+			{
+				if (execve(table->cmd[0], table->cmd, env) == -1)
+					return (put_error(INTROUVABLE_FILE, table->cmd[0]),
+						free_array(env), exit(127), 1);
+			}
+			err = exec(table, env);
+			if (err == -1)
+				return (put_error(NOTFOUNDMSG, table->cmd[0]),
 					free_array(env), exit(127), 1);
 		}
-		err = exec(table, env);
-		if (err == -1)
-			return (put_error(NOTFOUNDMSG, table->cmd[0]),
-				free_array(env), exit(127), 1);
+		return (built);
 	}
 	exit(0);
 }

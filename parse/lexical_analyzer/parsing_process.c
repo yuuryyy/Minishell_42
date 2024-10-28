@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 22:19:54 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 01:36:20 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,11 @@ int	process_line(t_args *cmdline)
 			free(tmp);
 			return (g_errno = 1, 1);
 		}
+		free(tmp);
 		return (1);
 	}
 	free(tmp);
-	remove_q(&cmdline->tokens);
+	// remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
 		if (heredoc_check(cmdline->tokens))
@@ -99,10 +100,20 @@ int	process_line(t_args *cmdline)
 	}
 	expand_var(&cmdline);
 	command_table(cmdline);
+	int	i;
 	tab = cmdline->table;
 	while (tab)
 	{
+		i = 0;
 		tab->cmd = ft_split(tab->arg, '\n');
+		while (tab->cmd[i])
+		{
+			if (tab->cmd[i][0] == '\"')//hard coded
+				tab->cmd[i] = ft_strtrim(tab->cmd[i], "\"");
+			else if (tab->cmd[i][0] == '\'')
+				tab->cmd[i] = ft_strtrim(tab->cmd[i], "\'");
+			i++;
+		}
 		free(tab->arg);
 		tab->arg = NULL;
 		tab = tab->next;

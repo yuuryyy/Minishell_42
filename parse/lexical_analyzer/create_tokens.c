@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 19:03:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/27 23:12:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	words_list(char	*line, t_args *cmd_line)
 		i = 0;
 		word = get_word(&line);
 		if (word && ft_strncmp(word, "\'", 2) == 0)
-			return (0);
+			return (free(word), 0);
 		if (!word || !*word)
 			break ;
 		type = get_type(word);
