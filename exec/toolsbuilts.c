@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toolsbuilts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:29:58 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 02:18:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 23:17:27 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,33 @@ t_list	*find_env_node2(t_list *env, char *cmd)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	add_env_node(t_list **env, char *new_content)
+{
+	t_list	*new_node;
+
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->content = new_content;
+	new_node->next = *env;
+	*env = new_node;
+}
+
+int	change_directory_to_oldpwd(char *oldpwd)
+{
+	if (!oldpwd)
+	{
+		ft_putendl_fd("cd: OLDPWD not set", 2);
+		return (1);
+	}
+	if (chdir(oldpwd) != 0)
+	{
+		ft_putstr_fd("cd: ", 2);
+		perror(oldpwd);
+		return (1);
+	}
+	ft_putendl_fd(oldpwd, 1);
+	return (0);
 }

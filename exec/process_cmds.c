@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:10:03 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/31 22:56:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 23:24:43 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ int execute_cmds(t_args *args)
         return (1);
     return (0);
 }
-0

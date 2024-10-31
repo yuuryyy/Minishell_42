@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 20:57:23 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 23:36:11 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
     exit(g_errno);
 }
 
-int exec_env(t_cmd_tab *table, t_list *env, int flag)
+int exec_env(t_cmd_tab *table, t_list *env)
 {
 	t_list *tmp;
 
@@ -161,7 +161,7 @@ void	remove_env_var(t_args *args, char *cmd)
 	}
 }
 
-int	ft_unset(t_args *args, char **cmd, int flag)
+int	ft_unset(t_args *args, char **cmd)
 {
 	int	i;
 

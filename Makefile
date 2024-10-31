@@ -35,6 +35,7 @@ SRCS		=	main.c \
 				exec/exuc_built.c \
 				exec/pipe_line.c \
 				exec/toolsbuilts.c \
+				exec/toolsbuilts2.c \
 				exec/redirections.c \
 
 OBJS		= $(SRCS:.c=.o)

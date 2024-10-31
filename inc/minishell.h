@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/31 02:48:41 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 23:36:35 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,22 @@ char	*envGetter(const char *key, t_list *env);
 
 // builtins
 int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
-int			echo(t_args *args, t_cmd_tab *cmd, int flag);
-int			cd(t_cmd_tab *cmd, t_list **env, int flag);
+int			echo(t_args *args, t_cmd_tab *table, int flag);
+int			cd(t_cmd_tab *cmd, t_list **env);
 t_list		*find_env_node2(t_list *env, char *cmd);
-int			pwd(t_cmd_tab *table, char **cmd, int flag);
-int			export_variable(t_args *args, t_cmd_tab *cmd, int flag);
+int			exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag);
+int			export_variable(t_args *args, t_cmd_tab *cmd);
 void		ordre_alpha(t_list **env);
 t_list		*find_env_node(t_list *env, char *cmd);
-int 		update_env_value(t_list *env_node, char *cmd, int append);
-int			ft_unset(t_args *args, char **cmd, int flag);
-int			exec_exit(t_args *args, t_cmd_tab *cmd, int flag);
-int			exec_env(t_cmd_tab *cmd, t_list *env, int flag);
-int 		is_valid_identifier(const char *str);
+int			update_env_value(t_list *env_node, char *cmd, int append);
+int			ft_unset(t_args *args, char **cmd);
+int			exec_env(t_cmd_tab *table, t_list *env);
+void		add_env_node(t_list **env, char *new_content);
+int			is_valid_identifier(const char *str);
+int			change_directory_to_oldpwd(char *oldpwd);
+int			pwd(t_cmd_tab *table, char **cmd, int flag);
+
+
 //exec
 int			exec_pipes(t_cmd_tab *table);
 int			execute(t_cmd_tab *table, int flag);
