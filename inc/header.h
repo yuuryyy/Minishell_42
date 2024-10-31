@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/27 20:30:19 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:48:13 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
+# define EXIT_ESDIR	126
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
 
@@ -30,13 +31,14 @@
 # define DUPMSG "dup() has failed\x1B[0m"
 # define DUP2SG "dup2() has failed\x1B[0m"
 # define FORKMSG "fork() has failed\x1B[0m"
-# define INTROUVABLE_FILE "No such file or directory: \x1B[0m"
-# define NOTFOUNDMSG "command not found: \x1B[0m"
+# define INTROUVABLE_FILE "\x1B[0m: no such file or directory"
+# define ISDIR "\x1B[0m: is a directory"
+# define NOTFOUNDMSG ": \x1B[0mcommand not found"
 # define WAITMSG	"wait() has failed .\x1B[0m"
 # define WAITPIDMSG "waitpid() has failed .\x1B[0m"
 # define SYNTAX "syntax error"  
 # define TOOMANYARG "too many arguments\x1B[0m"
-# define PERMISSION "permission denied : \x1B[0m" 
+# define PERMISSION ": \x1B[0mpermission denied " 
 # define NUMERICARG ": numeric argument required \x1B[0m"
 # define NOTVALID ": not a valid identifier\x1B[0m"
 # define OLDNOTSET "OLDPWD not set\x1B[0m"

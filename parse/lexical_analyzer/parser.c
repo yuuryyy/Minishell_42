@@ -6,22 +6,51 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 01:20:22 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/30 23:57:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_string(t_token *current, char *new)
-{
-	char	*arg;
+// ->  MinionHell^~^  >$ "$PATH" leaks in double qoutes
 
-	if (!new)
-		current->flag = false;
-	arg = ft_strjoin2(new, current->content);
-	if (current->space)
-		arg = ft_strjoin2(arg, "\n");
-	return (arg);
+t_token	*handle_string(t_token *current) //
+{
+	char	*str;
+	bool 	space = current->space;
+	void 	*next = current->next;
+
+	if (!current->content || !ft_strchr(current->content, ' '))
+		return (current);
+
+	t_token	*tmp = current;
+	current->next = NULL;
+
+	str = ft_strrchr(current->content, ' ');
+	if (str && ft_strncmp(str, " ", 2) == 0) 
+		space = true;
+
+	char **splited = ft_split(current->content, ' ');
+	free(current->content);
+
+	
+	int i = 0;
+	tmp->content = splited[i++];
+	tmp->type = string; 
+	tmp->space = true;
+
+	
+	while (splited[i])
+	{
+		tmp->next = new_token(splited[i++], string); // prot
+		tmp->next->space = true;
+		tmp = tmp->next;
+	}
+	tmp->space = space;
+	tmp->next = next;
+
+	free(splited);
+	return (current);
 }
 
 t_token	*handle_tokens(t_token **current, t_list **list)
@@ -70,9 +99,18 @@ t_token	*handle_limiters(t_token **current, t_list **limiter)
 
 t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 {
-	if (current->type >= 6)
-		new->arg = handle_string(current, new->arg);
-	else
+	if (current->type == string)
+	{
+		current = handle_string(current);
+		while (current && current->type == string
+			&& (current->content == NULL || *current->content == '\0'))
+			current = current->next;
+	}
+	if (current && current->type >= 6)
+	{
+		current = handle_tokens(&current, &new->arg);
+	}
+	else if (current)
 	{
 		if (current->type == redin)
 			current = handle_tokens(&current->next, &new->in);
@@ -92,6 +130,7 @@ t_token	*cmd_tab2(t_cmd_tab *new, t_token *current)
 			current = handle_limiters(&current->next, &new->delimiter);
 		}
 	}
+	
 	return (current);
 }
 

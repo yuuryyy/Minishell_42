@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 01:20:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 01:02:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	s()
 	system("leaks minishell");
 }
 
+
+#define ANSI_FONT_COL_RESET     "\x1b[0m"
+#define FONT_COL_CUSTOM_RED     "\e[38;2;200;0;0m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
+#define FONT_COL_CUSTOM_GREEN   "\e[38;2;0;200;0m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
+#define FONT_COL_CUSTOM_BLUE    "\e[38;2;0;0;200m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
+#define MAGINTA   "\e[38;2;255;192;203m" // where rrr;ggg;bbb in 48;2;rrr;ggg;bbbm can go from 0 to 255 respectively
+#define CYAN "\e[38;2;160;190;200m" // where rrr;ggg;bbb in 48;2;rrr;ggg;bbbm can go from 0 to 255 respectively
+
 int g_errno = 0;
 
 int main(int ac, char **av, char **env)
@@ -29,25 +37,28 @@ int main(int ac, char **av, char **env)
     (void)ac;
     (void)av;
     ft_bzero(&cmd_line, sizeof(t_args));
-    environment(env, &cmd_line);
+    environment(env, &cmd_line);//I retrieved the env
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
 
     while (1)
     {
+		// tcsetattr();
         rl_catch_signals = 0;
         free_current_cmdline(&cmd_line);
         setup_signal_handlers();
-        cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
+        // cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
+        cmd_line.line = readline(MAGINTA "->  MinionHell^~^ " CYAN " >$ " ANSI_FONT_COL_RESET);
         if (cmd_line.line == NULL)
         {
+			while (wait(NULL) != -1)
+				continue ;
 			write(STDOUT_FILENO, "exit", 5);
     		free_struct(&cmd_line);
             exit(0);
         }
         if (*cmd_line.line)
             add_history(cmd_line.line);
-		// printf("heeere\n");
         if (process_line(&cmd_line) != 0)
             continue;
 		if (cmd_line.table == NULL)

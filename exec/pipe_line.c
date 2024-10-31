@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/27 17:35:24 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:40:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	forking(t_cmd_tab *tab, int *fd)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			return (close (fd[1]), put_error(DUP2SG, NULL), 1);
 		close(fd[1]);
-		exit(execute(tab));
+		exit(execute(tab, MULTI));
 	}
 	else if (pid > 0)
 	{
@@ -51,7 +51,7 @@ int	exec_pipes(t_cmd_tab *table)
 	{
 		if (tab->next == NULL)
 		{
-			g_errno = single_cmd(tab);
+			g_errno = single_cmd(tab, MULTI);
 			return (0);
 		}
 		if (pipe(fd) == -1)

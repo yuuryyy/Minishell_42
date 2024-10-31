@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/27 22:13:04 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/29 00:24:57 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,36 @@ int	is_seperator(char c)
 	return (c == '|' || c == '<' || c == '>' );
 }
 
+char	*envGetter(const char *key, t_list *env)
+{
+	char	*value;
+	char	*lookup;
+	t_list	*tmp;
+
+	if (!key || !env)
+		return (NULL);
+	value = NULL;
+	lookup = ft_strjoin(key, "=");
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strncmp(lookup , tmp->content, ft_strlen(lookup)) == 0)
+		{
+			value = ft_strdup(tmp->content + ft_strlen(lookup));
+	 		break;
+		}
+		tmp = tmp->next;
+	}
+	free(lookup);
+	return (value);
+}
+
 void	environment(char **envp, t_args *cmd_line)
 {
 	t_list	*node;
 	t_list	*prev;
 	int		i;
-	char	*str;
-	char	**pathh;
 
-	str = getenv("PATH");
-	pathh = ft_split(str, ':');
-	prev = NULL;
-	cmd_line->path = pathh;
 	i = 0;
 	while (envp[i])
 	{

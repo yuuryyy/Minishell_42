@@ -11,18 +11,43 @@ minionshell: No such file or directory: sdds
 built check
 minionshell: No such file or directory: sdds
 
-##############################################################################
-====> reason
-
-->  MinionHell^~^ >$  ls < sdds| ls| ls
- ls | ls |
- ls |
-====> 0
-built check
--1>>>>>>>>
-====> 1 done
-
+#############################################################################
 
 
 minionshell: cd: No such file or directory: /home/mmesbahi/
 bash: cd: /home/mmesbahi/: No such file or directory
+
+< main.c Makefile
+
+< dfvdf
+
+
+##############################################################################
+
+    no error printing ....
+
+=====> reason : $ unset $(env | awk -F= '{print $1}') && env
+
+bash-3.2$ echo $?
+127
+
+->  MinionHell^~^ >$ echo "$?"
+0
+
+
+##############################################################################
+
+=====> reason : $ unset $(env | awk -F= '{print $1}') && env
+
+bash-3.2$ env
+bash: env: No such file or directory
+
+->  MinionHell^~^ >$ env
+_=/Users/ychagri/Desktop/Minishell_42/./minishell
+PWD=/Users/ychagri
+echo "$?"
+ Cp��
+
+PWD=/Users/ychagri
+
+##############################################################################

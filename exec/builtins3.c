@@ -6,13 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 18:08:06 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:29:18 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo(t_args *args, t_cmd_tab *table)
+int echo(t_args *args, t_cmd_tab *table, int flag)
 {
     bool newline;
     int i;
@@ -20,6 +20,9 @@ int echo(t_args *args, t_cmd_tab *table)
     (void)args;
 	newline = true;
 	i = 0;
+    if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (g_errno = 1, 1);
     if (table && !table->cmd[1])
         write(STDOUT_FILENO,"\n", 1);
     else if (table->cmd[1] && ft_strncmp(table->cmd[1], "-n", 3) == 0)
@@ -39,11 +42,14 @@ int echo(t_args *args, t_cmd_tab *table)
 	return (0);
 }
 
-int pwd(char **cmd)
+int pwd(t_cmd_tab *table, char **cmd, int flag)
 {
 	char	*cwd;
 
     (void)cmd;
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (g_errno = 1, 1);
 	if (cmd[1] && *cmd[1] == '-')
 		return (put_built_err("pwd: ", NULL, "extra options!!"), 1);
     cwd = getcwd(NULL, 0);
@@ -79,6 +85,8 @@ int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
 	len = array_len(cmd_table->cmd);
 	if (flag == SINGLE)
 	{
+		if (infile_opn(cmd_table) || outfile_opn(cmd_table))
+			return (g_errno = 1, 1);
 		if (len == 1)
 			return (printf("exit\n"), free_struct(cmd_table->data), exit (0), 0);
 		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
@@ -106,10 +114,13 @@ int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
 }
 
 
-int exec_env(t_cmd_tab *table, t_list *env)
+int exec_env(t_cmd_tab *table, t_list *env, int flag)
 {
 	t_list *tmp;
 
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (g_errno = 1, 1);
     if (table->cmd[1])
     {
 		ft_putstr_fd("env: "RED, 2);
@@ -130,7 +141,7 @@ int exec_env(t_cmd_tab *table, t_list *env)
 	return (0);
 }
 
-int ft_unset(t_args *args, char **cmd)
+int ft_unset(t_args *args, char **cmd, int flag)
 {
     int		i;
 	t_list	*prev;
@@ -138,6 +149,9 @@ int ft_unset(t_args *args, char **cmd)
 
     i = 1;
 	g_errno = 0;
+	if (flag == SINGLE)
+		if (infile_opn(args->table) || outfile_opn(args->table))
+			return (g_errno = 1, 1);
     while (cmd[i])
     {
 		if (ft_isdigit(*cmd[i]))

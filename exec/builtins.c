@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 22:46:23 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 01:05:54 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int change_directory_home_or_oldpwd(t_cmd_tab *cmd, t_list *env)
 int change_directory_specified(t_cmd_tab *cmd)
 {
     if (chdir(cmd->cmd[1]) != 0)
-		return (put_built_err("cd: ", INTROUVABLE_FILE, cmd->cmd[1]), 1);
+		return (put_built_err("cd: ", cmd->cmd[1], INTROUVABLE_FILE), 1);
     return (g_errno = 0, 0);
 }
 
@@ -87,10 +87,13 @@ int update_environment_variables(t_list *env, char *current_path)
     return (0);
 }
 
-int cd(t_cmd_tab *cmd, t_list *env)
+int cd(t_cmd_tab *cmd, t_list *env, int flag)
 {
     char current_path[PATH_MAX];
 
+	if (flag == SINGLE)
+		if (infile_opn(cmd) || outfile_opn(cmd))
+			return (g_errno = 1, 1);
     if (getcwd(current_path, PATH_MAX) == NULL)
 	{
 		perror("cd");

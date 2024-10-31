@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 02:45:05 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/30 23:35:04 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,25 @@ char	*remove_quotes(char *str, int c)
 	return (update);
 }
 
+// void ft_list_remove_if(t_token **begin_list)
+// {
+// 	if (begin_list == NULL || *begin_list == NULL)
+// 		return;
+// 	t_token *cur = *begin_list;
+
+// 	if (cur->type == string && cur->content == NULL)
+// 	{
+// 		*begin_list = cur->next;
+// 		free(cur);
+// 		ft_token_remove_if(begin_list);
+// 	}
+// 	else 
+// 	{ 
+// 		cur = *begin_list;
+// 		ft_token_remove_if(&cur->next);
+// 	}
+// }
+
 int	process_line(t_args *cmdline)
 {
 	char		*tmp;
@@ -106,16 +125,13 @@ int	process_line(t_args *cmdline)
 		return (free(tmp), g_errno = EXIT_SUCCESS, 1);
 	if (!words_list(tmp, cmdline))
 	{
-		if (heredoc_check(cmdline->tokens))
-		{
-			free(tmp);
-			return (g_errno = 1, 1);
-		}
+		heredoc_check(cmdline->tokens);
 		free(tmp);
+		g_errno = 1;
 		return (1);
 	}
 	free(tmp);
-	// remove_q(&cmdline->tokens);
+	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
 		if (heredoc_check(cmdline->tokens))
@@ -124,23 +140,17 @@ int	process_line(t_args *cmdline)
 		return (1);
 	}
 	expand_var(&cmdline);
+	// del_emptystr(&cmdline->tokens);
 	command_table(cmdline);
-	int	i;
 	tab = cmdline->table;
 	while (tab)
 	{
-		i = 0;
-		tab->cmd = ft_split(tab->arg, '\n');
-		while (tab->cmd[i])
+		if (tab->arg)
 		{
-			if (tab->cmd[i][0] == '\"')//hard coded
-				tab->cmd[i] = remove_quotes(tab->cmd[i], '\"');
-			else if (tab->cmd[i][0] == '\'')
-				tab->cmd[i] = remove_quotes(tab->cmd[i], '\'');
-			i++;
+			tab->cmd = lst_to_array(tab->arg);
+			ft_lstclear(&tab->arg, del);
+			tab->arg = NULL;
 		}
-		free(tab->arg);
-		tab->arg = NULL;
 		tab = tab->next;
 	}
 	if (ft_heredoc(&cmdline->table))

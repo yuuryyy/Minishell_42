@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/27 22:58:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:32:03 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,13 @@ int is_valid_identifier(const char *str)
     return (1);
 }
 
-int export_variable(t_args *args, t_cmd_tab *cmd)
+int export_variable(t_args *args, t_cmd_tab *cmd, int flag)
 {
     t_list *current;
 
+	if (flag == SINGLE)
+		if (infile_opn(cmd) || outfile_opn(cmd))
+			return (g_errno = 1, 1);
     if (cmd->cmd[1] == NULL)
     {
         current = args->env;

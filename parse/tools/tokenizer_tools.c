@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 01:09:28 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/30 22:27:07 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,11 @@ int	strin_len(char *line)
 
 	i = 0;
 	len = 0;
-	if (line[i] == '$')
+	while (line[i] && !is_seperator(line[i])
+		&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ')
 	{
 		i++;
 		len++;
-		while (line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
-		{
-			i++;
-			len++;
-		}
-	}
-	else
-	{
-		while (line[i] && !is_seperator(line[i]) && line[i] != '$'
-			&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ')
-		{
-			i++;
-			len++;
-		}
 	}
 	return (len);
 }
@@ -84,8 +71,6 @@ int	word_len(char *line)
 			len++;
 		}
 	}
-	else if (line[i] == '$' && line[i + 1] == '?')
-		return (2);
 	else
 		return (strin_len(line));
 	return (len);

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/25 13:21:53 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 01:08:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_table(t_cmd_tab **table)
 	tmp = (*table);
 	*table = tmp->next;
 	if (tmp->arg)
-		free(tmp->arg);
+		ft_lstclear(&tmp->arg, free_del);
 	if (tmp->cmd)
 		free_array(tmp->cmd);
 	if (tmp->delimiter)
@@ -81,13 +81,11 @@ void	free_struct(t_args *cmd_line)
 	close(cmd_line->fdout);
 	if (cmd_line->env)
 		ft_lstclear(&cmd_line->env, free_del);
-	if (cmd_line->path)
-		free_array(cmd_line->path);
 	if (cmd_line->line)
 		free(cmd_line->line);
 	if (cmd_line->tokens)
 		free_tokens(&cmd_line->tokens);
 	if (cmd_line->table)
 		free_table(&cmd_line->table);
-	ft_bzero(cmd_line, sizeof(t_args *));
+	ft_bzero(cmd_line, sizeof(t_args ));
 }

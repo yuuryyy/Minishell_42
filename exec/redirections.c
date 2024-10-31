@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 15:41:54 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 19:00:28 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:52:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ int	infile_opn(t_cmd_tab *cmd)
 			if (check_files(tmp->content, INPUT))
 				return (1);
 			if (tmp->next == NULL)
+			{
 				infile = tmp->content;
+				break ;
+			}
 			tmp = tmp->next;
 		}
-		if (ft_strncmp(tmp->content, "/dev/stdin", ft_strlen(infile) + 1) == 0)
+		if (ft_strncmp(tmp->content, "/dev/stdin", 11) == 0)
            fdin = STDIN_FILENO;
 		else
 		{

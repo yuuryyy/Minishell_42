@@ -4,6 +4,7 @@
         "array": "c",
         "string_view": "c",
         "vector": "c",
-        "iterator": "c"
+        "iterator": "c",
+        "__node_handle": "c"
     }
 }

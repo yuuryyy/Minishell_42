@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/28 01:19:38 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/30 22:37:44 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+
 extern int	g_errno;
 
 typedef enum s_type
@@ -48,7 +49,7 @@ typedef enum s_type
 typedef struct s_cmd_tab
 {
 	char				**cmd;
-	char				*arg;
+	t_list				*arg;
 	t_list				*in;
 	t_list				*out;
 	bool				heredoc;
@@ -66,7 +67,7 @@ typedef struct s_token
 	char			*content;
 	t_type			type;
 	bool			space;
-	bool			flag;
+	// bool			flag;
 	struct s_token	*next;
 }	t_token;
 
@@ -74,7 +75,7 @@ typedef struct s_token
 typedef struct s_args
 {
 	t_list		*env;
-	char		**path;
+	// char		**path; // dynamic
 	char		*line;
 	t_token		*tokens;
 	t_cmd_tab	*table;
@@ -87,6 +88,7 @@ void		environment(char **envp, t_args *args);
 int			is_seperator(char c);
 int			process_line(t_args *cmdline);
 int			ft_heredoc(t_cmd_tab **cmds);
+int			array_len(char **str);
 
 void		free_current_cmdline(t_args *cmdline);
 void		command_table(t_args *cmdline);
@@ -113,28 +115,31 @@ bool		syntax_check(t_args *cmdline);
 
 t_cmd_tab	*new_tab(void);
 t_list		*new_lim(char *content, bool quote);
+t_token	*new_token(char *content, int type);
+void	tokenadd_back(t_token	**token, t_token	*new);
 void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 void		ft_limadd_back(t_list **lst, t_list *new);
+char	*envGetter(const char *key, t_list *env);
 
 // builtins
 int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
-int			echo(t_args *args, t_cmd_tab *cmd);
-int			cd(t_cmd_tab *cmd, t_list *env);
+int			echo(t_args *args, t_cmd_tab *cmd, int flag);
+int			cd(t_cmd_tab *cmd, t_list *env, int flag);
 t_list		*find_env_node2(t_list *env, char *cmd);
-int			pwd(char **cmd);
-int			export_variable(t_args *args, t_cmd_tab *cmd);
+int			pwd(t_cmd_tab *table, char **cmd, int flag);
+int			export_variable(t_args *args, t_cmd_tab *cmd, int flag);
 void		ordre_alpha(t_list **env);
 t_list		*find_env_node(t_list *env, char *cmd);
 int 		update_env_value(t_list *env_node, char *cmd, int append);
-int			ft_unset(t_args *args, char **cmd);
+int			ft_unset(t_args *args, char **cmd, int flag);
 int			exec_exit(t_args *args, t_cmd_tab *cmd, int flag);
-int			exec_env(t_cmd_tab *cmd, t_list *env);
+int			exec_env(t_cmd_tab *cmd, t_list *env, int flag);
 int 		is_valid_identifier(const char *str);
 //exec
 int			exec_pipes(t_cmd_tab *table);
-int			execute(t_cmd_tab *table);
+int			execute(t_cmd_tab *table, int flag);
 int			execute_cmds(t_args *args);
-int			single_cmd(t_cmd_tab *table);
+int			single_cmd(t_cmd_tab *table, int flag);
 int			check_files(char *filename, int flag);
 //signals
 void		sigint_handler(int signum);
