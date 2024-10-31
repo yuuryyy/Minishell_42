@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/30 22:55:14 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 00:35:23 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@ char	*expand(char *word, t_type type, t_list *env)
 	if (!word || !ft_strchr(word, '$'))
 		return (word);
 	tmp = env;
-	// if (word[0] == '$' && word[1] == '?')
-	// {
-	// 	free(word);
-	// 	word = ft_itoa(g_errno);
-	// }
-	// else if (type == string)
-	// 	word = expand_string(word, tmp);
-	// else
-	// {
 		index = index_ds(word);
 		while (index != -1)
 		{
