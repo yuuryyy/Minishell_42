@@ -6,23 +6,22 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/28 17:29:18 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:57:23 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo(t_args *args, t_cmd_tab *table, int flag)
+int echo(t_args *args, t_cmd_tab *table,int flag)
 {
     bool newline;
     int i;
 
     (void)args;
+    (void)flag;
+
 	newline = true;
 	i = 0;
-    if (flag == SINGLE)
-		if (infile_opn(table) || outfile_opn(table))
-			return (g_errno = 1, 1);
     if (table && !table->cmd[1])
         write(STDOUT_FILENO,"\n", 1);
     else if (table->cmd[1] && ft_strncmp(table->cmd[1], "-n", 3) == 0)
@@ -47,9 +46,8 @@ int pwd(t_cmd_tab *table, char **cmd, int flag)
 	char	*cwd;
 
     (void)cmd;
-	if (flag == SINGLE)
-		if (infile_opn(table) || outfile_opn(table))
-			return (g_errno = 1, 1);
+    (void)flag;
+    (void)table;
 	if (cmd[1] && *cmd[1] == '-')
 		return (put_built_err("pwd: ", NULL, "extra options!!"), 1);
     cwd = getcwd(NULL, 0);
@@ -61,7 +59,7 @@ int pwd(t_cmd_tab *table, char **cmd, int flag)
     }
     ft_putendl_fd(cwd, STDOUT_FILENO);
     free(cwd);
-    g_errno = 0;
+    g_errno= 0;
     return (g_errno); 
 }
 
@@ -77,50 +75,45 @@ int	array_len(char **str)
 	return (i);
 }
 
-int exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag)
+int exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
 {
-	int	len;
+    int len;
 
-	(void)cmdline;
-	len = array_len(cmd_table->cmd);
-	if (flag == SINGLE)
-	{
-		if (infile_opn(cmd_table) || outfile_opn(cmd_table))
-			return (g_errno = 1, 1);
-		if (len == 1)
-			return (printf("exit\n"), free_struct(cmd_table->data), exit (0), 0);
-		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
-			return (printf("exit\n"), put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),
-					free_struct(cmd_table->data), exit(255), 255);
-		else if (len == 2 && is_num(cmd_table->cmd[1]))
-			return (printf("exit\n"), free_struct(cmd_table->data), exit (ft_atoi(cmd_table->cmd[1])), 0);
-		else
-			return (printf("exit\n"), put_built_err("exit: ",NULL, TOOMANYARG), 1);
-		}
-	else
-	{
-		if (len == 1 || (len == 2 && is_num(cmd_table->cmd[1])))
-		{
-			if (len == 2)
-				g_errno = ft_atoi(cmd_table->cmd[1]);
-			return (g_errno);
-		}
-		else if (len >= 2 && !is_num(cmd_table->cmd[1]))
-			return (put_built_err("exit: ",cmd_table->cmd[1], NUMERICARG),1);
-		else
-			return (put_built_err("exit: ",NULL, TOOMANYARG), 1);
-	}
-	return (0);
+    (void)args;
+    (void)flag;
+    len = array_len(cmd->cmd);
+    
+    printf("exit\n");
+    printf("len: %d\n", len);
+    if (len > 1)
+    {
+        if (!is_num(cmd->cmd[1]))
+        {
+            printf("SHELL: exit: %s: numeric argument required\n", cmd->cmd[1]);
+            g_errno = 255;
+            exit(g_errno);
+        }
+        if (len > 2)
+        {
+            printf("SHELL: exit: too many arguments\n");
+            g_errno = 1;
+            return g_errno;
+        }
+    }
+    if (len == 1)
+    {
+        exit(0);
+    }
+    // fprintf(stderr, "str = <<<<%s>>>\n", cmd->cmd[1]);
+    g_errno = ft_atoi(cmd->cmd[1]);
+    // fprintf(stderr, "errno  = <<<<%d>>>\n", g_errno);
+    exit(g_errno);
 }
-
 
 int exec_env(t_cmd_tab *table, t_list *env, int flag)
 {
 	t_list *tmp;
 
-	if (flag == SINGLE)
-		if (infile_opn(table) || outfile_opn(table))
-			return (g_errno = 1, 1);
     if (table->cmd[1])
     {
 		ft_putstr_fd("env: "RED, 2);
@@ -141,40 +134,52 @@ int exec_env(t_cmd_tab *table, t_list *env, int flag)
 	return (0);
 }
 
-int ft_unset(t_args *args, char **cmd, int flag)
+void	remove_env_var(t_args *args, char *cmd)
 {
-    int		i;
-	t_list	*prev;
-	t_list	*current;
+	char		*env_var;
+	t_list		*prev;
+	t_list		*current;
 
-    i = 1;
-	g_errno = 0;
-	if (flag == SINGLE)
-		if (infile_opn(args->table) || outfile_opn(args->table))
-			return (g_errno = 1, 1);
-    while (cmd[i])
-    {
-		if (ft_isdigit(*cmd[i]))
-			put_built_err("unset: ", cmd[i], NOTVALID);
-       prev = NULL;
-       current = args->env;
-        while (current)
-        {
-            char *env_var = (char *)current->content;
-            if (ft_strncmp(env_var, cmd[i], ft_strlen(cmd[i])) == 0 && env_var[ft_strlen(cmd[i])] == '=')
-            {
-                if (prev)
-                    prev->next = current->next;
-                else
-                    args->env = current->next;
-                free(current->content);
-                free(current);
-                break;
-            }
-            prev = current;
-            current = current->next;
-        }
-        i++;
-    }
-    return (g_errno);
+	prev = NULL;
+	current = args->env;
+	while (current)
+	{
+		env_var = (char *)current->content;
+		if (ft_strncmp(env_var, cmd, ft_strlen(cmd)) == 0
+			&& env_var[ft_strlen(cmd)] == '=')
+		{
+			if (prev)
+				prev->next = current->next;
+			else
+				args->env = current->next;
+			free(current->content);
+			free(current);
+			break ;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+
+int	ft_unset(t_args *args, char **cmd, int flag)
+{
+	int	i;
+
+	i = 1;
+	while (cmd[i])
+	{
+		if (!is_valid_identifier(cmd[i]))
+		{
+			printf("unset: %s': not a valid identifier\n", cmd[i]);
+			g_errno = 1;
+		}
+		else
+		{
+			remove_env_var(args, cmd[i]);
+		}
+		i++;
+	}
+	if (g_errno != 1)
+		g_errno = 0;
+	return (0);
 }

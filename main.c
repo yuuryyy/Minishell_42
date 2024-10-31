@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/31 01:02:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/10/31 20:39:10 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,18 @@ int main(int ac, char **av, char **env)
             continue;
 		if (cmd_line.table == NULL)
 			continue ;
+        t_cmd_tab *tab = cmd_line.table;
+
+        while (tab)
+        {
+            if (tab->cmd)
+            {
+                // Affichage des commandes pour le débogage
+                for (int i = 0; tab->cmd[i]; i++)
+                    printf("cmd[%d]====%s\n", i, tab->cmd[i]);
+            }
+            tab = tab->next;
+        }
         execute_cmds(&cmd_line);
         while (wait(0) != -1)
             continue;
@@ -76,16 +88,6 @@ int main(int ac, char **av, char **env)
     return 0;
 }
 
-        // t_cmd_tab *tab = cmd_line.table;
-
-        // while (tab)
-        // {
-        //     if (tab->cmd)
-        //     {
-        //         // Affichage des commandes pour le débogage
-        //         for (int i = 0; tab->cmd[i]; i++)
-        //             printf("cmd[%d]====%s\n", i, tab->cmd[i]);
-        //     }
         //     printf("arg====%s\n", tab->arg);
         //     printf("append====%s\n", tab->append);
         //     while (tab->delimiter)
