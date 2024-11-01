@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/01 01:47:31 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:18:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ int exec_env(t_cmd_tab *table, t_list *env)
 		ft_putstr_fd(table->cmd[1], 2);
 		ft_putstr_fd(RESET, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-        g_errno = 127;
-        return (127);
+        g_errno = BINARY_ERROR;
+        return (BINARY_ERROR);
     }
     tmp = env;
     while (tmp)

@@ -6,15 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:37:33 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/30 23:57:35 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:00:50 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// ->  MinionHell^~^  >$ "$PATH" leaks in double qoutes
-
-t_token	*handle_string(t_token *current) //
+t_token	*handle_string(t_token *current) 
 {
 	char	*str;
 	bool 	space = current->space;
@@ -25,30 +23,23 @@ t_token	*handle_string(t_token *current) //
 
 	t_token	*tmp = current;
 	current->next = NULL;
-
 	str = ft_strrchr(current->content, ' ');
 	if (str && ft_strncmp(str, " ", 2) == 0) 
 		space = true;
-
 	char **splited = ft_split(current->content, ' ');
 	free(current->content);
-
-	
 	int i = 0;
 	tmp->content = splited[i++];
 	tmp->type = string; 
 	tmp->space = true;
-
-	
 	while (splited[i])
 	{
-		tmp->next = new_token(splited[i++], string); // prot
+		tmp->next = new_token(splited[i++], string);
 		tmp->next->space = true;
 		tmp = tmp->next;
 	}
 	tmp->space = space;
 	tmp->next = next;
-
 	free(splited);
 	return (current);
 }

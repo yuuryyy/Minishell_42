@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/28 17:48:13 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:18:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define EXIT_ESDIR	126
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
+# define SYNTAX_ERROR 258
 
 # define NOT_BUITIN -1
 # define BUILTIN_ERR 1
@@ -45,19 +46,26 @@
 # define HOMNOTSET "HOME not set\x1B[0m"
 # define HOMNOTSET "HOME not set\x1B[0m"
 
-
+//heredoc fd writing and expanding
 # define NO_EXW 11
 # define EXPND_W 12
 # define WRITE_FD 13
 
+//
 # define INPUT 0
 # define OUTPUT 1
 
+//to tell wich redirection is the the last to be opened
 # define APND 7
 # define REDOUT 8
 
+//to define the behavior of builtins
 # define SINGLE 1
 # define MULTI 2
+
+//exit code edit flags
+# define EDIT 0
+# define RETRIEVE 1
 
 # define RED   "\x1B[31m"
 # define GREEN "\x1B[32m"

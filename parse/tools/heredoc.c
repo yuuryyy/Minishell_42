@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/26 18:50:42 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:01:57 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 			{
 				if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
 					return (put_error(DUP2SG, NULL), 1);
+				exit_code(EXIT_FAILURE, EDIT);
 				free_current_cmdline(cmdline);
 				return (1);
 			}
@@ -131,7 +132,7 @@ int	ft_heredoc(t_cmd_tab **cmds)
 		{
 			if (pipe(fd) == -1)
 				return (ft_putstr_fd("pipe has failed", 2),
-					g_errno = EXIT_FAILURE, 1);
+						exit_code(1, EDIT), 1);
 			tmp = cmdtable->delimiter;
 			err = open_heredoc(tmp, fd, (*cmds)->data);
 			if (err)

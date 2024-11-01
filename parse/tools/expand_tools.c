@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:19:01 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 02:08:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 02:58:10 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ char	*get_value(char *befor_dolla, char *key, char *after_dolla, t_list *env)
 	tmp = NULL;
 	if (key && key[0] && key[1] == '?')
 	{
-		if (g_errno == -1)
-			g_errno = 1;
-		val = ft_itoa(g_errno);
+		val = ft_itoa(exit_code(0, RETRIEVE));
 		tmp = ft_strjoin(befor_dolla, val);
 		word = ft_strjoin2(tmp, after_dolla);
 		free(val);
@@ -75,8 +73,6 @@ char	*get_value(char *befor_dolla, char *key, char *after_dolla, t_list *env)
 		else
 			word = ft_strjoin(befor_dolla, after_dolla);
 	}
-	// while(1)
-	// 	;
 	return (word);
 }
 
@@ -113,8 +109,6 @@ void	expand_quotes(char **word, int index, t_list *env)
 	free(*word);
 	*word = NULL;
 	*word = get_value(befor_dolla, key, after_dolla, env);
-		// while (1)
-		// 	;
 	free(key);
 	free(befor_dolla);
 	free(after_dolla);

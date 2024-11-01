@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/31 00:11:53 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:18:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec(t_cmd_tab *table, t_list *env)
 	i = 0;
 	path = envGetter("PATH", env);
 	if (!path)
-		return (put_error(INTROUVABLE_FILE, table->cmd[0]), exit (127), 1);
+		return (put_error(INTROUVABLE_FILE, table->cmd[0]), exit (BINARY_ERROR), 1);
 	envp = lst_to_array(env);
 	bin = ft_split(path, ':');
 	free(path);
@@ -39,7 +39,7 @@ int	exec(t_cmd_tab *table, t_list *env)
 	return (err);
 }
 
-int	execute(t_cmd_tab *table, int flag)
+void	execute(t_cmd_tab *table, int flag)
 {
 	char	**env;
 	int		err;
@@ -66,16 +66,16 @@ int	execute(t_cmd_tab *table, int flag)
 					{
 						if (S_ISDIR(status.st_mode))
 							return (put_error(ISDIR, table->cmd[0]),
-								free_array(env), exit(EXIT_ESDIR), 1);
+								free_array(env), exit(EXIT_ESDIR));
 					}
 					return (put_error(INTROUVABLE_FILE, table->cmd[0]),
-							free_array(env), exit(127), 1);
+							free_array(env), exit(BINARY_ERROR));
 				}
 			}
 			err = exec(table, table->data->env);
 			if (err == -1)
 				return (put_error(NOTFOUNDMSG, table->cmd[0]),
-					free_array(env), exit(127), 127);
+					free_array(env), exit(BINARY_ERROR));
 		}
 		exit (built);
 	}
@@ -86,6 +86,7 @@ int	single_cmd(t_cmd_tab *table, int flag)
 {
 	int		status;
 	pid_t	pid;
+	int		code;
 
 	pid = fork();
 	if (pid == -1)
@@ -100,8 +101,8 @@ int	single_cmd(t_cmd_tab *table, int flag)
 			close(table->fd_heredoc);
 		if (WIFEXITED(status))
 		{
-			g_errno = WEXITSTATUS(status);
-			return (g_errno);
+			code = WEXITSTATUS(status);
+			return (exit_code(code, EDIT), code);
 		}
 	}
 	return (0);

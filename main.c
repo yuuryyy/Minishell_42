@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 01:59:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 02:49:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ void	s()
 	system("leaks minishell");
 }
 
+
+int exit_code(int code, int flag)
+{
+    static int exit_code;
+
+    if (flag == EDIT)
+        exit_code = code;
+    return exit_code;
+}
 
 #define ANSI_FONT_COL_RESET     "\x1b[0m"
 #define FONT_COL_CUSTOM_RED     "\e[38;2;200;0;0m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
@@ -40,7 +49,7 @@ int main(int ac, char **av, char **env)
     environment(env, &cmd_line);//I retrieved the env
     cmd_line.fdin = dup(STDIN_FILENO);
     cmd_line.fdout = dup(STDOUT_FILENO);
-
+	exit_code(0, EDIT);
     while (1)
     {
         rl_catch_signals = 0;

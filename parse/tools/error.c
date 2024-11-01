@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/31 01:07:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 03:09:43 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	put_built_err(char *built, char *name, char *err)
 		ft_putstr_fd(name, 2);
 	ft_putstr_fd(err, 2);
 	ft_putstr_fd("\n", 2);
-	g_errno = 1;
+	exit_code(EXIT_FAILURE, EDIT);
 }
 
 void	put_error(char *msg, char *name)
@@ -38,7 +38,10 @@ void	put_error(char *msg, char *name)
 		ft_putstr_fd(name, 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n"RESET, 2);
-	g_errno = 258;
+	if (ft_strncmp(msg, SYNTAX, 13) == 0)
+		exit_code(SYNTAX_ERROR, EDIT);
+	else
+		exit_code(EXIT_FAILURE, EDIT);
 }
 
 bool	syntax_check(t_args *cmdline)

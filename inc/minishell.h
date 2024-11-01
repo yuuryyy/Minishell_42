@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/10/31 23:36:35 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/01 03:19:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,12 @@ int			pwd(t_cmd_tab *table, char **cmd, int flag);
 
 //exec
 int			exec_pipes(t_cmd_tab *table);
-int			execute(t_cmd_tab *table, int flag);
+void		execute(t_cmd_tab *table, int flag);
 int			execute_cmds(t_args *args);
 int			single_cmd(t_cmd_tab *table, int flag);
 int			check_files(char *filename, int flag);
 //signals
+int			exit_code(int code, int flag);
 void		sigint_handler(int signum);
 void		setup_signal_handlers(void);
 // tools
