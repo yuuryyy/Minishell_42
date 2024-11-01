@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 00:51:29 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 02:03:49 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int	process_line(t_args *cmdline)
 		put_error(SYNTAX , NULL);
 		return (1);
 	}
+		// while(1)
+		// 	;
 	expand_var(&cmdline);
 	command_table(cmdline);
 	tab = cmdline->table;

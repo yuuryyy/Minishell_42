@@ -40,8 +40,6 @@ SRCS		=	main.c \
 
 OBJS		= $(SRCS:.c=.o)
 
-M			:= AUTO_PUSH
-
 all : $(NAME)
 
 lib :
@@ -66,7 +64,7 @@ re: fclean all
 
 push: fclean
 	git add .
-	git commit -m "$(M)"
+	git commit -m "$(filter-out $@, $(MAKECMDGOALS))"
 	git push
 
 .PHONY: clean fclean re lib

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 23:36:11 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/01 01:47:31 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,24 @@ int echo(t_args *args, t_cmd_tab *table,int flag)
     bool newline;
     int i;
 
-    (void)args;
-    (void)flag;
-
+    // (void)args;
+    // (void)flag;
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (g_errno = 1, 1);
 	newline = true;
-	i = 0;
-    if (table && !table->cmd[1])
-        write(STDOUT_FILENO,"\n", 1);
-    else if (table->cmd[1] && ft_strncmp(table->cmd[1], "-n", 3) == 0)
+	i = 1;
+    while (table->cmd[i] && ft_strncmp(table->cmd[i], "-n", 3) == 0)
     {
         newline = false;
         i++;
     }
-    while (table->cmd[++i])
+    while (table->cmd[i])
     {
        write(STDOUT_FILENO, table->cmd[i], ft_strlen(table->cmd[i]));
         if (table->cmd[i + 1])
            write(STDOUT_FILENO, " ", 1);
+		i++;
     }
     if (newline)
        write(STDOUT_FILENO, "\n", 1);
@@ -82,9 +83,6 @@ int exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
     (void)args;
     (void)flag;
     len = array_len(cmd->cmd);
-    
-    printf("exit\n");
-    printf("len: %d\n", len);
     if (len > 1)
     {
         if (!is_num(cmd->cmd[1]))

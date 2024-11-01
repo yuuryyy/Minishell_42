@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 00:53:19 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 01:59:52 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int main(int ac, char **av, char **env)
         rl_catch_signals = 0;
         free_current_cmdline(&cmd_line);
         setup_signal_handlers();
-        // cmd_line.line = readline("\033[38;2;255;192;203m\033[1m->  MinionHell^~^ \033[34m>$ \033[0m");
-        cmd_line.line = readline(MAGINTA "->  MinionHell^~^ " CYAN " >$ " ANSI_FONT_COL_RESET);
+        cmd_line.line = readline(MAGINTA "->  MinionHell^~^ " CYAN ">$ " ANSI_FONT_COL_RESET);
         if (cmd_line.line == NULL)
         {
 			while (wait(NULL) != -1)
@@ -74,6 +73,8 @@ int main(int ac, char **av, char **env)
         //     }
         //     tab = tab->next;
         // }
+		// while(1)
+		// 	;
         execute_cmds(&cmd_line);
             // printf("raha null\n");
         while (wait(0) != -1)
