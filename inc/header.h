@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 03:18:52 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 21:04:51 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@
 # define NOTFOUNDMSG ": \x1B[0mcommand not found"
 # define WAITMSG	"wait() has failed .\x1B[0m"
 # define WAITPIDMSG "waitpid() has failed .\x1B[0m"
-# define SYNTAX "syntax error"  
+# define SYNTAX "syntax error"
 # define TOOMANYARG "too many arguments\x1B[0m"
-# define PERMISSION ": \x1B[0mpermission denied " 
+# define PERMISSION ": \x1B[0mpermission denied "
 # define NUMERICARG ": numeric argument required \x1B[0m"
 # define NOTVALID ": not a valid identifier\x1B[0m"
 # define OLDNOTSET "OLDPWD not set\x1B[0m"
 # define HOMNOTSET "HOME not set\x1B[0m"
-# define HOMNOTSET "HOME not set\x1B[0m"
-
 //heredoc fd writing and expanding
 # define NO_EXW 11
 # define EXPND_W 12

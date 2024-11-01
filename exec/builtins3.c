@@ -6,22 +6,20 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/01 03:18:46 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 20:58:21 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int echo(t_args *args, t_cmd_tab *table,int flag)
+int echo(t_cmd_tab *table,int flag)
 {
     bool newline;
     int i;
 
-    // (void)args;
-    // (void)flag;
 	if (flag == SINGLE)
 		if (infile_opn(table) || outfile_opn(table))
-			return (g_errno = 1, 1);
+			return (1);
 	newline = true;
 	i = 1;
     while (table->cmd[i] && ft_strncmp(table->cmd[i], "-n", 3) == 0)
@@ -38,8 +36,7 @@ int echo(t_args *args, t_cmd_tab *table,int flag)
     }
     if (newline)
        write(STDOUT_FILENO, "\n", 1);
-	g_errno = 0;
-	return (0);
+	return (exit_code(EXIT_SUCCESS, EDIT));
 }
 
 int pwd(t_cmd_tab *table, char **cmd, int flag)

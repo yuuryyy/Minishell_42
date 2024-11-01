@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 03:09:43 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 20:49:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	put_error(char *msg, char *name)
 	ft_putstr_fd("\n"RESET, 2);
 	if (ft_strncmp(msg, SYNTAX, 13) == 0)
 		exit_code(SYNTAX_ERROR, EDIT);
+	else if (ft_strncmp(msg, NOTFOUNDMSG, 24) == 0)
+		exit_code(BINARY_ERROR, EDIT);
 	else
 		exit_code(EXIT_FAILURE, EDIT);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exuc_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 23:36:20 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/01 23:29:48 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int exec_builtin(t_args *args, t_cmd_tab *cmd, int flag)
     if (!cmd || !cmd->cmd)
 		return (NOT_BUITIN);
     if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
-        return (echo(args, cmd, flag));
+        return (echo(cmd, flag));
     else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-        return (cd(cmd, &args->env));
+        return (cd(cmd, &args->env, flag));
     else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
         return (pwd(cmd, cmd->cmd, flag));
     else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)

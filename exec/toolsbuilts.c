@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toolsbuilts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:29:58 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 23:17:27 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/01 21:23:54 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,15 @@ int	change_directory_to_oldpwd(char *oldpwd)
 {
 	if (!oldpwd)
 	{
-		ft_putendl_fd("cd: OLDPWD not set", 2);
+		put_built_err("cd: ", NULL, OLDNOTSET);
 		return (1);
 	}
-	if (chdir(oldpwd) != 0)
+	else if (chdir(oldpwd) != 0)
 	{
 		ft_putstr_fd("cd: ", 2);
 		perror(oldpwd);
-		return (1);
+		return (exit_code(EXIT_FAILURE, EDIT));
 	}
 	ft_putendl_fd(oldpwd, 1);
-	return (0);
+	return (exit_code(EXIT_SUCCESS, EDIT));
 }

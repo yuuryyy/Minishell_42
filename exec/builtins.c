@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 23:14:45 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/01 23:33:19 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	change_directory_to_home(char *home)
 {
 	if (!home)
 	{
-		ft_putendl_fd("cd: HOME not set", 2);
+		put_built_err("cd: ", NULL, HOMNOTSET);
 		return (1);
 	}
-	if (chdir(home) != 0)
+	else if (chdir(home) != 0)
 	{
 		ft_putstr_fd("cd: ", 2);
 		perror(home);
-		return (1);
+		return (exit_code(EXIT_FAILURE, EDIT));
 	}
 	return (0);
 }
@@ -39,7 +39,7 @@ int	handle_cd_command(t_cmd_tab *cmd, t_list *env)
 		if (change_directory_to_home(home) == 1)
 			return (1);
 	}
-	else if (ft_strcmp(cmd->cmd[1], "-") == 0)
+	else if (ft_strncmp(cmd->cmd[1], "-", 2) == 0)
 	{
 		oldpwd = path(env, "OLDPWD");
 		if (change_directory_to_oldpwd(oldpwd))
@@ -51,7 +51,7 @@ int	handle_cd_command(t_cmd_tab *cmd, t_list *env)
 		{
 			ft_putstr_fd("cd: ", 2);
 			perror(cmd->cmd[1]);
-			return (1);
+			return (exit_code(EXIT_FAILURE, EDIT));
 		}
 	}
 	return (0);
@@ -70,7 +70,7 @@ void	update_oldpwd(t_list **env, char *current_path)
 		oldpwd_node->content = oldpwd_str;
 	}
 	else
-		add_env_node(env, oldpwd_str);
+		ft_lstadd_back(env,ft_lstnew(oldpwd_str));
 }
 
 void	update_pwd(t_list **env, char *new_path)
@@ -86,25 +86,30 @@ void	update_pwd(t_list **env, char *new_path)
 		pwd_node->content = pwd_str;
 	}
 	else
-		add_env_node(env, pwd_str);
+		ft_lstadd_back(env,ft_lstnew(pwd_str));
 }
 
-int	cd(t_cmd_tab *cmd, t_list **env)
+int	cd(t_cmd_tab *cmd, t_list **env, int flag)
 {
 	char	current_path[PATH_MAX];
 	char	new_path[PATH_MAX];
+	int		err;
 
+	if (flag == SINGLE)
+		if (infile_opn(cmd) || outfile_opn(cmd))
+			return (1);
 	if (getcwd(current_path, PATH_MAX) == NULL)
 	{
 		perror("cd");
-		return (1);
+		err = exit_code(EXIT_FAILURE, EDIT);
 	}
-	if (handle_cd_command(cmd, *env) == 1)
+	else if (handle_cd_command(cmd, *env) == 1)
 		return (1);
 	if (getcwd(new_path, PATH_MAX) != NULL)
 	{
 		update_oldpwd(env, current_path);
 		update_pwd(env, new_path);
 	}
+	exit_code(EXIT_SUCCESS, EDIT);
 	return (0);
 }

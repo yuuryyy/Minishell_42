@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/01 03:19:40 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/01 22:27:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ char	*envGetter(const char *key, t_list *env);
 
 // builtins
 int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
-int			echo(t_args *args, t_cmd_tab *table, int flag);
-int			cd(t_cmd_tab *cmd, t_list **env);
+int			echo(t_cmd_tab *table, int flag);
+int			cd(t_cmd_tab *cmd, t_list **env, int flag);
 t_list		*find_env_node2(t_list *env, char *cmd);
 int			exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag);
 int			export_variable(t_args *args, t_cmd_tab *cmd);
