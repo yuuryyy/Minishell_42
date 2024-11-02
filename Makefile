@@ -3,9 +3,8 @@ NAME 		=	minishell
 
 CC			=	cc
 
-CFLAGS		=	-g -Wall -Wextra -I./inc -I$(shell brew --prefix readline)/include  
+CFLAGS		=	-g -Wall -Wextra -Werror -I./inc -I$(shell brew --prefix readline)/include
 #-fsanitize=address
-#-Werror
 
 LFLAGS 		=	-L$(shell brew --prefix readline)/lib -lreadline
 
@@ -25,6 +24,7 @@ SRCS		=	main.c \
 				parse/tools/tokenizer_tools.c \
 				parse/lexical_analyzer/create_tokens.c \
 				parse/lexical_analyzer/parser.c \
+				parse/lexical_analyzer/form_cmdtable.c \
 				parse/lexical_analyzer/parsing_process.c \
 				exec/exec_cmd.c \
 				exec/tools.c \

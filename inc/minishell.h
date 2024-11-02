@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/02 03:53:55 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:12:13 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		del(void *content);
 void		put_error(char *msg, char *name);
 void		put_built_err(char *built, char *name, char *err);
 
-char		*expand(char *word, t_type type, t_list *env);
+char		*expand(char *word, t_list *env);
 void		expand_quotes(char **word, int index, t_list *env);
 int			index_ds(char *str);
 char		**lst_to_array(t_list *lst);
@@ -114,12 +114,16 @@ void		remove_q(t_token **lst);
 bool		syntax_check(t_args *cmdline);
 
 t_cmd_tab	*new_tab(void);
+void	handle_red(t_cmd_tab *new, t_token *current);
+t_token	*handle_limiters(t_token **current, t_list **limiter);
+t_token	*handle_tokens(t_token **current, t_list **list);
+t_token	*handle_string(t_token *current);
 t_list		*new_lim(char *content, bool quote);
 t_token	*new_token(char *content, int type);
 void	tokenadd_back(t_token	**token, t_token	*new);
 void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 void		ft_limadd_back(t_list **lst, t_list *new);
-char	*envGetter(const char *key, t_list *env);
+char	*envgetter(const char *key, t_list *env);
 
 // builtins
 int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
@@ -148,6 +152,7 @@ int			single_cmd(t_cmd_tab *table);
 int			check_files(char *filename, int flag);
 //signals
 int			exit_code(int code, int flag);
+void		heredc_sig(int signal);
 void		sigint_handler(int signum);
 void		setup_signal_handlers(void);
 // tools

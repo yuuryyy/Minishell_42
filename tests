@@ -20,4 +20,25 @@ declare -x ds5
 
 export is not displaying vars in the right order!!!!!!
 
+##############################################################################
 
+======> reason : I only skip -n not -nnnn
+
+bash-3.2$ echo -n -n -nnnn -nnnnm
+-nnnnmbash-3.2$
+
+->  MinionHell^~^ >$ echo -n -n -nnnn -nnnnm
+-nnnn -nnnnm->  MinionHell^~^ >$ 
+
+
+##############################################################################
+sell lvl should be incremented when running minishell on minishell
+
+->  MinionHell^~^ >$ $SHLVL
+minionshell: 1: command not found
+->  MinionHell^~^ >$ ./minishell 
+->  MinionHell^~^ >$ $SHLVL
+minionshell: 1: command not found
+->  MinionHell^~^ >$ 
+
+##############################################################################

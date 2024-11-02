@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/29 00:24:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:07:40 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_seperator(char c)
 	return (c == '|' || c == '<' || c == '>' );
 }
 
-char	*envGetter(const char *key, t_list *env)
+char	*envgetter(const char *key, t_list *env)
 {
 	char	*value;
 	char	*lookup;
@@ -30,10 +30,10 @@ char	*envGetter(const char *key, t_list *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (ft_strncmp(lookup , tmp->content, ft_strlen(lookup)) == 0)
+		if (ft_strncmp(lookup, tmp->content, ft_strlen(lookup)) == 0)
 		{
 			value = ft_strdup(tmp->content + ft_strlen(lookup));
-	 		break;
+			break ;
 		}
 		tmp = tmp->next;
 	}
@@ -53,7 +53,7 @@ void	environment(char **envp, t_args *cmd_line)
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		node = ft_lstnew(ft_strdup(envp[i]));
 		node->previous = prev;

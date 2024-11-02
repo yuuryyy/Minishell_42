@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 03:05:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:04:09 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,25 +96,6 @@ char	*remove_quotes(char *str, int c)
 	return (update);
 }
 
-// void ft_list_remove_if(t_token **begin_list)
-// {
-// 	if (begin_list == NULL || *begin_list == NULL)
-// 		return;
-// 	t_token *cur = *begin_list;
-
-// 	if (cur->type == string && cur->content == NULL)
-// 	{
-// 		*begin_list = cur->next;
-// 		free(cur);
-// 		ft_token_remove_if(begin_list);
-// 	}
-// 	else 
-// 	{ 
-// 		cur = *begin_list;
-// 		ft_token_remove_if(&cur->next);
-// 	}
-// }
-
 int	process_line(t_args *cmdline)
 {
 	char		*tmp;
@@ -122,32 +103,24 @@ int	process_line(t_args *cmdline)
 
 	tmp = ft_strdup(cmdline->line);
 	if (!*tmp)
-		return (free(tmp),exit_code(EXIT_SUCCESS, EDIT), 1);
+		return (free(tmp), exit_code(EXIT_SUCCESS, EDIT), 1);
 	if (!words_list(tmp, cmdline))
-	{
-		heredoc_check(cmdline->tokens);
-		free(tmp);
-		return (1);
-	}
+		return (free(tmp), 1);
 	free(tmp);
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
 		if (heredoc_check(cmdline->tokens))
 			return (exit_code(1, EDIT), 1);
-		put_error(SYNTAX , NULL);
-		return (1);
+		return (put_error(SYNTAX, NULL), 1);
 	}
 	expand_var(&cmdline);
 	command_table(cmdline);
 	tab = cmdline->table;
 	while (tab)
 	{
-		if (tab->arg)
-			tab->cmd = lst_to_array(tab->arg);
+		tab->cmd = lst_to_array(tab->arg);
 		tab = tab->next;
 	}
-	if (ft_heredoc(&cmdline->table))
-		return (1);
-	return (0);
+	return (ft_heredoc(&cmdline->table));
 }

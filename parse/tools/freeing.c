@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:36:15 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 00:20:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:10:41 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	free_struct(t_args *cmd_line)
 		free_tokens(&cmd_line->tokens);
 	if (cmd_line->table)
 		free_table(&cmd_line->table);
-	ft_bzero(cmd_line, sizeof(t_args ));
+	ft_bzero(cmd_line, sizeof(t_args));
 }

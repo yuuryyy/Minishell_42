@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 12:19:01 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 02:58:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:07:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*expand_string(char *word, t_list *env)
 
 	if (!ft_strchr(word, '$') || !word || ft_strncmp(word, "$", 2) == 0)
 		return (word);
-	value = envGetter(word + 1, env);
+	value = envgetter(word + 1, env);
 	if (value)
 	{
 		free(word);
@@ -63,7 +63,7 @@ char	*get_value(char *befor_dolla, char *key, char *after_dolla, t_list *env)
 	}
 	else
 	{
-		tmp = envGetter(key + 1, env);
+		tmp = envgetter(key + 1, env);
 		if (tmp)
 		{
 			word = ft_strjoin(befor_dolla, tmp);
@@ -76,7 +76,7 @@ char	*get_value(char *befor_dolla, char *key, char *after_dolla, t_list *env)
 	return (word);
 }
 
-int	key_len(char *word, int	index)
+int	key_len(char *word, int index)
 {
 	int	i;
 	int	len;

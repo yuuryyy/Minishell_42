@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:45:51 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 20:49:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:08:19 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	del(void *content)
 {
-	// free(content);
 	content = NULL;
 }
-
 
 void	put_built_err(char *built, char *name, char *err)
 {

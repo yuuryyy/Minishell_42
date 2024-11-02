@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 19:03:41 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 04:35:31 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:27:04 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	**lst_to_array(t_list *lst)
 	char	**arr;
 	t_list	*tmp;
 
+	if (!lst)
+		return (NULL);
 	tmp = lst;
 	i = 0;
 	len = ft_lstsize(tmp);
