@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 02:43:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 03:53:44 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec(t_cmd_tab *table, t_list *env)
 	return (err);
 }
 
-void	execute(t_cmd_tab *table, int flag)
+void	execute(t_cmd_tab *table)
 {
 	char	**env;
 	int		err;
@@ -50,10 +50,7 @@ void	execute(t_cmd_tab *table, int flag)
 		exit(EXIT_FAILURE);
 	if (table->cmd)
 	{
-		if (flag == SINGLE)
-			built = NOT_BUITIN;
-		else
-			built = exec_builtin(table->data, table, MULTI);
+		built = exec_builtin(table->data, table, MULTI);
 		if (built == NOT_BUITIN)
 		{
 			env = lst_to_array(table->data->env);
@@ -66,6 +63,9 @@ void	execute(t_cmd_tab *table, int flag)
 					{
 						if (S_ISDIR(status.st_mode))
 							return (put_error(ISDIR, table->cmd[0]),
+								free_array(env), exit(EXIT_ESDIR));
+						if (!(S_IXUSR & status.st_mode))
+							return (put_error(PERMISSION, table->cmd[0]),
 								free_array(env), exit(EXIT_ESDIR));
 					}
 					return (put_error(INTROUVABLE_FILE, table->cmd[0]),
@@ -82,7 +82,7 @@ void	execute(t_cmd_tab *table, int flag)
 	exit(0);
 }
 
-int	single_cmd(t_cmd_tab *table, int flag)
+int	single_cmd(t_cmd_tab *table)
 {
 	int		status;
 	pid_t	pid;
@@ -92,7 +92,7 @@ int	single_cmd(t_cmd_tab *table, int flag)
 	if (pid == -1)
 		return (put_error(FORKMSG, NULL), 1);
 	else if (pid == 0)
-		execute(table, flag);
+		execute(table);
 	else
 	{
 		close(STDIN_FILENO);

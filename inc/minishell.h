@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/02 02:39:55 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 03:53:55 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,9 @@ int			pwd(t_cmd_tab *table, char **cmd, int flag);
 //exec
 int			exec(t_cmd_tab *table, t_list *env);
 int			exec_pipes(t_cmd_tab *table);
-void		execute(t_cmd_tab *table, int flag);
+void		execute(t_cmd_tab *table);
 int			execute_cmds(t_args *args);
-int			single_cmd(t_cmd_tab *table, int flag);
+int			single_cmd(t_cmd_tab *table);
 int			check_files(char *filename, int flag);
 //signals
 int			exit_code(int code, int flag);

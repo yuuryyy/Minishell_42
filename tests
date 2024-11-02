@@ -1,49 +1,4 @@
 
-#############################################################################
-
-
-minionshell: cd: No such file or directory: /home/mmesbahi/
-bash: cd: /home/mmesbahi/: No such file or directory
-
-< main.c Makefile
-
-< dfvdf
-
-
-##############################################################################
-
-    no error printing ....
-
-=====> reason : $ unset $(env | awk -F= '{print $1}') && env
-
-bash-3.2$ echo $?
-BINARY_ERROR
-
-->  MinionHell^~^ >$ echo "$?"
-0
-
-
-##############################################################################
-
-=====> reason : $ unset $(env | awk -F= '{print $1}') && env
-
-bash-3.2$ env
-bash: env: No such file or directory
-
-->  MinionHell^~^ >$ env
-_=/Users/ychagri/Desktop/Minishell_42/./minishell
-PWD=/Users/ychagri
-echo "$?"
- Cp��
-
-PWD=/Users/ychagri
-
-##############################################################################
-
-
-->  MinionHell^~^  >$ echo
-
-printing two lines;
 
 ######################################
 ======> reason : signals
@@ -52,13 +7,6 @@ printing two lines;
 ->  MinionHell^~^  >$ ->  MinionHell^~^  >$ 
 ##############################################################################
 
- MinionHell^~^ >$ /dev/null 
-minionshell: /dev/null: no such file or directory
-
-bash-3.2$ /dev/null
-bash: /dev/null: Permission denied
-
-##############################################################################
 
 
 ->  MinionHell^~^ >$ export ds5
@@ -72,5 +20,4 @@ declare -x ds5
 
 export is not displaying vars in the right order!!!!!!
 
-sbah lward awridti >>>>> meryem bug????<3333333388888T> 
 
