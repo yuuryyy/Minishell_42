@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 21:04:51 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 00:27:45 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define EXIT_ESDIR	126
 # define BINARY_ERROR 127
 # define FATAL_ERROR 130
+# define EXIT_OUTOFRANGE 255
 # define SYNTAX_ERROR 258
 
 # define NOT_BUITIN -1

@@ -59,3 +59,18 @@ bash-3.2$ /dev/null
 bash: /dev/null: Permission denied
 
 ##############################################################################
+
+
+->  MinionHell^~^ >$ export ds5
+export: `ds5': not a valid identifier
+
+bash-3.2$  export ds5
+declare -x ds5
+
+
+##############################################################################
+
+export is not displaying vars in the right order!!!!!!
+
+sbah lward awridti >>>>> meryem bug????<3333333388888T> 
+

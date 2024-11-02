@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 03:18:46 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 02:43:10 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec(t_cmd_tab *table, t_list *env)
 	i = 0;
 	path = envGetter("PATH", env);
 	if (!path)
-		return (put_error(INTROUVABLE_FILE, table->cmd[0]), exit (BINARY_ERROR), 1);
+		return (put_error(INTROUVABLE_FILE, table->cmd[0]), exit (BINARY_ERROR), -1);
 	envp = lst_to_array(env);
 	bin = ft_split(path, ':');
 	free(path);

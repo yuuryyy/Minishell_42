@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 03:26:21 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 02:54:22 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	forking(t_cmd_tab *tab, int *fd)
 {
 	pid_t	pid;
+
 
 	pid = fork();
 	if (pid == -1)

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/01 22:27:02 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 02:39:55 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ int			export_variable(t_args *args, t_cmd_tab *cmd);
 void		ordre_alpha(t_list **env);
 t_list		*find_env_node(t_list *env, char *cmd);
 int			update_env_value(t_list *env_node, char *cmd, int append);
-int			ft_unset(t_args *args, char **cmd);
-int			exec_env(t_cmd_tab *table, t_list *env);
+int			ft_unset(t_args *args, char **cmd, int flag);
+int			exec_env(t_cmd_tab *table, t_list *env, int flag);
 void		add_env_node(t_list **env, char *new_content);
 int			is_valid_identifier(const char *str);
 int			change_directory_to_oldpwd(char *oldpwd);
@@ -140,6 +140,7 @@ int			pwd(t_cmd_tab *table, char **cmd, int flag);
 
 
 //exec
+int			exec(t_cmd_tab *table, t_list *env);
 int			exec_pipes(t_cmd_tab *table);
 void		execute(t_cmd_tab *table, int flag);
 int			execute_cmds(t_args *args);

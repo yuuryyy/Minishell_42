@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/01 20:58:21 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 03:10:55 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,20 @@ int pwd(t_cmd_tab *table, char **cmd, int flag)
 {
 	char	*cwd;
 
-    (void)cmd;
-    (void)flag;
-    (void)table;
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (1);
 	if (cmd[1] && *cmd[1] == '-')
 		return (put_built_err("pwd: ", NULL, "extra options!!"), 1);
     cwd = getcwd(NULL, 0);
     if (cwd == NULL)
     {
         perror("pwd");
-        g_errno = 1;
-        return (g_errno);
+        return (exit_code(EXIT_FAILURE, EDIT));
     }
     ft_putendl_fd(cwd, STDOUT_FILENO);
     free(cwd);
-    g_errno= 0;
-    return (g_errno); 
+    return (exit_code(EXIT_SUCCESS, EDIT)); 
 }
 
 int	array_len(char **str)
@@ -76,60 +74,62 @@ int	array_len(char **str)
 int exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
 {
     int len;
+	int	code;
 
-    (void)args;
-    (void)flag;
+	if (flag == SINGLE)
+	{
+		printf("exit\n");
+		if (infile_opn(cmd) || outfile_opn(cmd))
+			return (1);
+	}
     len = array_len(cmd->cmd);
+	if (len == 1)
+		return (free_struct(args), exit(0), 0);
     if (len > 1)
     {
         if (!is_num(cmd->cmd[1]))
         {
-            printf("SHELL: exit: %s: numeric argument required\n", cmd->cmd[1]);
-            g_errno = 255;
-            exit(g_errno);
+			put_built_err("exit: ", cmd->cmd[1], NUMERICARG);
+			free_struct(args);
+            exit(exit_code(EXIT_OUTOFRANGE, EDIT));
         }
-        if (len > 2)
-        {
-            printf("SHELL: exit: too many arguments\n");
-            g_errno = 1;
-            return g_errno;
-        }
+		else if (len == 2 && is_num(cmd->cmd[1]))
+		{
+			code = exit_code(ft_atoi(cmd->cmd[1]), EDIT);
+			free_struct(args);
+			exit(code);
+		}
+		put_built_err("exit: ", NULL, TOOMANYARG);
     }
-    if (len == 1)
-    {
-        exit(0);
-    }
-    // fprintf(stderr, "str = <<<<%s>>>\n", cmd->cmd[1]);
-    g_errno = ft_atoi(cmd->cmd[1]);
-    // fprintf(stderr, "errno  = <<<<%d>>>\n", g_errno);
-    exit(g_errno);
+	return (1);
 }
 
-int exec_env(t_cmd_tab *table, t_list *env)
+int exec_env(t_cmd_tab *table, t_list *env, int flag)
 {
-	t_list *tmp;
+	pid_t	pid;
+	int		status;
 
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (1);
     if (table->cmd[1])
     {
-		ft_putstr_fd("env: "RED, 2);
-		ft_putstr_fd(table->cmd[1], 2);
-		ft_putstr_fd(RESET, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-        g_errno = BINARY_ERROR;
-        return (BINARY_ERROR);
+		put_built_err("env: ", NULL, "no argumets/options !!");
+		return (1);
     }
-    tmp = env;
-    while (tmp)
-    {
-        write(STDOUT_FILENO, (char *)tmp->content, ft_strlen(tmp->content));
-		write(STDOUT_FILENO, "\n", 1);
-        tmp = tmp->next;
-    }
-    g_errno = 0;
-	return (0);
+	pid = fork();
+	if (pid == -1)
+		return (put_error(FORKMSG, NULL), 1);
+	if (pid == 0)
+		if (exec(table, env) == -1)
+			exit (BINARY_ERROR);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (exit_code(WEXITSTATUS(status), EDIT));
+	return (exit_code(EXIT_SUCCESS, EDIT));
 }
 
-void	remove_env_var(t_args *args, char *cmd)
+void	remove_env_var(t_args *args, char *argument)
 {
 	char		*env_var;
 	t_list		*prev;
@@ -140,8 +140,8 @@ void	remove_env_var(t_args *args, char *cmd)
 	while (current)
 	{
 		env_var = (char *)current->content;
-		if (ft_strncmp(env_var, cmd, ft_strlen(cmd)) == 0
-			&& env_var[ft_strlen(cmd)] == '=')
+		if (ft_strncmp(env_var, argument, ft_strlen(argument)) == 0
+			&& env_var[ft_strlen(argument)] == '=')
 		{
 			if (prev)
 				prev->next = current->next;
@@ -156,25 +156,22 @@ void	remove_env_var(t_args *args, char *cmd)
 	}
 }
 
-int	ft_unset(t_args *args, char **cmd)
+int	ft_unset(t_args *args, char **cmd, int flag)
 {
 	int	i;
 
 	i = 1;
+	exit_code(EXIT_SUCCESS, EDIT);
+	if (flag == SINGLE)
+		if (infile_opn(args->table) || outfile_opn(args->table))
+			return (1);
 	while (cmd[i])
 	{
 		if (!is_valid_identifier(cmd[i]))
-		{
-			printf("unset: %s': not a valid identifier\n", cmd[i]);
-			g_errno = 1;
-		}
+			put_built_err("unset: ", cmd[i], NOTVALID);
 		else
-		{
 			remove_env_var(args, cmd[i]);
-		}
 		i++;
 	}
-	if (g_errno != 1)
-		g_errno = 0;
-	return (0);
+	return (exit_code(0, RETRIEVE));
 }
