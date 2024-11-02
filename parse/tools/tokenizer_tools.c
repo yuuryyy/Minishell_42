@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/30 22:27:07 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 04:31:15 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	strin_len(char *line)
 	i = 0;
 	len = 0;
 	while (line[i] && !is_seperator(line[i])
-		&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ')
+		&& line[i] != '\"' && line[i] != '\'' && line[i] != ' ' && line[i] != '\t')
 	{
 		i++;
 		len++;

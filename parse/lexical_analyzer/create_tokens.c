@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/30 22:19:44 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 04:29:49 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_word(char **line)
 	if (!*line || !line || !**line)
 		return (NULL);
 	tmp = *line;
-	while (tmp[i] && tmp[i] == ' ')
+	while (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\t'))
 		i++;
 	start = i;
 	len = word_len(tmp + i);
@@ -114,7 +114,7 @@ int	words_list(char	*line, t_args *cmd_line)
 			return (free(word), 0);
 		lst = new_token(word, type);
 		tokenadd_back(&cmd_line->tokens, lst);
-		while (line[i] && line[i] == ' ')
+		while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 			i++;
 		lst->space = line[i] && i > 0;
 	}
