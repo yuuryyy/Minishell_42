@@ -6,11 +6,40 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 19:58:01 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:07:32 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_seperator(char c)
+{
+	return (c == '|' || c == '<' || c == '>' );
+}
+
+char	*envgetter(const char *key, t_list *env)
+{
+	char	*value;
+	char	*lookup;
+	t_list	*tmp;
+
+	if (!key || !env)
+		return (NULL);
+	value = NULL;
+	lookup = ft_strjoin(key, "=");
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strncmp(lookup, tmp->content, ft_strlen(lookup)) == 0)
+		{
+			value = ft_strdup(tmp->content + ft_strlen(lookup));
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	free(lookup);
+	return (value);
+}
 
 void	handle_envi(t_cmd_tab *table)
 {

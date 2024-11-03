@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 20:35:38 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:06:14 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,27 @@ int	add_new_env_var(t_args *args, const char *cmd, int append)
 	return (0);
 }
 
-int	updates(t_args *args, t_cmd_tab *cmd, char *variable, char *find_sign)
+int	updates(t_cmd_tab *cmd, char *variable, char *find_sign, int i)
 {
 	t_list	*env_node;
 
-	env_node = find_env_node(args->env, variable);
+	env_node = find_env_node(cmd->data->env, variable);
 	if (env_node)
 	{
 		if (find_sign)
 		{
-			if (update_env_value(env_node, cmd->cmd[1], 1) != 0)
+			if (update_env_value(env_node, cmd->cmd[i], 1) != 0)
 				return (exit_code(1, EDIT));
 		}
-		else if (ft_strchr(cmd->cmd[1], '='))
+		else if (ft_strchr(cmd->cmd[i], '='))
 		{
-			if (update_env_value(env_node, cmd->cmd[1], 0) != 0)
+			if (update_env_value(env_node, cmd->cmd[i], 0) != 0)
 				return (exit_code(1, EDIT));
 		}
 	}
 	else
 	{
-		if (add_new_env_var(args, cmd->cmd[1], find_sign != NULL) != 0)
+		if (add_new_env_var(cmd->data, cmd->cmd[i], find_sign != NULL) != 0)
 			return (exit_code(1, EDIT));
 	}
 	return (0);
@@ -98,23 +98,24 @@ int	export_variable(t_args *args, t_cmd_tab *cmd)
 	char	*find_sign;
 	char	*variable;
 	int		result;
+	int		i;
 
+	i = 1;
+	exit_code(EXIT_SUCCESS, EDIT);
 	if (!cmd->cmd[1])
+		return (display_env_vars(args->env), exit_code(EXIT_SUCCESS, EDIT));
+	while (cmd->cmd[i])
 	{
-		display_env_vars(args->env);
-		return (exit_code(EXIT_SUCCESS, EDIT));
-	}
-	find_sign = ft_strnstr(cmd->cmd[1], "+=", ft_strlen(cmd->cmd[1]));
-	variable = extract_variable(cmd->cmd[1], find_sign != NULL);
-	if (ft_strncmp(variable, "PATH", 5) == 0)
-		args->env_i = false;
-	if (!variable || !is_valid(variable))
-	{
-		put_built_err("export: ", variable, NOTVALID);
+		find_sign = ft_strnstr(cmd->cmd[i], "+=", ft_strlen(cmd->cmd[i]));
+		variable = extract_variable(cmd->cmd[i], find_sign != NULL);
+		if (ft_strncmp(variable, "PATH", 5) == 0)
+			args->env_i = false;
+		if (!variable || !is_valid(variable))
+			put_built_err("export: ", variable, NOTVALID);
+		else
+			result = updates(cmd, variable, find_sign, i);
 		free(variable);
-		return (exit_code(1, EDIT));
+		i++;
 	}
-	result = updates(args, cmd, variable, find_sign);
-	free(variable);
-	return (result);
+	return (exit_code(0, RETRIEVE));
 }

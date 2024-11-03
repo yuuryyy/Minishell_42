@@ -6,39 +6,50 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 19:52:12 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:09:55 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_seperator(char c)
+void	add_env_node(t_list **env, char *new_content)
 {
-	return (c == '|' || c == '<' || c == '>' );
+	t_list	*new_node;
+
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->content = new_content;
+	new_node->next = *env;
+	*env = new_node;
 }
 
-char	*envgetter(const char *key, t_list *env)
+void	init_shlvl(t_list **env)
 {
-	char	*value;
-	char	*lookup;
-	t_list	*tmp;
+	t_list	*shlvl_node;
+	int		shlvl_value;
+	char	*new_shlvl;
+	char	*itoa_value;
 
-	if (!key || !env)
-		return (NULL);
-	value = NULL;
-	lookup = ft_strjoin(key, "=");
-	tmp = env;
-	while (tmp)
+	shlvl_node = find_env_node2(*env, "SHLVL=");
+	if (shlvl_node)
 	{
-		if (ft_strncmp(lookup, tmp->content, ft_strlen(lookup)) == 0)
-		{
-			value = ft_strdup(tmp->content + ft_strlen(lookup));
-			break ;
-		}
-		tmp = tmp->next;
+		shlvl_value = ft_atoi(shlvl_node->content + 6);
+		shlvl_value++;
+		itoa_value = ft_itoa(shlvl_value);
+		new_shlvl = ft_strjoin("SHLVL=", itoa_value);
+		free(itoa_value);
+		if (!new_shlvl)
+			return ;
+		free(shlvl_node->content);
+		shlvl_node->content = new_shlvl;
 	}
-	free(lookup);
-	return (value);
+	else
+	{
+		new_shlvl = ft_strdup("SHLVL=1");
+		if (new_shlvl)
+			add_env_node(env, new_shlvl);
+	}
 }
 
 void	set_envi(t_args *cmd_line)
@@ -79,4 +90,5 @@ void	environment(char **envp, t_args *cmd_line)
 		ft_lstadd_back(&cmd_line->env, node);
 		i++;
 	}
+	init_shlvl(&cmd_line->env);
 }
