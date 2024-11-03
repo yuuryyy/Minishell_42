@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 00:27:45 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:10:00 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define HEADER_H
 
 # include "minishell.h"
-
-
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define EXIT_ESDIR	126
@@ -45,12 +43,13 @@
 # define NOTVALID ": not a valid identifier\x1B[0m"
 # define OLDNOTSET "OLDPWD not set\x1B[0m"
 # define HOMNOTSET "HOME not set\x1B[0m"
+
 //heredoc fd writing and expanding
 # define NO_EXW 11
 # define EXPND_W 12
 # define WRITE_FD 13
 
-//
+//to check files
 # define INPUT 0
 # define OUTPUT 1
 
@@ -65,12 +64,13 @@
 //exit code edit flags
 # define EDIT 0
 # define RETRIEVE 1
-
+//colors
 # define RED   "\x1B[31m"
 # define GREEN "\x1B[32m"
 # define BLUE  "\x1B[34m"
 # define RESET "\x1B[0m"
-
-
+# define ANSI_FONT_COL_RESET     "\x1b[0m"
+# define MAGINTA   "\e[38;2;255;192;203m"
+# define CYAN "\e[38;2;160;190;200m" 
 
 #endif

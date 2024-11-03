@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   toolsbuilts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:29:58 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/01 21:23:54 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:09:39 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
-
-int	get_equal_position(char *cmd)
-{
-	char	*append_pos;
-	int		i;
-
-	i = 0;
-	append_pos = ft_strnstr(cmd, "+=", ft_strlen(cmd));
-	if (append_pos)
-		return (append_pos - cmd);
-	while (cmd[i] != '=' && cmd[i])
-		i++;
-	return (i);
-}
+#include "minishell.h"
 
 t_list	*find_env_node(t_list *env, char *cmd)
 {
@@ -67,18 +53,6 @@ t_list	*find_env_node2(t_list *env, char *cmd)
 	return (NULL);
 }
 
-void	add_env_node(t_list **env, char *new_content)
-{
-	t_list	*new_node;
-
-	new_node = malloc(sizeof(t_list));
-	if (!new_node)
-		return ;
-	new_node->content = new_content;
-	new_node->next = *env;
-	*env = new_node;
-}
-
 int	change_directory_to_oldpwd(char *oldpwd)
 {
 	if (!oldpwd)
@@ -94,4 +68,33 @@ int	change_directory_to_oldpwd(char *oldpwd)
 	}
 	ft_putendl_fd(oldpwd, 1);
 	return (exit_code(EXIT_SUCCESS, EDIT));
+}
+
+int	validate_exit_argument(t_cmd_tab *cmd)
+{
+	int	len;
+
+	len = array_len(cmd->cmd);
+	if (len > 1)
+	{
+		if (!is_num(cmd->cmd[1]))
+		{
+			put_built_err("exit: ", cmd->cmd[1], NUMERICARG);
+			return (exit_code(EXIT_OUTOFRANGE, EDIT));
+		}
+		else if (len > 2)
+		{
+			put_built_err("exit: ", NULL, TOOMANYARG);
+			return (-1);
+		}
+	}
+	if (len == 2)
+		return (ft_atoi(cmd->cmd[1]));
+	return (0);
+}
+
+int	perform_exit(t_args *args, int code)
+{
+	free_struct(args);
+	exit(exit_code(code, EDIT));
 }

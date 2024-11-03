@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/01 02:49:35 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:02:13 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ int exit_code(int code, int flag)
     return exit_code;
 }
 
-#define ANSI_FONT_COL_RESET     "\x1b[0m"
-#define FONT_COL_CUSTOM_RED     "\e[38;2;200;0;0m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
-#define FONT_COL_CUSTOM_GREEN   "\e[38;2;0;200;0m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
-#define FONT_COL_CUSTOM_BLUE    "\e[38;2;0;0;200m" // where rrr;ggg;bbb in 38;2;rrr;ggg;bbbm can go from 0 to 255 respectively
-#define MAGINTA   "\e[38;2;255;192;203m" // where rrr;ggg;bbb in 48;2;rrr;ggg;bbbm can go from 0 to 255 respectively
-#define CYAN "\e[38;2;160;190;200m" // where rrr;ggg;bbb in 48;2;rrr;ggg;bbbm can go from 0 to 255 respectively
-
 int g_errno = 0;
 
 int main(int ac, char **av, char **env)
@@ -53,8 +46,8 @@ int main(int ac, char **av, char **env)
     while (1)
     {
         rl_catch_signals = 0;
-        free_current_cmdline(&cmd_line);
         setup_signal_handlers();
+        free_current_cmdline(&cmd_line);
         cmd_line.line = readline(MAGINTA "->  MinionHell^~^ " CYAN ">$ " ANSI_FONT_COL_RESET);
         if (cmd_line.line == NULL)
         {
@@ -68,27 +61,9 @@ int main(int ac, char **av, char **env)
             add_history(cmd_line.line);
         if (process_line(&cmd_line) != 0)
             continue;
-        // t_cmd_tab *tab = cmd_line.table;
-
-        // while (tab)
-        // {
-        //     if (tab->cmd)
-    //    while (1)
-	// 		;
-        //     {
-        //         // Affichage des commandes pour le débogage
-        //         for (int i = 0; tab->cmd[i]; i++)
-        //             printf("cmd[%d]====%s\n", i, tab->cmd[i]);
-        //     }
-        //     tab = tab->next;
-        // }
-		// while(1)
-		// 	;
         execute_cmds(&cmd_line);
-            // printf("raha null\n");
         while (wait(0) != -1)
             continue;
-
         if (dup2(cmd_line.fdin, STDIN_FILENO) == -1)
             return (put_error("dup2 error on fdin", NULL), free_struct(&cmd_line), 1);
 

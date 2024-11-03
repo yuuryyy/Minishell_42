@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sahil <sahil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 03:55:48 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 06:02:03 by sahil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	forking(t_cmd_tab *tab, int *fd)
 {
 	pid_t	pid;
-
 
 	pid = fork();
 	if (pid == -1)
@@ -44,11 +43,10 @@ int	exec_pipes(t_cmd_tab *table)
 {
 	t_cmd_tab	*tab;
 	int			fd[2];
-	int			err;
 	int			code;
 
 	tab = table;
-	err = 0;
+	code = 0;
 	while (tab)
 	{
 		if (tab->next == NULL)

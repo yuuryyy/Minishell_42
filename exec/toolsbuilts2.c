@@ -6,50 +6,86 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 18:34:12 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/10/31 23:51:04 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 04:12:43 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ordre_alpha(t_list **env)
+char	*ft_strcpy(char *s1, const char *s2)
 {
-    t_list *i;
-    t_list *j;
-    char *temp;
+	char	*orig;
 
-    if (!env || !(*env))
-        return;
-    i = *env;
-    while (i)
-    {
-        j = i->next;
-        while (j)
-        {
-            if (ft_strcmp((char *)i->content, (char *)j->content) > 0)
-            {
-                temp = i->content;
-                i->content = j->content;
-                j->content = temp;
-            }
-            j = j->next;
-        }
-        i = i->next;
-    }
+	orig = s1;
+	while (*s2)
+	{
+		*s1++ = *s2++;
+	}
+	*s1 = '\0';
+	return (orig);
 }
 
-int	is_valid_identifier(const char *str)
+char	*ft_strdup2(const char *str)
 {
-    if (!str || !*str)
-        return (0);
-    if (!ft_isalpha(*str) && *str != '_')
-        return (0);
-    str++;
-    while (*str)
-    {
-        if (!ft_isalnum(*str) && *str != '_')
-            return (0);
-        str++;
-    }
-    return (1);
+	char		*dup;
+	size_t		len;
+
+	len = ft_strlen(str);
+	dup = malloc(len + 1);
+	if (!dup)
+		return (NULL);
+	ft_strcpy(dup, str);
+	return (dup);
+}
+
+char	*ft_strcat(char *dest, char *src)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
+	{
+		i++;
+	}
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
+}
+
+char	*ft_strncpy(char *dest, const char *src, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+
+int	get_equal_position(char *cmd)
+{
+	char	*append_pos;
+	int		i;
+
+	i = 0;
+	append_pos = ft_strnstr(cmd, "+=", ft_strlen(cmd));
+	if (append_pos)
+		return (append_pos - cmd);
+	while (cmd[i] != '=' && cmd[i])
+		i++;
+	return (i);
 }
