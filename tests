@@ -26,3 +26,12 @@ export is not displaying vars in the right order!!!!!!
 cat: l: No such file or directory
 
 exit 
+
+##############################################################################
+->  MinionHell^~^ >$ export 43 hhh 3423 
+minionshell: export: 43: not a valid identifier
+->  MinionHell^~^ >$ 
+
+bash-3.2$  export 43 hhh 3423 
+bash: export: `43': not a valid identifier
+bash: export: `3423': not a valid identifier
