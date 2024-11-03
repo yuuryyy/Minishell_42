@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 02:02:46 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:33:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 	char	*buffer;
 
 	signal(SIGINT, heredc_sig);
+	signal(SIGQUIT, SIG_IGN);
 	buffer = NULL;
 	while (1)
 	{
@@ -51,9 +52,8 @@ int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 		if (flag != NO_EXW)
 		{
 			if (flag == EXPND_W)
-				buffer = expand(buffer, double_quote, cmdline->env);
-			buffer = ft_strjoin2(buffer, "\n");
-			write (fd[1], buffer, ft_strlen(buffer));
+				buffer = expand(buffer, cmdline->env);
+			ft_putendl_fd(buffer, fd[1]);
 		}
 		free(buffer);
 	}

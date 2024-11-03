@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/03 04:12:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:26:33 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		del(void *content);
 void		put_error(char *msg, char *name);
 void		put_built_err(char *built, char *name, char *err);
 
-char		*expand(char *word, t_type type, t_list *env);
+char		*expand(char *word, t_list *env);
 void		expand_quotes(char **word, int index, t_list *env);
 int			index_ds(char *str);
 char		**lst_to_array(t_list *lst);
