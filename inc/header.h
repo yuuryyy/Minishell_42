@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 18:40:14 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 19:52:36 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define MAGINTA   "\e[38;2;255;192;203m"
 # define CYAN "\e[38;2;160;190;200m" 
 
-# define PROMPT	 "->  MinionHell^~^ "
+# define PROMPT	  "->  MinionHell^~^ "
+# define DEF_PATH "PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 #endif

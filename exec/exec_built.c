@@ -1,16 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exuc_built.c                                       :+:      :+:    :+:   */
+/*   exec_built.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:11:48 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 01:08:56 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:57:14 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	echo(t_cmd_tab *table, int flag)
+{
+	int		i;
+	bool	newline;
+
+	i = 1;
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (1);
+	newline = parse_echo_options(table, &i);
+	print_echo_args(table, i, newline);
+	return (exit_code(EXIT_SUCCESS, EDIT));
+}
+
+int	pwd(t_cmd_tab *table, char **cmd, int flag)
+{
+	char	*cwd;
+
+	if (flag == SINGLE)
+		if (infile_opn(table) || outfile_opn(table))
+			return (1);
+	if (cmd[1] && *cmd[1] == '-')
+		return (put_built_err("pwd: ", NULL, "extra options!!"), 1);
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		perror("pwd");
+		return (exit_code(EXIT_FAILURE, EDIT));
+	}
+	ft_putendl_fd(cwd, STDOUT_FILENO);
+	free(cwd);
+	return (exit_code(EXIT_SUCCESS, EDIT));
+}
+
+int	exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
+{
+	int	code;
+
+	if (flag == SINGLE)
+	{
+		if (infile_opn(cmd) || outfile_opn(cmd))
+			return (1);
+		printf("exit\n");
+	}
+	code = validate_exit_argument(cmd);
+	if (code == -1)
+		return (1);
+	perform_exit(args, code);
+	return (0);
+}
 
 int	exec_builtin(t_args *args, t_cmd_tab *cmd, int flag)
 {

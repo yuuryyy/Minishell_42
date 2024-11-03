@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 18:19:47 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 21:09:53 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	sigint_handler(int signum)
 {
 	(void)signum;
-	while (wait(NULL) != -1)
-		continue ;
-	rl_replace_line("", 0);
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-	exit_code(1, EDIT);
+	if (waitpid(0, NULL, WNOHANG))
+	{
+		rl_replace_line("", 0);
+		write(STDOUT_FILENO, "\n", 1);
+		rl_on_new_line();
+		rl_redisplay();
+		exit_code(1, EDIT);
+	}
 }
 
 void	setup_signal_handlers(void)
