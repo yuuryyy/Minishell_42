@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   before_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 19:36:03 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:52:12 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_envi(t_args *cmd_line)
 	cmd_line->env = ft_lstnew(ft_strjoin("PWD=", cpath));
 	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("SHLVL=1")));
 	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("_=/usr/bin/env")));
-	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup(DEF_PATH)));
 }
 
 void	environment(char **envp, t_args *cmd_line)
