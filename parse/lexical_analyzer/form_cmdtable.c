@@ -5,21 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 21:50:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 21:56:28 by ychagri          ###   ########.fr       */
+/*   Created: 2024/11/03 04:09:18 by ychagri           #+#    #+#             */
+/*   Updated: 2024/11/03 04:11:35 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*splitbyspace(t_token *current, t_token *tmp, bool space)
+t_token	*split_space(t_token *tmp, t_token *current)
 {
 	char	**splited;
 	int		i;
 
+	i = 0;
 	splited = ft_split(current->content, ' ');
 	free(current->content);
-	i = 0;
 	tmp->content = splited[i++];
 	tmp->type = string;
 	tmp->space = true;
@@ -30,27 +30,27 @@ t_token	*splitbyspace(t_token *current, t_token *tmp, bool space)
 		tmp = tmp->next;
 	}
 	free(splited);
-	tmp->space = space;
 	return (tmp);
 }
 
 t_token	*handle_string(t_token *current)
 {
 	char	*str;
-	t_token	*tmp;
 	bool	space;
-	void	*next;
+	t_token	*next;
+	t_token	*tmp;
 
 	if (!current->content || !ft_strchr(current->content, ' '))
 		return (current);
 	tmp = current;
-	next = current->next;
 	space = current->space;
+	next = current->next;
 	current->next = NULL;
 	str = ft_strrchr(current->content, ' ');
 	if (str && ft_strncmp(str, " ", 2) == 0)
 		space = true;
-	tmp = splitbyspace(current, tmp, space);
+	tmp = split_space(tmp, current);
+	tmp->space = space;
 	tmp->next = next;
 	return (current);
 }
@@ -66,7 +66,7 @@ t_token	*handle_tokens(t_token **current, t_list **list)
 	while (tmp && tmp->type >= 6)
 	{
 		str = ft_strjoin2(str, tmp->content);
-		if (tmp->space)
+		if (tmp->space || (tmp->next && tmp->next->type < 6))
 			break ;
 		tmp = tmp->next;
 	}
@@ -99,7 +99,7 @@ t_token	*handle_limiters(t_token **current, t_list **limiter)
 	return (tmp);
 }
 
-void	handle_red(t_cmd_tab *new, t_token *current)
+t_token	*handle_red(t_cmd_tab *new, t_token *current)
 {
 	if (current->type == redin)
 		current = handle_tokens(&current->next, &new->in);
@@ -118,4 +118,5 @@ void	handle_red(t_cmd_tab *new, t_token *current)
 		new->heredoc = true;
 		current = handle_limiters(&current->next, &new->delimiter);
 	}
+	return (current);
 }

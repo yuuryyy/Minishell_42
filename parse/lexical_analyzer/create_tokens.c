@@ -6,26 +6,11 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 06:29:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 04:29:49 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 02:25:33 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_token	*new_token(char *content, int type)
-{
-	t_token	*token;
-
-	if (!content)
-		return (NULL);
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->content = content;
-	token->next = NULL;
-	token->type = type;
-	return (token);
-}
 
 char	*get_word(char **line)
 {

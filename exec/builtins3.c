@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/02 20:04:59 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 04:28:18 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int exec_exit(t_args *args, t_cmd_tab *cmd, int flag)
 		}
 		put_built_err("exit: ", NULL, TOOMANYARG);
     }
-	return (0);
+	return (1);		
 }
 
 int exec_env(t_cmd_tab *table, t_list *env, int flag)

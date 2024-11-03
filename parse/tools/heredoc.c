@@ -6,56 +6,59 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 01:42:42 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 22:26:36 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 02:02:46 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc_process(char *limiter, int *fd, int flag, t_args *cmdline)
+void	heredc_sig(int signal)
 {
-	char	*buffer;
+	(void)signal;
+	g_errno = -1;
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	close(STDIN_FILENO);
+}
 
-	buffer = readline("heredoc> ");
-	if (!buffer)
+int	recieved_sig(t_args *cmdline)
+{
+	if (g_errno == -1)
 	{
-		if (g_errno == SIGINT)
-		{
-			if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
-				return (put_error(DUP2SG, NULL), 1);
-			return (exit_code(EXIT_FAILURE, EDIT),
-				free_current_cmdline(cmdline), 1);
-		}
-		else
-			return (0);
+		g_errno = 0;
+		if (dup2(cmdline->fdin, STDIN_FILENO) == -1)
+			return (put_error(DUP2SG, NULL), 1);
+		return (free_current_cmdline(cmdline), exit_code(EXIT_FAILURE, EDIT));
 	}
-	if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
-		return (free(buffer), 0);
-	if (flag != NO_EXW)
-	{
-		if (flag == EXPND_W)
-			buffer = expand(buffer, cmdline->env);
-		buffer = ft_strjoin2(buffer, "\n");
-		write (fd[1], buffer, ft_strlen(buffer));
-	}
-	return (free(buffer), 2);
+	return (0);
 }
 
 int	read_line(char *limiter, int *fd, int flag, t_args *cmdline)
 {
-	int		err;
+	char	*buffer;
 
 	signal(SIGINT, heredc_sig);
+	buffer = NULL;
 	while (1)
 	{
-		err = heredoc_process(limiter, fd, flag, cmdline);
-		if (err == 1)
+		buffer = readline("heredoc> ");
+		if (!buffer && recieved_sig(cmdline))
 			return (1);
-		else if (err == 0)
+		else if (!buffer)
 			break ;
-		else
-			continue ;
+		if (ft_strncmp(buffer, limiter, ft_strlen(limiter) + 1) == 0)
+			break ;
+		if (flag != NO_EXW)
+		{
+			if (flag == EXPND_W)
+				buffer = expand(buffer, double_quote, cmdline->env);
+			buffer = ft_strjoin2(buffer, "\n");
+			write (fd[1], buffer, ft_strlen(buffer));
+		}
+		free(buffer);
 	}
+	if (buffer)
+		free(buffer);
 	return (0);
 }
 

@@ -6,13 +6,13 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 22:09:58 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 02:06:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand(char *word, t_list *env)
+char	*expand(char *word, t_type type, t_list *env)
 {
 	int		index;
 	t_list	*tmp;
@@ -47,7 +47,7 @@ void	str_exp(t_token *tmp, t_list *env)
 			free(tmp->content);
 			tmp->content = NULL;
 		}
-		tmp->content = expand(tmp->content, env);
+		tmp->content = expand(tmp->content, tmp->type, env);
 	}
 }
 

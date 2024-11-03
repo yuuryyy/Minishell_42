@@ -6,41 +6,11 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/02 22:04:09 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:19:45 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_cmd_tab	*new_tab(void)
-{
-	t_cmd_tab	*new;
-
-	new = malloc(sizeof(t_cmd_tab));
-	if (!new)
-		return (NULL);
-	ft_bzero(new, sizeof(t_cmd_tab));
-	return (new);
-}
-
-void	table_add_back(t_cmd_tab **head, t_cmd_tab *new)
-{
-	t_cmd_tab	*tmp;
-	t_cmd_tab	*prev;
-
-	tmp = *head;
-	if (*head == NULL)
-	{
-		*head = new;
-		return ;
-	}
-	while (tmp)
-	{
-		prev = tmp;
-		tmp = tmp->next;
-	}
-	prev->next = new;
-}
 
 int	heredoc_check(t_token *token)
 {
@@ -96,31 +66,47 @@ char	*remove_quotes(char *str, int c)
 	return (update);
 }
 
-int	process_line(t_args *cmdline)
+int	check_nd_fill(t_args *cmdline)
 {
-	char		*tmp;
 	t_cmd_tab	*tab;
 
-	tmp = ft_strdup(cmdline->line);
-	if (!*tmp)
-		return (free(tmp), exit_code(EXIT_SUCCESS, EDIT), 1);
-	if (!words_list(tmp, cmdline))
-		return (free(tmp), 1);
-	free(tmp);
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
 		if (heredoc_check(cmdline->tokens))
 			return (exit_code(1, EDIT), 1);
-		return (put_error(SYNTAX, NULL), 1);
+		put_error(SYNTAX, NULL);
+		return (1);
 	}
 	expand_var(&cmdline);
 	command_table(cmdline);
 	tab = cmdline->table;
 	while (tab)
 	{
-		tab->cmd = lst_to_array(tab->arg);
+		if (tab->arg)
+			tab->cmd = lst_to_array(tab->arg);
 		tab = tab->next;
 	}
-	return (ft_heredoc(&cmdline->table));
+	return (0);
+}
+
+int	process_line(t_args *cmdline)
+{
+	char		*tmp;
+
+	tmp = ft_strdup(cmdline->line);
+	if (!*tmp)
+		return (free(tmp), exit_code(EXIT_SUCCESS, EDIT), 1);
+	if (!words_list(tmp, cmdline))
+	{
+		heredoc_check(cmdline->tokens);
+		free(tmp);
+		return (1);
+	}
+	free(tmp);
+	if (check_nd_fill(cmdline))
+		return (1);
+	if (ft_heredoc(&cmdline->table))
+		return (1);
+	return (0);
 }
