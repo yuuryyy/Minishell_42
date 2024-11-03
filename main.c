@@ -6,13 +6,25 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 22:11:49 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:54:10 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_errno = 0;
+
+
+// << the heredoc opens
+// ambg red
+// << << 
+// mkdir -p 1//2/3/4
+// shlvl
+
+//top | top SIGQUI
+//exit with LLONG_MAXT
+
+//cat << $USER
 
 int	exit_code(int code, int flag)
 {
