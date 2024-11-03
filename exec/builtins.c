@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 22:01:15 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/01 23:33:19 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/02 22:31:45 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	update_oldpwd(t_list **env, char *current_path)
 		oldpwd_node->content = oldpwd_str;
 	}
 	else
-		ft_lstadd_back(env,ft_lstnew(oldpwd_str));
+		ft_lstadd_back(env, ft_lstnew(oldpwd_str));
 }
 
 void	update_pwd(t_list **env, char *new_path)
@@ -86,7 +86,7 @@ void	update_pwd(t_list **env, char *new_path)
 		pwd_node->content = pwd_str;
 	}
 	else
-		ft_lstadd_back(env,ft_lstnew(pwd_str));
+		ft_lstadd_back(env, ft_lstnew(pwd_str));
 }
 
 int	cd(t_cmd_tab *cmd, t_list **env, int flag)

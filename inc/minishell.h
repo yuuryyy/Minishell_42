@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/03 04:26:33 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:48:33 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,21 +125,43 @@ t_token	*handle_red(t_cmd_tab *new, t_token *current);
 t_token	*handle_tokens(t_token **current, t_list **list);
 
 // builtins
-int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
-int			echo(t_cmd_tab *table, int flag);
-int			cd(t_cmd_tab *cmd, t_list **env, int flag);
-t_list		*find_env_node2(t_list *env, char *cmd);
-int			exec_exit(t_args *cmdline, t_cmd_tab *cmd_table, int flag);
-int			export_variable(t_args *args, t_cmd_tab *cmd);
-void		ordre_alpha(t_list **env);
-t_list		*find_env_node(t_list *env, char *cmd);
-int			update_env_value(t_list *env_node, char *cmd, int append);
-int			ft_unset(t_args *args, char **cmd, int flag);
-int			exec_env(t_cmd_tab *table, t_list *env, int flag);
-void		add_env_node(t_list **env, char *new_content);
-int			is_valid_identifier(const char *str);
-int			change_directory_to_oldpwd(char *oldpwd);
-int			pwd(t_cmd_tab *table, char **cmd, int flag);
+int	exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
+int	echo(t_cmd_tab *table, int flag);
+int	pwd(t_cmd_tab *table, char **cmd, int flag);
+int	exec_exit(t_args *args, t_cmd_tab *cmd, int flag);
+int	perform_exit(t_args *args, int code);
+int	validate_exit_argument(t_cmd_tab *cmd);
+int	exec_env(t_cmd_tab *table, t_list *env, int flag);
+int	ft_unset(t_args *args, char **cmd, int flag);
+int	export_variable(t_args *args, t_cmd_tab *cmd);
+int	is_valid(const char *str);
+int	replace_env_value(t_list *env_node, const char *new_part);
+int	updates(t_args *args, t_cmd_tab *cmd, char *variable, char *find_sign);
+int	update_env_value(t_list *env_node, char *cmd, int append);
+int	add_new_env_var(t_args *args, const char *cmd, int append);
+int	cd(t_cmd_tab *cmd, t_list **env, int flag);
+int	handle_cd_command(t_cmd_tab *cmd, t_list *env);
+int	change_directory_to_home(char *home);
+int	array_len(char **str);
+int	get_equal_position(char *cmd);
+int	change_directory_to_oldpwd(char *oldpwd);
+void	update_pwd(t_list **env, char *new_path);
+void	update_oldpwd(t_list **env, char *current_path);
+void	print_echo_args(t_cmd_tab *table, int i, bool newline);
+void	ordre_env_vars(t_list **env);
+void	display_env_vars(t_list *env);
+void	remove_env_var(t_args *args, char *argument);
+char	*prepare_new_content(const char *cmd, int append);
+char	*ft_strcpy(char *s1, const char *s2);
+char	*ft_strdup2(const char *str);
+char	*ft_strcat(char *dest, char *src);
+char	*path(t_list *env, const char *var_name);
+char	**lst_to_array(t_list *lst);
+char	*extract_variable(const char *cmd, int append);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+bool	parse_echo_options(t_cmd_tab *table, int *i);
+t_list	*find_env_node(t_list *env, char *cmd);
+t_list	*find_env_node2(t_list *env, char *cmd);
 
 
 //exec

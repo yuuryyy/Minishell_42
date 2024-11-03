@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 02:07:16 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 04:46:09 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	exec(t_cmd_tab *table, t_list *env)
 	i = 0;
 	path = envgetter("PATH", env);
 	if (!path)
-		return (put_error(INTROUVABLE_FILE, table->cmd[0]), exit (BINARY_ERROR), -1);
+		return (put_error(INTROUVABLE_FILE, table->cmd[0]),
+			exit (BINARY_ERROR), -1);
 	envp = lst_to_array(env);
 	bin = ft_split(path, ':');
 	free(path);
@@ -41,10 +42,10 @@ int	exec(t_cmd_tab *table, t_list *env)
 
 void	execute(t_cmd_tab *table)
 {
-	char	**env;
-	int		err;
-	int		built;
-	struct stat status;
+	char			**env;
+	int				err;
+	int				built;
+	struct stat		status;
 
 	if (infile_opn(table) || outfile_opn(table))
 		exit(EXIT_FAILURE);
@@ -69,7 +70,7 @@ void	execute(t_cmd_tab *table)
 								free_array(env), exit(EXIT_ESDIR));
 					}
 					return (put_error(INTROUVABLE_FILE, table->cmd[0]),
-							free_array(env), exit(BINARY_ERROR));
+						free_array(env), exit(BINARY_ERROR));
 				}
 			}
 			err = exec(table, table->data->env);

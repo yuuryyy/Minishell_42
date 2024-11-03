@@ -24,3 +24,5 @@ export is not displaying vars in the right order!!!!!!
 ##############################################################################
 ->  MinionHell^~^ >$ cat<<l
 cat: l: No such file or directory
+
+exit 
