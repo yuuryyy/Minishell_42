@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/11/03 16:52:22 by ychagri          ###   ########.fr       */
-=======
-/*   Updated: 2024/11/03 04:46:09 by kaafkhar         ###   ########.fr       */
->>>>>>> 3c43e069671f0a4115664e7e774007ba99bcbde8
+/*   Updated: 2024/11/03 17:28:57 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +70,6 @@ void	execute(t_cmd_tab *table)
 	char			**env;
 	int				err;
 	int				built;
-<<<<<<< HEAD
-=======
-	struct stat		status;
->>>>>>> 3c43e069671f0a4115664e7e774007ba99bcbde8
 
 	if (infile_opn(table) || outfile_opn(table))
 		exit(EXIT_FAILURE);
@@ -89,26 +81,7 @@ void	execute(t_cmd_tab *table)
 			env = lst_to_array(table->data->env);
 			err = 0;
 			if (ft_strchr(table->cmd[0], '/'))
-<<<<<<< HEAD
 				exec_bin(table, env);
-=======
-			{
-				if (execve(table->cmd[0], table->cmd, env) == -1)
-				{
-					if (stat(table->cmd[0], &status) == 0)
-					{
-						if (S_ISDIR(status.st_mode))
-							return (put_error(ISDIR, table->cmd[0]),
-								free_array(env), exit(EXIT_ESDIR));
-						if (!(S_IXUSR & status.st_mode))
-							return (put_error(PERMISSION, table->cmd[0]),
-								free_array(env), exit(EXIT_ESDIR));
-					}
-					return (put_error(INTROUVABLE_FILE, table->cmd[0]),
-						free_array(env), exit(BINARY_ERROR));
-				}
-			}
->>>>>>> 3c43e069671f0a4115664e7e774007ba99bcbde8
 			err = exec(table, table->data->env);
 			if (err == -1)
 				return (put_error(NOTFOUNDMSG, table->cmd[0]),

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 17:24:44 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 17:10:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 18:40:14 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,24 @@
 # define BUILTIN_ERR 1
 # define BUILTIN_SUC 0
 
-# define PIPEMSG "pipe() has failed\x1B[0m"
-# define OPENMSG "open() has failed\x1B[0m"
-# define DUPMSG "dup() has failed\x1B[0m"
-# define DUP2SG "dup2() has failed\x1B[0m"
-# define FORKMSG "fork() has failed\x1B[0m"
-# define INTROUVABLE_FILE "\x1B[0m: no such file or directory"
-# define ISDIR "\x1B[0m: is a directory"
-# define NOTFOUNDMSG ": \x1B[0mcommand not found"
-# define WAITMSG	"wait() has failed .\x1B[0m"
-# define WAITPIDMSG "waitpid() has failed .\x1B[0m"
-# define SYNTAX "syntax error"
-# define TOOMANYARG "too many arguments\x1B[0m"
-# define PERMISSION ": \x1B[0mpermission denied "
-# define NUMERICARG ": numeric argument required \x1B[0m"
-# define NOTVALID ": not a valid identifier\x1B[0m"
-# define OLDNOTSET "OLDPWD not set\x1B[0m"
-# define HOMNOTSET "HOME not set\x1B[0m"
+//errors
+# define INTROUVABLE_FILE	"\x1B[0m: no such file or directory"
+# define NUMERICARG			": numeric argument required \x1B[0m"
+# define NOTVALID			": not a valid identifier\x1B[0m"
+# define WAITPIDMSG			"waitpid() has failed .\x1B[0m"
+# define NOTFOUNDMSG		": \x1B[0mcommand not found"
+# define PERMISSION			": \x1B[0mpermission denied"
+# define WAITMSG			"wait() has failed .\x1B[0m"
+# define TOOMANYARG 		"too many arguments\x1B[0m"
+# define OPENMSG 			"open() has failed\x1B[0m"
+# define PIPEMSG 			"pipe() has failed\x1B[0m"
+# define FORKMSG 			"fork() has failed\x1B[0m"
+# define DUP2SG 			"dup2() has failed\x1B[0m"
+# define OLDNOTSET 			"OLDPWD not set\x1B[0m"
+# define DUPMSG 			"dup() has failed\x1B[0m"
+# define ISDIR 				"\x1B[0m: is a directory"
+# define HOMNOTSET 			"HOME not set\x1B[0m"
+# define SYNTAX 			"syntax error"
 
 //heredoc fd writing and expanding
 # define NO_EXW 11
@@ -72,5 +73,7 @@
 # define ANSI_FONT_COL_RESET     "\x1b[0m"
 # define MAGINTA   "\e[38;2;255;192;203m"
 # define CYAN "\e[38;2;160;190;200m" 
+
+# define PROMPT	 "->  MinionHell^~^ "
 
 #endif
