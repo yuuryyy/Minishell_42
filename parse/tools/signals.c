@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 21:09:53 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:44:38 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	sigint_handler(int signum)
 		rl_redisplay();
 		exit_code(1, EDIT);
 	}
+	else
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 void	setup_signal_handlers(void)

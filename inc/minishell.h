@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/03 19:10:54 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:33:51 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char		*expand(char *word, t_list *env);
 int			index_ds(char *str);
 
 // builtins
-int			updates(t_args *args, t_cmd_tab *cmd, char *variable, char *f_sign);
+int			updates(t_args *args, t_cmd_tab *cmd, char *variable, char *f_sign, int i);
 int			add_new_env_var(t_args *args, const char *cmd, int append);
 int			replace_env_value(t_list *env_node, const char *new_part);
 int			update_env_value(t_list *env_node, char *cmd, int append);
