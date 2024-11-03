@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/03 17:26:29 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 19:10:54 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_token
 	char			*content;
 	t_type			type;
 	bool			space;
-	// bool			flag;
 	struct s_token	*next;
 }	t_token;
 
@@ -76,6 +75,7 @@ typedef struct s_args
 	t_list		*env;
 	char		*line;
 	t_token		*tokens;
+	bool		env_i;
 	t_cmd_tab	*table;
 	int			fdin;
 	int			fdout;

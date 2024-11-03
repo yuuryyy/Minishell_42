@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:19:43 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 04:11:48 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:44:43 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	exec_env(t_cmd_tab *table, t_list *env, int flag)
 {
 	pid_t	pid;
 	int		status;
+	t_list	*tmp;
 
 	if (flag == SINGLE)
 		if (infile_opn(table) || outfile_opn(table))
@@ -76,15 +77,32 @@ int	exec_env(t_cmd_tab *table, t_list *env, int flag)
 		put_built_err("env: ", NULL, "no argumets/options !!");
 		return (1);
 	}
-	pid = fork();
-	if (pid == -1)
-		return (put_error(FORKMSG, NULL), 1);
-	if (pid == 0)
-		if (exec(table, env) == -1)
-			exit (BINARY_ERROR);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (exit_code(WEXITSTATUS(status), EDIT));
+	if (table->data->env_i == true)
+	{
+		tmp = table->data->env;
+		while (tmp)
+		{
+			if (ft_strncmp("PATH=", tmp->content, 5) == 0)
+				tmp = tmp->next;
+			else
+			{
+				ft_putendl_fd(tmp->content, STDOUT_FILENO);
+				tmp = tmp->next;
+			}
+		}
+	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			return (put_error(FORKMSG, NULL), 1);
+		if (pid == 0)
+			if (exec(table, env) == -1)
+				return (put_error(NOTFOUNDMSG, "env"), exit(BINARY_ERROR), 127);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			return (exit_code(WEXITSTATUS(status), EDIT));
+	}
 	return (exit_code(EXIT_SUCCESS, EDIT));
 }
 

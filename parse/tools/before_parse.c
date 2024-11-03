@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 04:46:09 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:36:03 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,18 @@ char	*envgetter(const char *key, t_list *env)
 	return (value);
 }
 
+void	set_envi(t_args *cmd_line)
+{
+	char	cpath[PATH_MAX];
+
+	if (getcwd(cpath, PATH_MAX) == 0)
+		return (perror(cpath), free_struct(cmd_line), exit(1));
+	cmd_line->env = ft_lstnew(ft_strjoin("PWD=", cpath));
+	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("SHLVL=1")));
+	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("_=/usr/bin/env")));
+	ft_lstadd_back(&cmd_line->env, ft_lstnew(ft_strdup("PATH=/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+}
+
 void	environment(char **envp, t_args *cmd_line)
 {
 	t_list	*node;
@@ -48,6 +60,12 @@ void	environment(char **envp, t_args *cmd_line)
 	int		i;
 
 	i = 0;
+	cmd_line->env_i = false;
+	if (!envp || !*envp)
+	{
+		cmd_line->env_i = true;
+		set_envi(cmd_line);
+	}
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)

@@ -6,7 +6,7 @@
 /*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 00:46:09 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:41:32 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	export_variable(t_args *args, t_cmd_tab *cmd)
 	}
 	find_sign = ft_strnstr(cmd->cmd[1], "+=", ft_strlen(cmd->cmd[1]));
 	variable = extract_variable(cmd->cmd[1], find_sign != NULL);
+	if (ft_strncmp(variable, "PATH", 5) == 0)
+		args->env_i = false;
 	if (!variable || !is_valid(variable))
 	{
 		put_built_err("export: ", variable, NOTVALID);
