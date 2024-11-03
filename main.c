@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 18:40:05 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:11:49 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	display_prompt(t_args *cmd_line)
 	{
 		while (wait(NULL) != -1)
 			continue ;
-		write(STDOUT_FILENO, "exit", 5);
+		write(STDOUT_FILENO, "exit\n", 6);
 		free_struct(cmd_line);
 		exit(0);
 	}
