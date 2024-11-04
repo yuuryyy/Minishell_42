@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/04 04:20:55 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 06:12:36 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		tokenadd_back(t_token	**token, t_token	*new);
 void		table_add_back(t_cmd_tab **head, t_cmd_tab *new);
 t_token		*handle_tokens(t_token **current, t_list **list);
 t_token		*handle_red(t_cmd_tab *new, t_token *current);
+void		add_env_node(t_list **env, char *new_content);
 void		ft_limadd_back(t_list **lst, t_list *new);
 int			words_list(char	*line, t_args *cmd_line);
 void		environment(char **envp, t_args *args);

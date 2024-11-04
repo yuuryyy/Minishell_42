@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   before_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/04 05:41:08 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 06:11:37 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_env_node(t_list **env, char *new_content)
-{
-	t_list	*new_node;
-
-	new_node = malloc(sizeof(t_list));
-	if (!new_node)
-		return ;
-	new_node->content = new_content;
-	new_node->next = *env;
-	*env = new_node;
-}
 
 void	update_shlvl_node(t_list *shlvl_node, int shlvl_value)
 {
@@ -39,33 +27,39 @@ void	update_shlvl_node(t_list *shlvl_node, int shlvl_value)
 	}
 }
 
+void	increment_shlvl(t_list *shlvl_node)
+{
+	char	*content;
+	int		shlvl_value;
+
+	content = (char *)shlvl_node->content;
+	if (content[6] == '-')
+		shlvl_value = 0;
+	else if (ft_atoi(content + 6) >= 1000)
+		shlvl_value = 1;
+	else if (ft_atoi(content + 6) == 999)
+	{
+		free(shlvl_node->content);
+		shlvl_node->content = ft_strdup("SHLVL=");
+		return ;
+	}
+	else
+	{
+		shlvl_value = ft_atoi(shlvl_node->content + 6);
+		shlvl_value++;
+	}
+	update_shlvl_node(shlvl_node, shlvl_value);
+}
+
 void	init_shlvl(t_list **env)
 {
 	t_list	*shlvl_node;
 	char	*new_shlvl;
-	char	*content;
-	int		shlvl_value;
 
 	shlvl_node = find_env_node2(*env, "SHLVL=");
 	if (shlvl_node)
 	{
-		content = (char *)shlvl_node->content;
-		if (content[6] == '-')
-			shlvl_value = 0;
-		else if (ft_atoi(content + 6) >= 1000)
-			shlvl_value = 1;
-		else if (ft_atoi(content + 6) == 999)
-		{
-			free(shlvl_node->content);
-			shlvl_node->content = ft_strdup("SHLVL=");
-			return ;
-		}
-		else
-		{
-			shlvl_value = ft_atoi(shlvl_node->content + 6);
-			shlvl_value++;
-		}
-		update_shlvl_node(shlvl_node, shlvl_value);
+		increment_shlvl(shlvl_node);
 	}
 	else
 	{

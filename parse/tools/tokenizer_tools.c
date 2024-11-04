@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 06:26:12 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 02:11:07 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 06:11:22 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,16 @@ void	remove_q(t_token **lst)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	add_env_node(t_list **env, char *new_content)
+{
+	t_list	*new_node;
+
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->content = new_content;
+	new_node->next = *env;
+	*env = new_node;
 }
