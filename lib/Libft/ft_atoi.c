@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:58:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/04 03:12:37 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:38:45 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned long long	ft_atoi(char *str)
 {
 	unsigned long long	i;
-	int			sign;
+	int					sign;
 	unsigned long long	res;
 	unsigned long long	temp;
 
