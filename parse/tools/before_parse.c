@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   before_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/04 04:32:42 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:45:09 by kaafkhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,39 @@ void	add_env_node(t_list **env, char *new_content)
 	*env = new_node;
 }
 
-void	init_shlvl(t_list **env)
+void	update_shlvl_node(t_list *shlvl_node)
 {
-	t_list	*shlvl_node;
 	int		shlvl_value;
 	char	*new_shlvl;
 	char	*itoa_value;
-	char	*tmp;
+	char	*content;
 
-	shlvl_node = find_env_node2(*env, "SHLVL=");
-	if (shlvl_node)
+	content = (char *)shlvl_node->content;
+	if (content[6] == '-')
+		shlvl_value = 0;
+	else
 	{
-		tmp = shlvl_node->content;
-		if (tmp[6] == '-')
-			shlvl_value = 0;
-		else
-		{
-			shlvl_value = ft_atoi(shlvl_node->content + 6);
-			shlvl_value++;
-		}
-		itoa_value = ft_itoa(shlvl_value);
-		new_shlvl = ft_strjoin("SHLVL=", itoa_value);
-		free(itoa_value);
-		if (!new_shlvl)
-			return ;
+		shlvl_value = ft_atoi(content + 6);
+		shlvl_value++;
+	}
+	itoa_value = ft_itoa(shlvl_value);
+	new_shlvl = ft_strjoin("SHLVL=", itoa_value);
+	free(itoa_value);
+	if (new_shlvl)
+	{
 		free(shlvl_node->content);
 		shlvl_node->content = new_shlvl;
 	}
+}
+
+void	init_shlvl(t_list **env)
+{
+	t_list	*shlvl_node;
+	char	*new_shlvl;
+
+	shlvl_node = find_env_node2(*env, "SHLVL=");
+	if (shlvl_node)
+		update_shlvl_node(shlvl_node);
 	else
 	{
 		new_shlvl = ft_strdup("SHLVL=1");
