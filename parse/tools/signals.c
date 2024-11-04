@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 22:59:18 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/04 00:35:34 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:24:02 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@ void	setup_signal_handlers(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sigquit_handler(int signum)
+{
+	(void)signum;
+	write(STDERR_FILENO, "\n", 1);
+	exit_code(1, EDIT);
 }

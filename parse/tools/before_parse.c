@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 05:34:46 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 22:09:55 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:32:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,19 @@ void	init_shlvl(t_list **env)
 	int		shlvl_value;
 	char	*new_shlvl;
 	char	*itoa_value;
+	char	*tmp;
 
 	shlvl_node = find_env_node2(*env, "SHLVL=");
 	if (shlvl_node)
 	{
-		shlvl_value = ft_atoi(shlvl_node->content + 6);
-		shlvl_value++;
+		tmp = shlvl_node->content;
+		if (tmp[6] == '-')
+			shlvl_value = 0;
+		else
+		{
+			shlvl_value = ft_atoi(shlvl_node->content + 6);
+			shlvl_value++;
+		}
 		itoa_value = ft_itoa(shlvl_value);
 		new_shlvl = ft_strjoin("SHLVL=", itoa_value);
 		free(itoa_value);

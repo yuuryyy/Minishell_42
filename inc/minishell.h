@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 19:09:51 by youssra           #+#    #+#             */
-/*   Updated: 2024/11/03 22:03:29 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:20:55 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int			updates(t_cmd_tab *cmd, char *variable, char *f_sign, int i);
 int			add_new_env_var(t_args *args, const char *cmd, int append);
 int			replace_env_value(t_list *env_node, const char *new_part);
 int			update_env_value(t_list *env_node, char *cmd, int append);
+int			export_variable(t_args *args, t_cmd_tab *cmd, int flag);
 void		print_echo_args(t_cmd_tab *table, int i, bool newline);
 int			exec_builtin(t_args *args, t_cmd_tab *cmd, int flag);
 char		*ft_strncpy(char *dest, const char *src, size_t n);
@@ -134,7 +135,6 @@ int			exec_env(t_cmd_tab *table, t_list *env, int flag);
 void		update_oldpwd(t_list **env, char *current_path);
 int			handle_cd_command(t_cmd_tab *cmd, t_list *env);
 char		*extract_variable(const char *cmd, int append);
-int			export_variable(t_args *args, t_cmd_tab *cmd);
 int			ft_unset(t_args *args, char **cmd, int flag);
 void		remove_env_var(t_args *args, char *argument);
 bool		parse_echo_options(t_cmd_tab *table, int *i);
@@ -170,6 +170,7 @@ void		execute(t_cmd_tab *table);
 //signals
 int			exit_code(int code, int flag);
 void		setup_signal_handlers(void);
+void		sigquit_handler(int signum);
 void		sigint_handler(int signum);
 
 // tools

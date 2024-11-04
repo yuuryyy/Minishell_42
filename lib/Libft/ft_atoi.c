@@ -6,18 +6,18 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:58:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/10/21 08:23:06 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 03:12:37 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(char *str)
+unsigned long long	ft_atoi(char *str)
 {
-	long long	i;
+	unsigned long long	i;
 	int			sign;
-	long long	res;
-	long long	temp;
+	unsigned long long	res;
+	unsigned long long	temp;
 
 	i = 0;
 	sign = 1;

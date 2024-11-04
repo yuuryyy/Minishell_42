@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   toolsbuilts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaafkhar <kaafkhar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 12:29:58 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 04:09:39 by kaafkhar         ###   ########.fr       */
+/*   Updated: 2024/11/04 03:46:42 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int	validate_exit_argument(t_cmd_tab *cmd)
 	len = array_len(cmd->cmd);
 	if (len > 1)
 	{
-		if (!is_num(cmd->cmd[1]))
+		if (len == 2 && cmd->cmd[1][0] == '-')
+			return (exit_code(EXIT_OUTOFRANGE, EDIT));
+		if (!is_num(cmd->cmd[1]) || ft_atoi(cmd->cmd[1]) > LLONG_MAX)
 		{
 			put_built_err("exit: ", cmd->cmd[1], NUMERICARG);
 			return (exit_code(EXIT_OUTOFRANGE, EDIT));
@@ -96,5 +98,5 @@ int	validate_exit_argument(t_cmd_tab *cmd)
 int	perform_exit(t_args *args, int code)
 {
 	free_struct(args);
-	exit(exit_code(code, EDIT));
+	exit(exit_code(code, RETRIEVE));
 }

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:52:56 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 17:28:57 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:22:53 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	single_cmd(t_cmd_tab *table)
 	pid_t	pid;
 	int		code;
 
+	signal(SIGQUIT, sigquit_handler);
 	pid = fork();
 	if (pid == -1)
 		return (put_error(FORKMSG, NULL), 1);

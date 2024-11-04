@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 21:37:35 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 17:27:00 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 04:26:48 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	exec_pipes(t_cmd_tab *table)
 
 	tab = table;
 	code = 0;
+	signal(SIGQUIT, sigquit_handler);
 	while (tab)
 	{
 		if (tab->next == NULL)

@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 00:04:49 by kaafkhar          #+#    #+#             */
-/*   Updated: 2024/11/03 22:06:14 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 03:51:47 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	display_env_vars(t_list *env)
 	}
 }
 
-int	export_variable(t_args *args, t_cmd_tab *cmd)
+int	export_variable(t_args *args, t_cmd_tab *cmd, int flag)
 {
 	char	*find_sign;
 	char	*variable;
@@ -101,6 +101,8 @@ int	export_variable(t_args *args, t_cmd_tab *cmd)
 	int		i;
 
 	i = 1;
+	if (flag == SINGLE && (infile_opn(cmd) || outfile_opn(cmd)))
+		return (1);
 	exit_code(EXIT_SUCCESS, EDIT);
 	if (!cmd->cmd[1])
 		return (display_env_vars(args->env), exit_code(EXIT_SUCCESS, EDIT));
