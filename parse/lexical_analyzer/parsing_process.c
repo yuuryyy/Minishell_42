@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 23:59:55 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 04:19:45 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/03 23:03:21 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	check_nd_fill(t_args *cmdline)
 	remove_q(&cmdline->tokens);
 	if (!syntax_check(cmdline))
 	{
-		if (heredoc_check(cmdline->tokens))
-			return (exit_code(1, EDIT), 1);
 		put_error(SYNTAX, NULL);
 		return (1);
 	}
@@ -99,7 +97,6 @@ int	process_line(t_args *cmdline)
 		return (free(tmp), exit_code(EXIT_SUCCESS, EDIT), 1);
 	if (!words_list(tmp, cmdline))
 	{
-		heredoc_check(cmdline->tokens);
 		free(tmp);
 		return (1);
 	}

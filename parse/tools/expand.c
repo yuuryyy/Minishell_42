@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 01:56:16 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 04:26:41 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 01:18:11 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ char	*expand(char *word, t_list *env)
 
 void	str_exp(t_token *tmp, t_list *env)
 {
-	if (tmp->type == heredoc)
-	{
-		tmp = tmp->next;
-		while (tmp && tmp->type >= string && tmp->space == 0)
-			tmp = tmp->next;
-	}
 	if (tmp && (tmp->type == string || tmp->type == double_quote))
 	{
 		if (tmp->type == string && ft_strchr(tmp->content, '$')
@@ -60,6 +54,16 @@ void	expand_var(t_args **cmd_line)
 	tmp = (*cmd_line)->tokens;
 	while (tmp)
 	{
+		if (tmp->type == heredoc)
+		{
+			tmp = tmp->next;
+			while (tmp && tmp->type >= string)
+			{
+				tmp = tmp->next;
+				if (!tmp || tmp->type < 6 || tmp->space)
+					break ;
+			}
+		}
 		str_exp(tmp, (*cmd_line)->env);
 		if (tmp)
 			tmp = tmp->next;

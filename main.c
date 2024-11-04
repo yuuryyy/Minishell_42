@@ -6,7 +6,7 @@
 /*   By: ychagri <ychagri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 00:25:05 by ychagri           #+#    #+#             */
-/*   Updated: 2024/11/03 22:54:10 by ychagri          ###   ########.fr       */
+/*   Updated: 2024/11/04 01:20:28 by ychagri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ int	g_errno = 0;
 // << the heredoc opens
 // ambg red
 // << << 
+//bash-3.2$ exit
+//bash-3.2$ echo $?
+//127
 // mkdir -p 1//2/3/4
 // shlvl
 
 //top | top SIGQUI
 //exit with LLONG_MAXT
-
+// export > file ====
 //cat << $USER
 
 int	exit_code(int code, int flag)
@@ -44,7 +47,7 @@ void	display_prompt(t_args *cmd_line)
 			continue ;
 		write(STDOUT_FILENO, "exit\n", 6);
 		free_struct(cmd_line);
-		exit(0);
+		exit(exit_code(0, RETRIEVE));
 	}
 	if (*cmd_line->line)
 		add_history(cmd_line->line);
